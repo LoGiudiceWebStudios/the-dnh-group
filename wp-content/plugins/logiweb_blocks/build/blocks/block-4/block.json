@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "create-block/custom-block-4",
+  "version": "0.1.0",
+  "title": "Custom Block 4",
+  "category": "widgets",
+  "icon": "smiley",
+  "description": "A custom block for displaying a section with a title and content.",
+  "example": {},
+  "supports": {
+    "html": false
+  },
+  "textdomain": "custom-block-4",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:../../global-styles.scss",
+  "style": "file:../../global-styles.scss",
+  "viewScript": "file:./view.js"
+}
