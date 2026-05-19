@@ -40,6 +40,8 @@ body {
     --font-size-title-small: 5vw;
     --font-size-subtitle: 4.2vw;
     --font-size-description: 4.2vw;
+
+    --rounded-full: 9999px;
 }
 
 /* UTILITY CLASSES */
@@ -184,7 +186,7 @@ h3 {
     font-family: var(--main-font);
     font-weight: var(--font-weight-regular);
     font-size: 1rem;
-    border-radius: 5px;
+    border-radius: var(--rounded-full);
     padding: 3%;
     padding-left: 5%;
     padding-right: 5%;
@@ -198,7 +200,7 @@ h3 {
     font-family: var(--main-font);
     font-weight: var(--font-weight-regular);
     font-size: 1rem;
-    border-radius: 5px;
+    border-radius: var(--rounded-full);
     padding: 3%;
     padding-left: 5%;
     padding-right: 5%;
@@ -212,7 +214,7 @@ h3 {
     font-family: var(--main-font);
     font-weight: var(--font-weight-regular);
     font-size: 1rem;
-    border-radius: 5px;
+    border-radius: var(--rounded-full);
     padding: 3%;
     padding-left: 5%;
     padding-right: 5%;
@@ -227,6 +229,7 @@ h3 {
     font-family: var(--main-font);
     font-weight: var(--font-weight-regular);
     font-size: 1rem;
+    border-radius: var(--rounded-full);
     padding: 3%;
     padding-left: 5%;
     padding-right: 5%;
@@ -244,6 +247,7 @@ h3 {
     font-family: var(--main-font);
     font-weight: var(--font-weight-regular);
     font-size: 1rem;
+    border-radius: var(--rounded-full);
     padding: 3%;
     padding-left: 5%;
     padding-right: 5%;
@@ -1829,7 +1833,7 @@ section {
 
     .btn-primary {
         font-size: 1vw;
-        border-radius: 8px;
+        border-radius: var(--rounded-full);
         padding: 2%;
         padding-left: 4%;
         padding-right: 4%;
@@ -1837,7 +1841,7 @@ section {
 
     .btn-secondary {
         font-size: 1vw;
-        border-radius: 8px;
+        border-radius: var(--rounded-full);
         padding: 2%;
         padding-left: 4%;
         padding-right: 4%;
@@ -1845,7 +1849,7 @@ section {
 
     .btn-secondary-white {
         font-size: 1vw;
-        border-radius: 8px;
+        border-radius: var(--rounded-full);
         padding: 1%;
         padding-left: 2%;
         padding-right: 2%;
@@ -1857,6 +1861,7 @@ section {
         padding: 2%;
         padding-left: 4%;
         padding-right: 4%;
+        border-radius: var(--rounded-full);
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -1868,6 +1873,7 @@ section {
         padding: 1%;
         padding-left: 2%;
         padding-right: 2%;
+        border-radius: var(--rounded-full);
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -2349,6 +2355,14 @@ section {
 
 .dropdown-submenu:hover>.dropdown-menu {
     display: block;
+}
+
+@media (min-width: 992px) {
+    .navbar .dropdown:hover > .dropdown-menu,
+    .navbar .dropdown:focus-within > .dropdown-menu {
+        display: block;
+        margin-top: 0;
+    }
 }
 
 

@@ -419,31 +419,68 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _global_styles_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../global-styles.scss */ "./src/global-styles.scss");
-/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./block.json */ "./src/blocks/block-10/block.json");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _global_styles_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../global-styles.scss */ "./src/global-styles.scss");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./block.json */ "./src/blocks/block-10/block.json");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__);
 
 
 
 
 
 
-
+const DEFAULT_COMPANIES = [{
+  name: "Microsoft",
+  badgeText: "M",
+  badgeColor: "#dbe7ff"
+}, {
+  name: "Google",
+  badgeText: "G",
+  badgeColor: "#fbe1e1"
+}, {
+  name: "Amazon",
+  badgeText: "A",
+  badgeColor: "#f6e3bf"
+}, {
+  name: "Meta",
+  badgeText: "F",
+  badgeColor: "#d9e2ff"
+}, {
+  name: "Apple",
+  badgeText: "A",
+  badgeColor: "#ececf1"
+}, {
+  name: "Netflix",
+  badgeText: "N",
+  badgeColor: "#f5d9dc"
+}, {
+  name: "Spotify",
+  badgeText: "S",
+  badgeColor: "#dbf0da"
+}, {
+  name: "Slack",
+  badgeText: "Sl",
+  badgeColor: "#e2daf9"
+}];
+const norm = (value = "") => String(value).trim();
+const getBadgeText = company => {
+  const explicit = norm(company?.badgeText);
+  if (explicit) {
+    return explicit;
+  }
+  const fromName = norm(company?.name).charAt(0).toUpperCase();
+  return fromName || "A";
+};
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)("logiweb/custom-block-10", {
-  title: "Certifications Carousel",
-  icon: "admin-site",
-  category: "widgets",
+  ..._block_json__WEBPACK_IMPORTED_MODULE_4__,
   attributes: {
     title: {
       type: "string",
       default: "Trusted by Industry Leaders"
     },
-    images: {
+    companies: {
       type: "array",
-      default: []
+      default: DEFAULT_COMPANIES
     }
   },
   edit: ({
@@ -452,135 +489,112 @@ __webpack_require__.r(__webpack_exports__);
   }) => {
     const {
       title = "",
-      images = []
+      companies = DEFAULT_COMPANIES
     } = attributes;
-    const [startIndex, setStartIndex] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(0);
-    const intervalRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useRef)();
-    const onSelectImages = media => {
+    const updateCompany = (index, key, value) => {
+      const next = [...companies];
+      next[index] = {
+        ...next[index],
+        [key]: value
+      };
       setAttributes({
-        images: media.map(img => ({
-          id: img.id,
-          url: img.url,
-          alt: img.alt || "",
-          caption: img.caption?.raw || img.caption || img.title || ""
-        }))
+        companies: next
       });
-      setStartIndex(0);
     };
-
-    // Show 5 items for desktop preview
-    const visibleImages = images.slice(startIndex, startIndex + 5);
-
-    // Auto-scroll simulation in editor
-    (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
-      if (images.length <= 5) return;
-      intervalRef.current = setInterval(() => {
-        setStartIndex(prev => (prev + 1) % images.length);
-      }, 3000);
-      return () => clearInterval(intervalRef.current);
-    }, [images.length]);
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-      className: "block-editor-container",
-      style: {
-        width: "100%",
-        padding: "2rem 0"
-      },
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+    const addCompany = () => {
+      setAttributes({
+        companies: [...companies, {
+          name: "New Brand",
+          badgeText: "N",
+          badgeColor: "#e8ecf5"
+        }]
+      });
+    };
+    const removeCompany = index => {
+      if (companies.length <= 1) {
+        return;
+      }
+      setAttributes({
+        companies: companies.filter((_, i) => i !== index)
+      });
+    };
+    const editorLoopItems = [...companies, ...companies];
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("section", {
+      className: "certifications-carousel",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
           title: "Carousel Settings",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
             label: "Section Title",
             value: title,
             onChange: val => setAttributes({
               title: val
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUploadCheck, {
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUpload, {
-              onSelect: onSelectImages,
-              allowedTypes: ["image"],
-              multiple: true,
-              gallery: true,
-              value: images.map(img => img.id),
-              render: ({
-                open
-              }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-                onClick: open,
-                isPrimary: true,
-                children: images.length ? "Edit Images" : "Add Images"
-              })
-            })
+          }), companies.map((company, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            style: {
+              marginTop: "10px",
+              marginBottom: "10px",
+              borderBottom: "1px solid #e5e9f2",
+              paddingBottom: "10px"
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: `Brand ${index + 1} Name`,
+              value: company.name || "",
+              onChange: value => updateCompany(index, "name", value)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Badge Text",
+              value: company.badgeText || "",
+              onChange: value => updateCompany(index, "badgeText", value)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Badge Color",
+              value: company.badgeColor || "#e8ecf5",
+              onChange: value => updateCompany(index, "badgeColor", value)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+              isSmall: true,
+              isDestructive: true,
+              onClick: () => removeCompany(index),
+              disabled: companies.length <= 1,
+              children: "Remove brand"
+            })]
+          }, index)), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+            isPrimary: true,
+            isSmall: true,
+            onClick: addCompany,
+            children: "+ Add brand"
           })]
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-        style: {
-          textAlign: "center",
-          marginBottom: "2rem"
-        },
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-          style: {
-            fontSize: "0.85rem",
-            color: "#999",
-            margin: 0,
-            marginBottom: "0.5rem"
-          },
-          children: "TRUSTED BY INDUSTRY LEADERS"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h2", {
-          style: {
-            fontSize: "1.8rem",
-            fontWeight: 600,
-            margin: 0
-          },
-          children: title
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "certifications-content",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "certifications-header",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+            tagName: "p",
+            className: "certifications-subtitle",
+            value: title,
+            onChange: value => setAttributes({
+              title: value
+            }),
+            placeholder: "Trusted by industry leaders"
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "certifications-marquee",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "certifications-track",
+            children: editorLoopItems.map((company, idx) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              className: "certification-item",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                className: "certification-badge",
+                style: {
+                  backgroundColor: company.badgeColor || "#e8ecf5"
+                },
+                children: getBadgeText(company)
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                className: "certification-caption",
+                children: company.name || "Brand"
+              })]
+            }, `${idx}-${company.name}`))
+          })
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-        style: {
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "1.5rem",
-          overflow: "hidden",
-          padding: "1rem"
-        },
-        children: visibleImages.length > 0 ? visibleImages.map((img, idx) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-          style: {
-            flex: "0 0 auto",
-            width: "120px",
-            height: "120px",
-            background: "#f5f5f5",
-            borderRadius: "8px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "0.5rem",
-            overflow: "hidden",
-            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
-            padding: "0.75rem 0.5rem"
-          },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
-            src: img.url,
-            alt: img.alt,
-            style: {
-              maxWidth: "80%",
-              maxHeight: "80%",
-              objectFit: "contain"
-            }
-          }), img.caption ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
-            style: {
-              fontSize: "0.72rem",
-              fontWeight: 600,
-              lineHeight: 1.2,
-              textAlign: "center",
-              color: "#2d3748"
-            },
-            children: img.caption
-          }) : null]
-        }, img.id || idx)) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-          style: {
-            color: "#999"
-          },
-          children: "Add images to start"
-        })
       })]
     });
   },
@@ -589,37 +603,41 @@ __webpack_require__.r(__webpack_exports__);
   }) => {
     const {
       title = "Trusted by Industry Leaders",
-      images = []
+      companies = DEFAULT_COMPANIES
     } = attributes;
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("section", {
+    const loopItems = [...companies, ...companies];
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("section", {
       className: "certifications-carousel fade-in-on-scroll",
       "data-block": "certifications",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
         className: "certifications-content",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
           className: "certifications-header",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
             className: "certifications-subtitle",
-            children: "Trusted by Industry Leaders"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h2", {
-            className: "certifications-title",
             children: title
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-          className: "certifications-track",
-          "data-carousel-track": true,
-          children: images.map((img, idx) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-            className: "certification-item",
-            "data-carousel-item": true,
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
-              src: img.url,
-              alt: img.alt || "Certification",
-              className: "certification-logo"
-            }), img.caption ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
-              className: "certification-caption",
-              children: img.caption
-            }) : null]
-          }, img.id || idx))
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "certifications-marquee",
+          "aria-label": "Trusted brands",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "certifications-track",
+            "data-carousel-track": true,
+            children: loopItems.map((company, idx) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              className: "certification-item",
+              "data-carousel-item": true,
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                className: "certification-badge",
+                style: {
+                  backgroundColor: company.badgeColor || "#e8ecf5"
+                },
+                children: getBadgeText(company)
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                className: "certification-caption",
+                children: company.name || "Brand"
+              })]
+            }, `${idx}-${company.name}`))
+          })
         })]
       })
     });
@@ -8790,6 +8808,8 @@ __webpack_require__.r(__webpack_exports__);
       secondaryText,
       secondaryUrl
     } = attributes;
+    const hasPrimaryText = Boolean((primaryText || "").trim());
+    const hasSecondaryText = Boolean((secondaryText || "").trim());
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
       className: "financing-hero-editor",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
@@ -8871,9 +8891,9 @@ __webpack_require__.r(__webpack_exports__);
               description: value
             }),
             placeholder: "Add financing description"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          }), (hasPrimaryText || hasSecondaryText) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
             className: "financing-hero-actions",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("a", {
+            children: [hasPrimaryText && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("a", {
               className: "financing-hero-btn primary",
               href: primaryUrl || "#",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
@@ -8881,7 +8901,7 @@ __webpack_require__.r(__webpack_exports__);
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
                 className: "fa-solid fa-arrow-right"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
+            }), hasSecondaryText && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
               className: "financing-hero-btn secondary",
               href: secondaryUrl || "#",
               children: secondaryText
@@ -8905,6 +8925,8 @@ __webpack_require__.r(__webpack_exports__);
       secondaryText,
       secondaryUrl
     } = attributes;
+    const hasPrimaryText = Boolean((primaryText || "").trim());
+    const hasSecondaryText = Boolean((secondaryText || "").trim());
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("section", {
       className: "financing-hero-block",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
@@ -8928,9 +8950,9 @@ __webpack_require__.r(__webpack_exports__);
           tagName: "p",
           className: "financing-hero-description",
           value: description
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        }), (hasPrimaryText || hasSecondaryText) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "financing-hero-actions",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("a", {
+          children: [hasPrimaryText && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("a", {
             className: "financing-hero-btn primary",
             href: primaryUrl || "#",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
@@ -8938,7 +8960,7 @@ __webpack_require__.r(__webpack_exports__);
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
               className: "fa-solid fa-arrow-right"
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
+          }), hasSecondaryText && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
             className: "financing-hero-btn secondary",
             href: secondaryUrl || "#",
             children: secondaryText
@@ -9093,7 +9115,7 @@ const DEFAULT_ITEMS = [{
           }, index))
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("section", {
-        className: "financing-benefits-block",
+        className: "financing-benefits-block fade-in-on-scroll",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "financing-benefits-inner",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
@@ -10927,44 +10949,50 @@ __webpack_require__.r(__webpack_exports__);
 
 
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)("logiweb/custom-block-4", {
-  title: "Custom Block 4",
-  icon: "smiley",
-  category: "widgets",
+  ..._block_json__WEBPACK_IMPORTED_MODULE_4__,
   attributes: {
     subtitle: {
-      type: "string"
+      type: "string",
+      default: "Our Core Service"
     },
     title: {
-      type: "string"
+      type: "string",
+      default: "Interior Painting"
     },
     description: {
-      type: "string"
+      type: "string",
+      default: "Refresh your living spaces with our professional interior painting services. We use premium paints and meticulous techniques to deliver flawless finishes."
     },
     backgroundImage: {
-      type: "string"
+      type: "string",
+      default: typeof logiweb_blocks !== "undefined" && logiweb_blocks.placeholder_image ? logiweb_blocks.placeholder_image : "https://via.placeholder.com/400x300?text=Add+Image"
+    },
+    imagePosition: {
+      type: "string",
+      default: "left"
     },
     primary_btn_text: {
       type: "string",
-      default: "Learn More"
+      default: "Get a Quote"
     },
     primary_btn_link: {
       type: "string"
     },
-    tertiary_btn_text: {
-      type: "string",
-      default: "Get Started"
-    },
-    tertiary_btn_link: {
-      type: "string"
-    },
     feature1_description: {
-      type: "string"
+      type: "string",
+      default: "Walls & ceilings"
     },
     feature2_description: {
-      type: "string"
+      type: "string",
+      default: "Trim & molding"
     },
     feature3_description: {
-      type: "string"
+      type: "string",
+      default: "Cabinets & built-ins"
+    },
+    feature4_description: {
+      type: "string",
+      default: "Accent walls"
     }
   },
   edit: ({
@@ -10976,13 +11004,13 @@ __webpack_require__.r(__webpack_exports__);
       title,
       description,
       backgroundImage,
+      imagePosition,
       primary_btn_link,
       primary_btn_text,
-      tertiary_btn_text,
-      tertiary_btn_link,
       feature1_description,
       feature2_description,
-      feature3_description
+      feature3_description,
+      feature4_description
     } = attributes;
     const onSelectImage = media => {
       setAttributes({
@@ -10990,10 +11018,10 @@ __webpack_require__.r(__webpack_exports__);
       });
     };
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
           title: "Image Settings",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUpload, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUpload, {
             onSelect: onSelectImage,
             allowedTypes: ["image"],
             value: backgroundImage,
@@ -11003,10 +11031,38 @@ __webpack_require__.r(__webpack_exports__);
               onClick: open,
               children: "Select Image"
             })
-          })
-        })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+            label: "Image Side",
+            value: imagePosition,
+            options: [{
+              label: "Left",
+              value: "left"
+            }, {
+              label: "Right",
+              value: "right"
+            }],
+            onChange: value => setAttributes({
+              imagePosition: value
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+          title: "Primary Button Settings",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: "Button Text",
+            value: primary_btn_text,
+            onChange: value => setAttributes({
+              primary_btn_text: value
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.URLInput, {
+            label: "Button Link",
+            value: primary_btn_link,
+            onChange: value => setAttributes({
+              primary_btn_link: value
+            })
+          })]
+        })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-        className: "section-container section-type-4",
+        className: `section-container section-type-4 ${imagePosition === "right" ? "image-right" : "image-left"}`,
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "container-left",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
@@ -11035,95 +11091,86 @@ __webpack_require__.r(__webpack_exports__);
             placeholder: "Add description"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
             className: "benefits-list",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
               className: "benefits-list-item",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                className: "benefit-check",
+                "aria-hidden": "true",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                  className: "fa-solid fa-check"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
                 tagName: "div",
-                className: "description",
+                className: "description-small",
                 value: feature1_description,
                 onChange: value => setAttributes({
                   feature1_description: value
                 }),
                 placeholder: "Add Text"
-              })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
               className: "benefits-list-item",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                className: "benefit-check",
+                "aria-hidden": "true",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                  className: "fa-solid fa-check"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
                 tagName: "div",
-                className: "description",
+                className: "description-small",
                 value: feature2_description,
                 onChange: value => setAttributes({
                   feature2_description: value
                 }),
                 placeholder: "Add Text"
-              })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
               className: "benefits-list-item",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                className: "benefit-check",
+                "aria-hidden": "true",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                  className: "fa-solid fa-check"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
                 tagName: "div",
-                className: "description",
+                className: "description-small",
                 value: feature3_description,
                 onChange: value => setAttributes({
                   feature3_description: value
                 }),
                 placeholder: "Add Text"
-              })
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              className: "benefits-list-item",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                className: "benefit-check",
+                "aria-hidden": "true",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                  className: "fa-solid fa-check"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+                tagName: "div",
+                className: "description-small",
+                value: feature4_description,
+                onChange: value => setAttributes({
+                  feature4_description: value
+                }),
+                placeholder: "Add Text"
+              })]
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-              title: "Primary Button Settings",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-                label: "Button Text",
-                value: primary_btn_text,
-                onChange: value => setAttributes({
-                  primary_btn_text: value
-                })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.URLInput, {
-                label: "Button Link",
-                value: primary_btn_link,
-                onChange: value => setAttributes({
-                  primary_btn_link: value
-                })
-              })]
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-              title: "Tertiary Button Settings",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-                label: "Button Text",
-                value: tertiary_btn_text,
-                onChange: value => setAttributes({
-                  tertiary_btn_text: value
-                })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.URLInput, {
-                label: "Button Link",
-                value: tertiary_btn_link,
-                onChange: value => setAttributes({
-                  tertiary_btn_link: value
-                })
-              })]
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
             className: "buttons",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
               tagName: "button",
               className: "btn-primary",
               value: primary_btn_text,
               onChange: value => setAttributes({
                 primary_btn_text: value
               }),
-              placeholder: "Button Text",
-              href: primary_btn_link
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
-              tagName: "button",
-              className: "btn-tertiary",
-              value: tertiary_btn_text,
-              onChange: value => setAttributes({
-                tertiary_btn_text: value
-              }),
-              placeholder: "Button Text",
-              href: tertiary_btn_link
-            })]
+              placeholder: "Button Text"
+            })
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
           className: "container-right",
@@ -11131,8 +11178,8 @@ __webpack_require__.r(__webpack_exports__);
             backgroundImage: `url(${backgroundImage})`
           },
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
-            src: window.location.origin + "/wp-content/plugins/logiweb_blocks/assets/Placeholder_Image_4.png",
-            alt: "Placeholder Image"
+            src: backgroundImage,
+            alt: title || "Service image"
           })
         })]
       })]
@@ -11146,16 +11193,16 @@ __webpack_require__.r(__webpack_exports__);
       title,
       description,
       backgroundImage,
+      imagePosition,
       primary_btn_link,
       primary_btn_text,
-      tertiary_btn_text,
-      tertiary_btn_link,
       feature1_description,
       feature2_description,
-      feature3_description
+      feature3_description,
+      feature4_description
     } = attributes;
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-      className: "section-container section-type-4",
+      className: `section-container section-type-4 ${imagePosition === "right" ? "image-right" : "image-left"}`,
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
         className: "container-left",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
@@ -11174,8 +11221,12 @@ __webpack_require__.r(__webpack_exports__);
           className: "benefits-list",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
             className: "benefits-list-item",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
-              class: "fa-solid fa-cube"
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+              className: "benefit-check",
+              "aria-hidden": "true",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                className: "fa-solid fa-check"
+              })
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
               className: "description-small",
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
@@ -11185,8 +11236,12 @@ __webpack_require__.r(__webpack_exports__);
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
             className: "benefits-list-item",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
-              class: "fa-solid fa-cube"
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+              className: "benefit-check",
+              "aria-hidden": "true",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                className: "fa-solid fa-check"
+              })
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
               className: "description-small",
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
@@ -11196,8 +11251,12 @@ __webpack_require__.r(__webpack_exports__);
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
             className: "benefits-list-item",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
-              class: "fa-solid fa-cube"
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+              className: "benefit-check",
+              "aria-hidden": "true",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                className: "fa-solid fa-check"
+              })
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
               className: "description-small",
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
@@ -11205,21 +11264,33 @@ __webpack_require__.r(__webpack_exports__);
                 tagName: "div"
               })
             })]
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-          className: "buttons",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
-            className: "btn-primary",
-            href: primary_btn_link,
-            children: primary_btn_text
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("a", {
-            className: "btn-tertiary",
-            href: tertiary_btn_link,
-            children: [tertiary_btn_text, " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
-              className: "material-symbols-outlined notranslate",
-              children: "chevron_right"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "benefits-list-item",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+              className: "benefit-check",
+              "aria-hidden": "true",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                className: "fa-solid fa-check"
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "description-small",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
+                value: feature4_description,
+                tagName: "div"
+              })
             })]
           })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "buttons",
+          children: primary_btn_text && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("a", {
+            className: "btn-primary",
+            href: primary_btn_link,
+            children: [primary_btn_text, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+              className: "material-symbols-outlined notranslate",
+              "aria-hidden": "true",
+              children: "chevron_right"
+            })]
+          })
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
         className: "container-right",
@@ -11227,8 +11298,8 @@ __webpack_require__.r(__webpack_exports__);
           backgroundImage: `url(${backgroundImage})`
         },
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
-          src: window.location.origin + "/wp-content/plugins/logiweb_blocks/assets/Placeholder_Image_4.png",
-          alt: "Placeholder Image"
+          src: backgroundImage,
+          alt: title || "Service image"
         })
       })]
     });
@@ -11320,6 +11391,8 @@ const DEFAULT_POINTS = [{
       secondaryUrl,
       points = []
     } = attributes;
+    const hasPrimaryText = Boolean((primaryText || "").trim());
+    const hasSecondaryText = Boolean((secondaryText || "").trim());
     const updatePoint = (index, field, value) => {
       const next = [...points];
       next[index] = {
@@ -11408,9 +11481,9 @@ const DEFAULT_POINTS = [{
               description: value
             }),
             placeholder: "CTA description"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          }), (hasPrimaryText || hasSecondaryText) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
             className: "ready-start-actions",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("a", {
+            children: [hasPrimaryText && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("a", {
               className: "ready-start-btn is-primary",
               href: primaryUrl || "#",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
@@ -11418,7 +11491,7 @@ const DEFAULT_POINTS = [{
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
                 className: "fa-solid fa-arrow-right"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
+            }), hasSecondaryText && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
               className: "ready-start-btn is-secondary",
               href: secondaryUrl || "#",
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
@@ -11456,6 +11529,8 @@ const DEFAULT_POINTS = [{
       secondaryUrl,
       points = []
     } = attributes;
+    const hasPrimaryText = Boolean((primaryText || "").trim());
+    const hasSecondaryText = Boolean((secondaryText || "").trim());
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("section", {
       className: "ready-start-block",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
@@ -11474,9 +11549,9 @@ const DEFAULT_POINTS = [{
           tagName: "p",
           className: "ready-start-description",
           value: description
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        }), (hasPrimaryText || hasSecondaryText) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "ready-start-actions",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("a", {
+          children: [hasPrimaryText && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("a", {
             className: "ready-start-btn is-primary",
             href: primaryUrl || "#",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
@@ -11484,7 +11559,7 @@ const DEFAULT_POINTS = [{
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
               className: "fa-solid fa-arrow-right"
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
+          }), hasSecondaryText && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
             className: "ready-start-btn is-secondary",
             href: secondaryUrl || "#",
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
@@ -11795,7 +11870,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_3__.name, {
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)("logiweb/custom-block-43", {
+  ..._block_json__WEBPACK_IMPORTED_MODULE_3__,
   edit({
     attributes,
     setAttributes
@@ -11968,7 +12044,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_3__.name, {
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)("logiweb/custom-block-44", {
+  ..._block_json__WEBPACK_IMPORTED_MODULE_3__,
   edit({
     attributes,
     setAttributes
@@ -12170,7 +12247,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_3__.name, {
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)("logiweb/custom-block-45", {
+  ..._block_json__WEBPACK_IMPORTED_MODULE_3__,
   edit({
     attributes,
     setAttributes
@@ -12179,19 +12257,60 @@ __webpack_require__.r(__webpack_exports__);
       resultsTitle,
       resultsSubtitle,
       editBtnText,
+      formPageUrl,
       bottomCta,
       bottomPhone,
-      bottomMsg
+      bottomMsg,
+      options = []
     } = attributes;
     const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)({
       className: "financing-results-editor"
     });
+    const updateOption = (index, key, value) => {
+      const next = [...options];
+      next[index] = {
+        ...next[index],
+        [key]: value
+      };
+      setAttributes({
+        options: next
+      });
+    };
+    const addOption = () => {
+      const next = [...options, {
+        name: "New Partner",
+        initials: "NP",
+        logoColor: "#3654de",
+        rating: "4.5",
+        minScore: "620+",
+        apr: "8.99% - 17.99%",
+        terms: "12 - 120 months",
+        benefitsText: "Benefit one\nBenefit two\nBenefit three",
+        applyUrl: "#"
+      }];
+      setAttributes({
+        options: next
+      });
+    };
+    const removeOption = index => {
+      const next = options.filter((_, i) => i !== index);
+      setAttributes({
+        options: next
+      });
+    };
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
           title: "Settings",
           initialOpen: true,
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: "Form Page URL (for Edit Info)",
+            value: formPageUrl || "",
+            onChange: v => setAttributes({
+              formPageUrl: v
+            }),
+            help: "Example: /apply-now/"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
             label: "Bottom CTA Text",
             value: bottomCta,
             onChange: v => setAttributes({
@@ -12210,7 +12329,64 @@ __webpack_require__.r(__webpack_exports__);
               bottomMsg: v
             })
           })]
-        })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+          title: `Financing Options (${options.length})`,
+          initialOpen: false,
+          children: [options.map((option, i) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            style: {
+              marginBottom: "14px",
+              borderBottom: "1px solid #e3e8f2",
+              paddingBottom: "14px"
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: `Option ${i + 1} Name`,
+              value: option.name || "",
+              onChange: v => updateOption(i, "name", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Initials",
+              value: option.initials || "",
+              onChange: v => updateOption(i, "initials", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Logo Color",
+              value: option.logoColor || "",
+              onChange: v => updateOption(i, "logoColor", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Rating",
+              value: option.rating || "",
+              onChange: v => updateOption(i, "rating", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Min Score",
+              value: option.minScore || "",
+              onChange: v => updateOption(i, "minScore", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "APR",
+              value: option.apr || "",
+              onChange: v => updateOption(i, "apr", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Terms",
+              value: option.terms || "",
+              onChange: v => updateOption(i, "terms", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextareaControl, {
+              label: "Benefits (one per line)",
+              value: option.benefitsText || "",
+              onChange: v => updateOption(i, "benefitsText", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Apply URL",
+              value: option.applyUrl || "",
+              onChange: v => updateOption(i, "applyUrl", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+              isDestructive: true,
+              isSmall: true,
+              onClick: () => removeOption(i),
+              children: "Remove Option"
+            })]
+          }, i)), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+            isPrimary: true,
+            isSmall: true,
+            onClick: addOption,
+            children: "+ Add Option"
+          })]
+        })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
         ...blockProps,
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
@@ -12236,30 +12412,33 @@ __webpack_require__.r(__webpack_exports__);
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
             className: "financing-results-grid",
-            children: [...Array(6)].map((_, i) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            children: options.map((option, i) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
               className: "financing-option-card",
               style: {
                 opacity: 0.6
               },
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                 className: "option-logo",
-                children: "GS"
+                style: {
+                  backgroundColor: option.logoColor || "#3654de"
+                },
+                children: option.initials || "NA"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h3", {
-                children: "Partner Name"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+                children: option.name || "Partner Name"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("p", {
                 className: "option-rating",
-                children: "\u2B50 4.8"
+                children: ["\u2B50 ", option.rating || "4.5"]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("ul", {
                 style: {
                   fontSize: "0.85rem",
                   color: "#666"
                 },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
-                  children: "Min. Credit Score"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
-                  children: "APR Range"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
-                  children: "Terms"
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("li", {
+                  children: ["Min. Credit Score: ", option.minScore || "N/A"]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("li", {
+                  children: ["APR Range: ", option.apr || "N/A"]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("li", {
+                  children: ["Terms: ", option.terms || "N/A"]
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
                 disabled: true,
@@ -12308,6 +12487,1346 @@ __webpack_require__.r(__webpack_exports__);
   },
   save() {
     return null; // Dynamic block - rendered via PHP
+  }
+});
+
+/***/ },
+
+/***/ "./src/blocks/block-46/index.js"
+/*!**************************************!*\
+  !*** ./src/blocks/block-46/index.js ***!
+  \**************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./block.json */ "./src/blocks/block-46/block.json");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__);
+
+
+
+
+
+const norm = (value = "") => String(value).trim();
+const getProjectImageUrl = project => project?.photoUrl || project?.imageUrl || "";
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)("logiweb/custom-block-46", {
+  ..._block_json__WEBPACK_IMPORTED_MODULE_3__,
+  edit({
+    attributes,
+    setAttributes
+  }) {
+    const {
+      projects = []
+    } = attributes;
+    const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)({
+      className: "portfolio-showcase-editor"
+    });
+    const categories = ["All", ...Array.from(new Set(projects.map(p => norm(p.category)).filter(Boolean)))];
+    const updateProject = (index, key, value) => {
+      const next = [...projects];
+      next[index] = {
+        ...next[index],
+        [key]: value
+      };
+      setAttributes({
+        projects: next
+      });
+    };
+    const addProject = () => {
+      setAttributes({
+        projects: [...projects, {
+          category: "Painting",
+          title: "New Project",
+          imageUrl: "",
+          imageAlt: "New Project",
+          description: "Project description",
+          location: "City, State",
+          size: "1,200 sq ft",
+          duration: "10 days",
+          completed: "April 1, 2026",
+          rating: "4.9",
+          featuresText: "Feature one\nFeature two\nFeature three",
+          badge: "Featured Project",
+          letter: "N",
+          startDate: "March 20, 2026",
+          teamSize: "4 specialists",
+          testimonial: "Great project outcome.",
+          testimonialAuthor: "Client Name",
+          primaryCtaText: "Start Your Project",
+          primaryCtaUrl: "#",
+          secondaryCtaText: "Explore Financing",
+          secondaryCtaUrl: "#"
+        }]
+      });
+    };
+    const removeProject = index => {
+      setAttributes({
+        projects: projects.filter((_, i) => i !== index)
+      });
+    };
+    const updateProjectImage = (index, media) => {
+      if (!media?.url) {
+        return;
+      }
+      const next = [...projects];
+      next[index] = {
+        ...next[index],
+        photoUrl: media.url,
+        imageUrl: media.url,
+        imageAlt: media.alt || media.title || next[index]?.title || "Project image"
+      };
+      setAttributes({
+        projects: next
+      });
+    };
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+          title: `Projects (${projects.length})`,
+          initialOpen: true,
+          children: [projects.map((project, i) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            style: {
+              marginBottom: "14px",
+              borderBottom: "1px solid #e5eaf4",
+              paddingBottom: "14px"
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUploadCheck, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUpload, {
+                onSelect: media => updateProjectImage(i, media),
+                allowedTypes: ["image"],
+                render: ({
+                  open
+                }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+                  onClick: open,
+                  isSecondary: true,
+                  children: getProjectImageUrl(project) ? "Change image" : "Add image"
+                })
+              })
+            }), getProjectImageUrl(project) ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              style: {
+                marginTop: "10px",
+                marginBottom: "10px",
+                borderRadius: "8px",
+                overflow: "hidden",
+                border: "1px solid #e5eaf4"
+              },
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                src: getProjectImageUrl(project),
+                alt: project.imageAlt || project.title || "Project image",
+                style: {
+                  width: "100%",
+                  maxHeight: "150px",
+                  objectFit: "cover",
+                  display: "block"
+                }
+              })
+            }) : null, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: `Project ${i + 1} Category`,
+              value: project.category || "",
+              onChange: v => updateProject(i, "category", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Title",
+              value: project.title || "",
+              onChange: v => updateProject(i, "title", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Image alt",
+              value: project.imageAlt || "",
+              onChange: v => updateProject(i, "imageAlt", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextareaControl, {
+              label: "Description",
+              value: project.description || "",
+              onChange: v => updateProject(i, "description", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Location",
+              value: project.location || "",
+              onChange: v => updateProject(i, "location", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Size",
+              value: project.size || "",
+              onChange: v => updateProject(i, "size", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Duration",
+              value: project.duration || "",
+              onChange: v => updateProject(i, "duration", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Completed",
+              value: project.completed || "",
+              onChange: v => updateProject(i, "completed", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Rating",
+              value: project.rating || "",
+              onChange: v => updateProject(i, "rating", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextareaControl, {
+              label: "Features (one per line)",
+              value: project.featuresText || "",
+              onChange: v => updateProject(i, "featuresText", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Badge",
+              value: project.badge || "",
+              onChange: v => updateProject(i, "badge", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Placeholder Letter",
+              value: project.letter || "",
+              onChange: v => updateProject(i, "letter", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Start Date",
+              value: project.startDate || "",
+              onChange: v => updateProject(i, "startDate", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Team Size",
+              value: project.teamSize || "",
+              onChange: v => updateProject(i, "teamSize", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextareaControl, {
+              label: "Testimonial",
+              value: project.testimonial || "",
+              onChange: v => updateProject(i, "testimonial", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Testimonial Author",
+              value: project.testimonialAuthor || "",
+              onChange: v => updateProject(i, "testimonialAuthor", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Primary CTA Text",
+              value: project.primaryCtaText || "",
+              onChange: v => updateProject(i, "primaryCtaText", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Primary CTA URL",
+              value: project.primaryCtaUrl || "",
+              onChange: v => updateProject(i, "primaryCtaUrl", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Secondary CTA Text",
+              value: project.secondaryCtaText || "",
+              onChange: v => updateProject(i, "secondaryCtaText", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Secondary CTA URL",
+              value: project.secondaryCtaUrl || "",
+              onChange: v => updateProject(i, "secondaryCtaUrl", v)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+              isDestructive: true,
+              isSmall: true,
+              onClick: () => removeProject(i),
+              children: "Remove Project"
+            })]
+          }, i)), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+            isPrimary: true,
+            isSmall: true,
+            onClick: addProject,
+            children: "+ Add Project"
+          })]
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("section", {
+        ...blockProps,
+        "data-portfolio-showcase": "1",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "portfolio-showcase-filters",
+          children: categories.map((category, i) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+            type: "button",
+            className: `portfolio-filter-btn ${i === 0 ? "is-active" : ""}`,
+            children: category
+          }, `${category}-${i}`))
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "portfolio-showcase-grid",
+          children: projects.map((project, i) => {
+            const features = String(project.featuresText || "").split(/\r?\n/).map(item => item.trim()).filter(Boolean);
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("article", {
+              className: "portfolio-project-card",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                className: "portfolio-project-media",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "portfolio-project-chip",
+                  children: project.category || "Project"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+                  className: "portfolio-project-score",
+                  children: ["\u2605 ", project.rating || "5.0"]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "portfolio-project-placeholder",
+                  children: project.letter || "P"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "portfolio-project-badge",
+                  children: project.badge || "Featured Project"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                className: "portfolio-project-content",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+                  className: "portfolio-project-category",
+                  children: project.category || "Category"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+                  tagName: "h3",
+                  className: "portfolio-project-title",
+                  value: project.title,
+                  onChange: v => updateProject(i, "title", v),
+                  placeholder: "Project title"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+                  className: "portfolio-project-description",
+                  children: project.description || "Project description"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                  className: "portfolio-project-meta",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+                    children: ["Location: ", project.location || "-"]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+                    children: ["Size: ", project.size || "-"]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+                    children: ["Duration: ", project.duration || "-"]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+                    children: ["Completed: ", project.completed || "-"]
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "portfolio-project-tags",
+                  children: features.slice(0, 3).map((feature, idx) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                    children: feature
+                  }, idx))
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                  type: "button",
+                  className: "portfolio-project-cta",
+                  disabled: true,
+                  children: "View Project Details"
+                })]
+              })]
+            }, i);
+          })
+        })]
+      })]
+    });
+  },
+  save({
+    attributes
+  }) {
+    const {
+      projects = []
+    } = attributes;
+    const categories = ["All", ...Array.from(new Set(projects.map(p => norm(p.category)).filter(Boolean)))];
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("section", {
+      className: "portfolio-showcase-block",
+      "data-portfolio-showcase": "1",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        className: "portfolio-showcase-filters",
+        role: "tablist",
+        "aria-label": "Project categories",
+        children: categories.map((category, i) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+          type: "button",
+          className: `portfolio-filter-btn ${i === 0 ? "is-active" : ""}`,
+          "data-filter": category.toLowerCase(),
+          children: category
+        }, `${category}-${i}`))
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        className: "portfolio-showcase-grid",
+        children: projects.map((project, i) => {
+          const features = String(project.featuresText || "").split(/\r?\n/).map(item => item.trim()).filter(Boolean);
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("article", {
+            className: "portfolio-project-card",
+            "data-category": (project.category || "all").toLowerCase(),
+            "data-project-title": project.title || "Project",
+            "data-project-category": project.category || "Project",
+            "data-project-description": project.description || "",
+            "data-project-location": project.location || "",
+            "data-project-size": project.size || "",
+            "data-project-duration": project.duration || "",
+            "data-project-completed": project.completed || "",
+            "data-project-rating": project.rating || "5.0",
+            "data-project-image": getProjectImageUrl(project),
+            "data-project-image-alt": project.imageAlt || project.title || "Project image",
+            "data-project-start": project.startDate || "",
+            "data-project-team": project.teamSize || "",
+            "data-project-features": features.join("||"),
+            "data-project-letter": project.letter || "P",
+            "data-project-testimonial": project.testimonial || "",
+            "data-project-author": project.testimonialAuthor || "",
+            "data-project-primary-text": project.primaryCtaText || "",
+            "data-project-primary-url": project.primaryCtaUrl || "#",
+            "data-project-secondary-text": project.secondaryCtaText || "",
+            "data-project-secondary-url": project.secondaryCtaUrl || "#",
+            role: "button",
+            tabIndex: "0",
+            "aria-label": `Open project ${project.title || "details"}`,
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "portfolio-project-media",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                className: "portfolio-project-chip",
+                children: project.category || "Project"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+                className: "portfolio-project-score",
+                children: ["\u2605 ", project.rating || "5.0"]
+              }), getProjectImageUrl(project) ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                className: "portfolio-project-image",
+                src: getProjectImageUrl(project),
+                alt: project.imageAlt || project.title || "Project image"
+              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "portfolio-project-placeholder",
+                children: project.letter || "P"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                className: "portfolio-project-badge",
+                children: project.badge || "Featured Project"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "portfolio-project-content",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+                className: "portfolio-project-category",
+                children: project.category || "Category"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h3", {
+                className: "portfolio-project-title",
+                children: project.title || "Project title"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+                className: "portfolio-project-description",
+                children: project.description || ""
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                className: "portfolio-project-meta",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  children: project.location || "-"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  children: project.size || "-"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  children: project.duration || "-"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  children: project.completed || "-"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "portfolio-project-tags",
+                children: features.slice(0, 3).map((feature, idx) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  children: feature
+                }, idx))
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
+                type: "button",
+                className: "portfolio-project-cta",
+                "data-project-open": true,
+                children: ["View Project Details", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+                  className: "fa-solid fa-arrow-right",
+                  "aria-hidden": "true"
+                })]
+              })]
+            })]
+          }, i);
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "portfolio-modal",
+        "data-portfolio-modal": true,
+        hidden: true,
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "portfolio-modal-backdrop",
+          "data-portfolio-close": true
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "portfolio-modal-dialog",
+          role: "dialog",
+          "aria-modal": "true",
+          "aria-label": "Project details popup",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+            type: "button",
+            className: "portfolio-modal-close",
+            "data-portfolio-close": true,
+            "aria-label": "Close popup",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+              className: "fa-solid fa-xmark",
+              "aria-hidden": "true"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "portfolio-modal-media",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+              className: "portfolio-modal-image",
+              src: "",
+              alt: "",
+              "data-modal-image": true,
+              hidden: true
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "portfolio-modal-placeholder",
+              "data-modal-letter": true,
+              children: "V"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+              "data-modal-title-media": true,
+              children: "Project title"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+              className: "portfolio-modal-chip",
+              "data-modal-category-chip": true,
+              children: "Category"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "portfolio-modal-content",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+              className: "portfolio-modal-category",
+              "data-modal-category": true,
+              children: "Category"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h3", {
+              "data-modal-title": true,
+              children: "Project title"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("p", {
+              className: "portfolio-modal-location",
+              "data-modal-location": true,
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+                className: "fa-solid fa-location-dot",
+                "aria-hidden": "true"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                children: "Location"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("p", {
+              className: "portfolio-modal-rating",
+              "data-modal-rating": true,
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+                className: "fa-solid fa-star",
+                "aria-hidden": "true"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                children: "5.0 Customer Rating"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+              className: "portfolio-modal-about-title",
+              children: "About this project"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+              className: "portfolio-modal-description",
+              "data-modal-description": true,
+              children: "Project description"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "portfolio-modal-details-grid",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("strong", {
+                  children: "Start Date"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("em", {
+                  "data-modal-start": true,
+                  children: "Date"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("strong", {
+                  children: "Completed"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("em", {
+                  "data-modal-completed": true,
+                  children: "Date"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("strong", {
+                  children: "Square Footage"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("em", {
+                  "data-modal-size": true,
+                  children: "Size"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("strong", {
+                  children: "Duration"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("em", {
+                  "data-modal-duration": true,
+                  children: "Duration"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("strong", {
+                  children: "Team Size"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("em", {
+                  "data-modal-team": true,
+                  children: "Team"
+                })]
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "portfolio-modal-features",
+              "data-modal-features": true
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "portfolio-modal-testimonial",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+                "data-modal-testimonial": true,
+                children: "Testimonial"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("small", {
+                "data-modal-author": true,
+                children: "Author"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "portfolio-modal-actions",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("a", {
+                href: "#",
+                className: "portfolio-modal-btn is-primary",
+                "data-modal-primary": true,
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  "data-modal-primary-text": true,
+                  children: "Start Your Project"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+                  className: "fa-solid fa-arrow-right",
+                  "aria-hidden": "true"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
+                href: "#",
+                className: "portfolio-modal-btn is-secondary",
+                "data-modal-secondary": true,
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  "data-modal-secondary-text": true,
+                  children: "Explore Financing"
+                })
+              })]
+            })]
+          })]
+        })]
+      })]
+    });
+  }
+});
+
+/***/ },
+
+/***/ "./src/blocks/block-47/index.js"
+/*!**************************************!*\
+  !*** ./src/blocks/block-47/index.js ***!
+  \**************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _global_styles_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../global-styles.scss */ "./src/global-styles.scss");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./block.json */ "./src/blocks/block-47/block.json");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__);
+
+
+
+
+
+
+
+const DEFAULT_IMAGE = window.location.origin + "/wp-content/plugins/logiweb_blocks/assets/Placeholder_Image_4.png";
+const DEFAULT_FEATURES = [{
+  title: "Kitchen Renovations",
+  description: "Custom kitchen designs with quality cabinets, countertops, and finishes."
+}, {
+  title: "Bathroom Remodels",
+  description: "Transform your bathroom into a spa-like retreat with modern fixtures and tile."
+}, {
+  title: "Basement Finishing",
+  description: "Maximize your living space with professional basement renovations."
+}, {
+  title: "Room Additions",
+  description: "Expand your home with seamless room additions and expansions."
+}];
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)("logiweb/custom-block-47", {
+  ..._block_json__WEBPACK_IMPORTED_MODULE_4__,
+  attributes: {
+    title: {
+      type: "string",
+      default: "Expert Home Remodeling"
+    },
+    description: {
+      type: "string",
+      default: "From concept to completion, our skilled craftsmen bring your vision to life with quality materials and attention to every detail."
+    },
+    imageUrl: {
+      type: "string",
+      default: DEFAULT_IMAGE
+    },
+    imageAlt: {
+      type: "string",
+      default: "Home remodeling project"
+    },
+    ctaText: {
+      type: "string",
+      default: "Start Your Project"
+    },
+    ctaUrl: {
+      type: "string",
+      default: "#"
+    },
+    features: {
+      type: "array",
+      default: DEFAULT_FEATURES
+    }
+  },
+  edit: ({
+    attributes,
+    setAttributes
+  }) => {
+    const {
+      title,
+      description,
+      imageUrl,
+      imageAlt,
+      ctaText,
+      ctaUrl,
+      features = []
+    } = attributes;
+    const onSelectImage = media => {
+      setAttributes({
+        imageUrl: media?.url || imageUrl,
+        imageAlt: media?.alt || media?.title || imageAlt
+      });
+    };
+    const updateFeature = (index, key, value) => {
+      const next = [...features];
+      next[index] = {
+        ...next[index],
+        [key]: value
+      };
+      setAttributes({
+        features: next
+      });
+    };
+    const addFeature = () => {
+      setAttributes({
+        features: [...features, {
+          title: "New Service",
+          description: "Service description"
+        }]
+      });
+    };
+    const removeFeature = index => {
+      if (features.length <= 1) {
+        return;
+      }
+      setAttributes({
+        features: features.filter((_, i) => i !== index)
+      });
+    };
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+          title: "Image Settings",
+          initialOpen: true,
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUpload, {
+            onSelect: onSelectImage,
+            allowedTypes: ["image"],
+            value: imageUrl,
+            render: ({
+              open
+            }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+              onClick: open,
+              isSecondary: true,
+              children: "Select Image"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: "Image Alt",
+            value: imageAlt,
+            onChange: value => setAttributes({
+              imageAlt: value
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+          title: "CTA Settings",
+          initialOpen: false,
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: "Button Text",
+            value: ctaText,
+            onChange: value => setAttributes({
+              ctaText: value
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.URLInput, {
+            label: "Button Link",
+            value: ctaUrl,
+            onChange: value => setAttributes({
+              ctaUrl: value
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+          title: `Service Cards (${features.length})`,
+          initialOpen: false,
+          children: [features.map((feature, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            style: {
+              marginBottom: "10px",
+              borderBottom: "1px solid #e5e9f1",
+              paddingBottom: "10px"
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: `Card ${index + 1} Title`,
+              value: feature.title || "",
+              onChange: value => updateFeature(index, "title", value)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Description",
+              value: feature.description || "",
+              onChange: value => updateFeature(index, "description", value)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+              isSmall: true,
+              isDestructive: true,
+              onClick: () => removeFeature(index),
+              disabled: features.length <= 1,
+              children: "Remove card"
+            })]
+          }, index)), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+            isPrimary: true,
+            isSmall: true,
+            onClick: addFeature,
+            children: "+ Add card"
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("section", {
+        className: "remodeling-showcase-block",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "remodeling-showcase-inner",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "remodeling-showcase-media",
+            style: {
+              backgroundImage: `url(${imageUrl})`
+            },
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
+              src: imageUrl,
+              alt: imageAlt || "Showcase image"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "remodeling-showcase-content",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+              tagName: "h2",
+              className: "remodeling-showcase-title",
+              value: title,
+              onChange: value => setAttributes({
+                title: value
+              }),
+              placeholder: "Block title"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+              tagName: "p",
+              className: "remodeling-showcase-description",
+              value: description,
+              onChange: value => setAttributes({
+                description: value
+              }),
+              placeholder: "Block description"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "remodeling-showcase-list",
+              children: features.map((feature, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("article", {
+                className: "remodeling-feature-card",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                  className: "remodeling-feature-check",
+                  "aria-hidden": "true",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                    className: "fa-solid fa-check"
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                  className: "remodeling-feature-copy",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+                    tagName: "h3",
+                    className: "remodeling-feature-title",
+                    value: feature.title,
+                    onChange: value => updateFeature(index, "title", value),
+                    placeholder: "Service title"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+                    tagName: "p",
+                    className: "remodeling-feature-description",
+                    value: feature.description,
+                    onChange: value => updateFeature(index, "description", value),
+                    placeholder: "Service description"
+                  })]
+                })]
+              }, index))
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "remodeling-showcase-actions",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+            tagName: "button",
+            className: "btn-primary remodeling-showcase-btn",
+            value: ctaText,
+            onChange: value => setAttributes({
+              ctaText: value
+            }),
+            placeholder: "Button text"
+          })
+        })]
+      })]
+    });
+  },
+  save: ({
+    attributes
+  }) => {
+    const {
+      title,
+      description,
+      imageUrl,
+      imageAlt,
+      ctaText,
+      ctaUrl,
+      features = []
+    } = attributes;
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("section", {
+      className: "remodeling-showcase-block fade-in-on-scroll",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "remodeling-showcase-inner",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "remodeling-showcase-media",
+          style: {
+            backgroundImage: `url(${imageUrl})`
+          },
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
+            src: imageUrl,
+            alt: imageAlt || "Showcase image"
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "remodeling-showcase-content",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h2", {
+            className: "remodeling-showcase-title",
+            children: title
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+            className: "remodeling-showcase-description",
+            children: description
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "remodeling-showcase-list",
+            children: features.map((feature, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("article", {
+              className: "remodeling-feature-card",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                className: "remodeling-feature-check",
+                "aria-hidden": "true",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                  className: "fa-solid fa-check"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                className: "remodeling-feature-copy",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {
+                  className: "remodeling-feature-title",
+                  children: feature.title
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                  className: "remodeling-feature-description",
+                  children: feature.description
+                })]
+              })]
+            }, index))
+          })]
+        })]
+      }), ctaText ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        className: "remodeling-showcase-actions",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("a", {
+          className: "btn-primary remodeling-showcase-btn",
+          href: ctaUrl,
+          children: [ctaText, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+            className: "material-symbols-outlined notranslate",
+            "aria-hidden": "true",
+            children: "chevron_right"
+          })]
+        })
+      }) : null]
+    });
+  }
+});
+
+/***/ },
+
+/***/ "./src/blocks/block-48/index.js"
+/*!**************************************!*\
+  !*** ./src/blocks/block-48/index.js ***!
+  \**************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _global_styles_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../global-styles.scss */ "./src/global-styles.scss");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./block.json */ "./src/blocks/block-48/block.json");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__);
+
+
+
+
+
+
+const DEFAULT_IMAGE = typeof logiweb_blocks !== "undefined" && logiweb_blocks.placeholder_image ? logiweb_blocks.placeholder_image : "https://via.placeholder.com/600x400?text=Service+Image";
+const DEFAULT_CARDS = [{
+  iconClass: "fa-solid fa-paint-roller",
+  title: "Interior & Exterior Painting",
+  description: "Transform your home with premium painting services that deliver lasting beauty and protection.",
+  itemsText: "Free color consultation\nPremium paint brands\n5-year warranty\nClean, professional crews",
+  linkText: "Learn More",
+  linkUrl: "#",
+  imageUrl: DEFAULT_IMAGE,
+  imageAlt: "Interior and exterior painting"
+}, {
+  iconClass: "fa-solid fa-droplet",
+  title: "Exterior Cleaning & Surface Prep",
+  description: "Restore your home's exterior beauty with professional pressure washing and surface preparation.",
+  itemsText: "Pressure & soft washing\nMold & mildew removal\nSurface sanding & prep\nDeck restoration",
+  linkText: "Learn More",
+  linkUrl: "#",
+  imageUrl: DEFAULT_IMAGE,
+  imageAlt: "Exterior cleaning and prep"
+}, {
+  iconClass: "fa-solid fa-house",
+  title: "Home Remodeling & Improvements",
+  description: "Kitchen, bath, and full home renovations that exceed expectations and add lasting value.",
+  itemsText: "Kitchen & bath renovations\nFlooring installation\nCustom carpentry\nProject management",
+  linkText: "Learn More",
+  linkUrl: "#",
+  imageUrl: DEFAULT_IMAGE,
+  imageAlt: "Home remodeling and improvements"
+}, {
+  iconClass: "fa-solid fa-bolt",
+  title: "Roofing & Electrical Solutions",
+  description: "Professional roofing repairs and electrical solutions to protect and power your home safely.",
+  itemsText: "Roof repair & replacement\nLicensed electricians\nEmergency services\nInspections",
+  linkText: "Learn More",
+  linkUrl: "#",
+  imageUrl: DEFAULT_IMAGE,
+  imageAlt: "Roofing and electrical solutions"
+}];
+const toItems = (itemsText = "") => String(itemsText).split(/\r?\n/).map(item => item.trim()).filter(Boolean);
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)("logiweb/custom-block-48", {
+  ..._block_json__WEBPACK_IMPORTED_MODULE_4__,
+  attributes: {
+    cards: {
+      type: "array",
+      default: DEFAULT_CARDS
+    }
+  },
+  edit: ({
+    attributes,
+    setAttributes
+  }) => {
+    const {
+      cards = []
+    } = attributes;
+    const updateCard = (index, key, value) => {
+      const next = [...cards];
+      next[index] = {
+        ...next[index],
+        [key]: value
+      };
+      setAttributes({
+        cards: next
+      });
+    };
+    const addCard = () => {
+      setAttributes({
+        cards: [...cards, {
+          iconClass: "fa-solid fa-star",
+          title: "New Service",
+          description: "Service description",
+          itemsText: "Benefit 1\nBenefit 2\nBenefit 3",
+          linkText: "Learn More",
+          linkUrl: "#",
+          imageUrl: DEFAULT_IMAGE,
+          imageAlt: "Service image"
+        }]
+      });
+    };
+    const removeCard = index => {
+      if (cards.length <= 1) {
+        return;
+      }
+      setAttributes({
+        cards: cards.filter((_, i) => i !== index)
+      });
+    };
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("section", {
+      className: "services-overlay-grid-block",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+          title: `Service Cards (${cards.length})`,
+          initialOpen: true,
+          children: [cards.map((card, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            style: {
+              marginBottom: "16px",
+              borderBottom: "1px solid #e4e9f3",
+              paddingBottom: "14px"
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
+              style: {
+                margin: "0 0 8px",
+                fontWeight: 600
+              },
+              children: ["Card ", index + 1]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUpload, {
+              onSelect: media => updateCard(index, "imageUrl", media.url),
+              allowedTypes: ["image"],
+              value: card.imageUrl,
+              render: ({
+                open
+              }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+                isSecondary: true,
+                onClick: open,
+                children: card.imageUrl ? "Change Image" : "Select Image"
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Image Alt",
+              value: card.imageAlt || "",
+              onChange: value => updateCard(index, "imageAlt", value)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Icon Class (Font Awesome)",
+              value: card.iconClass || "",
+              onChange: value => updateCard(index, "iconClass", value)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Title",
+              value: card.title || "",
+              onChange: value => updateCard(index, "title", value)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextareaControl, {
+              label: "Description",
+              value: card.description || "",
+              onChange: value => updateCard(index, "description", value)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextareaControl, {
+              label: "Bullet List (one per line)",
+              value: card.itemsText || "",
+              onChange: value => updateCard(index, "itemsText", value)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Link Text",
+              value: card.linkText || "",
+              onChange: value => updateCard(index, "linkText", value)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Link URL",
+              value: card.linkUrl || "",
+              onChange: value => updateCard(index, "linkUrl", value)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+              isSmall: true,
+              isDestructive: true,
+              onClick: () => removeCard(index),
+              disabled: cards.length <= 1,
+              children: "Remove card"
+            })]
+          }, index)), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+            isPrimary: true,
+            isSmall: true,
+            onClick: addCard,
+            children: "+ Add card"
+          })]
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        className: "services-overlay-grid-inner",
+        children: cards.map((card, index) => {
+          const items = toItems(card.itemsText);
+          const imgUrl = card.imageUrl || DEFAULT_IMAGE;
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("article", {
+            className: "services-overlay-card",
+            style: {
+              backgroundImage: `url(${imgUrl})`
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
+              className: "services-overlay-card-image",
+              src: imgUrl,
+              alt: card.imageAlt || card.title || "Service"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "services-overlay-card-layer"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              className: "services-overlay-card-content",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                className: "services-overlay-card-icon",
+                "aria-hidden": "true",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                  className: card.iconClass || "fa-solid fa-star"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+                tagName: "h3",
+                className: "services-overlay-card-title",
+                value: card.title,
+                onChange: value => updateCard(index, "title", value),
+                placeholder: "Service title"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+                tagName: "p",
+                className: "services-overlay-card-description",
+                value: card.description,
+                onChange: value => updateCard(index, "description", value),
+                placeholder: "Service description"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("ul", {
+                className: "services-overlay-card-list",
+                children: items.map((item, idx) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("li", {
+                  children: item
+                }, idx))
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("a", {
+                className: "services-overlay-card-link",
+                href: card.linkUrl || "#",
+                children: [card.linkText || "Learn More", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                  className: "fa-solid fa-arrow-right",
+                  "aria-hidden": "true"
+                })]
+              })]
+            })]
+          }, index);
+        })
+      })]
+    });
+  },
+  save: ({
+    attributes
+  }) => {
+    const {
+      cards = []
+    } = attributes;
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("section", {
+      className: "services-overlay-grid-block fade-in-on-scroll",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        className: "services-overlay-grid-inner",
+        children: cards.map((card, index) => {
+          const items = toItems(card.itemsText);
+          const imgUrl = card.imageUrl || DEFAULT_IMAGE;
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("article", {
+            className: "services-overlay-card",
+            style: {
+              backgroundImage: `url(${imgUrl})`
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
+              className: "services-overlay-card-image",
+              src: imgUrl,
+              alt: card.imageAlt || card.title || "Service"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "services-overlay-card-layer"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              className: "services-overlay-card-content",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                className: "services-overlay-card-icon",
+                "aria-hidden": "true",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                  className: card.iconClass || "fa-solid fa-star"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {
+                className: "services-overlay-card-title",
+                children: card.title
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                className: "services-overlay-card-description",
+                children: card.description
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("ul", {
+                className: "services-overlay-card-list",
+                children: items.map((item, idx) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("li", {
+                  children: item
+                }, idx))
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("a", {
+                className: "services-overlay-card-link",
+                href: card.linkUrl || "#",
+                children: [card.linkText || "Learn More", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                  className: "fa-solid fa-arrow-right",
+                  "aria-hidden": "true"
+                })]
+              })]
+            })]
+          }, index);
+        })
+      })
+    });
+  }
+});
+
+/***/ },
+
+/***/ "./src/blocks/block-49/index.js"
+/*!**************************************!*\
+  !*** ./src/blocks/block-49/index.js ***!
+  \**************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _global_styles_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../global-styles.scss */ "./src/global-styles.scss");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./block.json */ "./src/blocks/block-49/block.json");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__);
+
+
+
+
+
+
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)("logiweb/custom-block-49", {
+  ..._block_json__WEBPACK_IMPORTED_MODULE_4__,
+  attributes: {
+    title: {
+      type: "string",
+      default: "Not Sure What You Need?"
+    },
+    description: {
+      type: "string",
+      default: "Our experts can help you determine the right services for your home. Schedule a free consultation today."
+    },
+    buttonText: {
+      type: "string",
+      default: "Get a Free Consultation"
+    },
+    buttonUrl: {
+      type: "string",
+      default: "#"
+    }
+  },
+  edit: ({
+    attributes,
+    setAttributes
+  }) => {
+    const {
+      title,
+      description,
+      buttonText,
+      buttonUrl
+    } = attributes;
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("section", {
+      className: "centered-cta-strip-block",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+          title: "Button Settings",
+          initialOpen: true,
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: "Button Text",
+            value: buttonText,
+            onChange: value => setAttributes({
+              buttonText: value
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: "Button URL",
+            value: buttonUrl,
+            onChange: value => setAttributes({
+              buttonUrl: value
+            })
+          })]
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "centered-cta-strip-inner",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+          tagName: "h2",
+          className: "centered-cta-strip-title",
+          value: title,
+          onChange: value => setAttributes({
+            title: value
+          }),
+          placeholder: "Title"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+          tagName: "p",
+          className: "centered-cta-strip-description",
+          value: description,
+          onChange: value => setAttributes({
+            description: value
+          }),
+          placeholder: "Description"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "centered-cta-strip-actions",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+            tagName: "button",
+            className: "btn-primary centered-cta-strip-btn",
+            value: buttonText,
+            onChange: value => setAttributes({
+              buttonText: value
+            }),
+            placeholder: "Button text"
+          })
+        })]
+      })]
+    });
+  },
+  save: ({
+    attributes
+  }) => {
+    const {
+      title,
+      description,
+      buttonText,
+      buttonUrl
+    } = attributes;
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("section", {
+      className: "centered-cta-strip-block fade-in-on-scroll",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "centered-cta-strip-inner",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h2", {
+          className: "centered-cta-strip-title",
+          children: title
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+          className: "centered-cta-strip-description",
+          children: description
+        }), buttonText ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "centered-cta-strip-actions",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("a", {
+            className: "btn-primary centered-cta-strip-btn",
+            href: buttonUrl,
+            children: [buttonText, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+              className: "material-symbols-outlined notranslate",
+              "aria-hidden": "true",
+              children: "chevron_right"
+            })]
+          })
+        }) : null]
+      })
+    });
   }
 });
 
@@ -12497,6 +14016,626 @@ __webpack_require__.r(__webpack_exports__);
           })]
         })
       })]
+    });
+  }
+});
+
+/***/ },
+
+/***/ "./src/blocks/block-50/index.js"
+/*!**************************************!*\
+  !*** ./src/blocks/block-50/index.js ***!
+  \**************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _global_styles_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../global-styles.scss */ "./src/global-styles.scss");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./block.json */ "./src/blocks/block-50/block.json");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__);
+
+
+
+
+
+
+
+const DEFAULT_IMAGE = typeof logiweb_blocks !== "undefined" && logiweb_blocks.placeholder_image ? logiweb_blocks.placeholder_image : "https://via.placeholder.com/500x400?text=Project+Image";
+const DEFAULT_PROJECTS = [{
+  imageUrl: DEFAULT_IMAGE,
+  category: "Remodeling",
+  categoryColor: "#10b981",
+  title: "Modern Kitchen Refresh",
+  location: "Cincinnati, OH",
+  year: "2025",
+  linkUrl: "#"
+}, {
+  imageUrl: DEFAULT_IMAGE,
+  category: "Exterior Painting",
+  categoryColor: "#3b82f6",
+  title: "Colonial Exterior Transformation",
+  location: "Louisville, KY",
+  year: "2025",
+  linkUrl: "#"
+}, {
+  imageUrl: DEFAULT_IMAGE,
+  category: "Remodeling",
+  categoryColor: "#10b981",
+  title: "Luxury Bathroom Remodel",
+  location: "Indianapolis, IN",
+  year: "2024",
+  linkUrl: "#"
+}, {
+  imageUrl: DEFAULT_IMAGE,
+  category: "Roofing",
+  categoryColor: "#f59e0b",
+  title: "Full Roof Replacement",
+  location: "Cincinnati, OH",
+  year: "2024",
+  linkUrl: "#"
+}, {
+  imageUrl: DEFAULT_IMAGE,
+  category: "Cleaning",
+  categoryColor: "#8b5cf6",
+  title: "Deck Restoration",
+  location: "Louisville, KY",
+  year: "2025",
+  linkUrl: "#"
+}, {
+  imageUrl: DEFAULT_IMAGE,
+  category: "Interior Painting",
+  categoryColor: "#ec4899",
+  title: "Whole Home Makeover",
+  location: "Indianapolis, IN",
+  year: "2025",
+  linkUrl: "#"
+}];
+const FILTER_OPTIONS = ["All Projects", "Interior Painting", "Exterior Painting", "Remodeling", "Roofing", "Cleaning"];
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)("logiweb/custom-block-50", {
+  ..._block_json__WEBPACK_IMPORTED_MODULE_5__,
+  attributes: {
+    projects: {
+      type: "array",
+      default: DEFAULT_PROJECTS
+    }
+  },
+  edit: ({
+    attributes,
+    setAttributes
+  }) => {
+    const {
+      projects = []
+    } = attributes;
+    const [activeFilter, setActiveFilter] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)("All Projects");
+    const updateProject = (index, key, value) => {
+      const next = [...projects];
+      next[index] = {
+        ...next[index],
+        [key]: value
+      };
+      setAttributes({
+        projects: next
+      });
+    };
+    const filteredProjects = activeFilter === "All Projects" ? projects : projects.filter(p => p.category === activeFilter);
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("section", {
+      className: "portfolio-grid-block fade-in-on-scroll",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+          title: `Portfolio Projects (${projects.length})`,
+          initialOpen: true,
+          children: projects.map((project, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+            style: {
+              marginBottom: "16px",
+              borderBottom: "1px solid #e4e9f3",
+              paddingBottom: "14px"
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("p", {
+              style: {
+                margin: "0 0 8px",
+                fontWeight: 600
+              },
+              children: ["Project ", index + 1]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUpload, {
+              onSelect: media => updateProject(index, "imageUrl", media.url),
+              allowedTypes: ["image"],
+              value: project.imageUrl,
+              render: ({
+                open
+              }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+                isSecondary: true,
+                onClick: open,
+                children: project.imageUrl ? "Change Image" : "Select Image"
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Category",
+              value: project.category || "",
+              onChange: value => updateProject(index, "category", value),
+              placeholder: "e.g., Remodeling"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+              style: {
+                marginTop: "8px"
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
+                style: {
+                  display: "block",
+                  marginBottom: "8px"
+                },
+                children: "Category Color"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ColorPalette, {
+                colors: [{
+                  name: "Green",
+                  color: "#10b981"
+                }, {
+                  name: "Blue",
+                  color: "#3b82f6"
+                }, {
+                  name: "Amber",
+                  color: "#f59e0b"
+                }, {
+                  name: "Purple",
+                  color: "#8b5cf6"
+                }, {
+                  name: "Pink",
+                  color: "#ec4899"
+                }],
+                value: project.categoryColor,
+                onChange: value => updateProject(index, "categoryColor", value)
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Title",
+              value: project.title || "",
+              onChange: value => updateProject(index, "title", value),
+              placeholder: "Project title"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Location",
+              value: project.location || "",
+              onChange: value => updateProject(index, "location", value),
+              placeholder: "e.g., Cincinnati, OH"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Year",
+              value: project.year || "",
+              onChange: value => updateProject(index, "year", value),
+              placeholder: "e.g., 2025"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Project Link",
+              value: project.linkUrl || "",
+              onChange: value => updateProject(index, "linkUrl", value),
+              placeholder: "https://example.com/project"
+            })]
+          }, index))
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        className: "portfolio-grid-toolbar",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+          className: "portfolio-grid-filters",
+          children: FILTER_OPTIONS.map(filter => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+            className: `portfolio-filter-btn ${activeFilter === filter ? "active" : ""}`,
+            onClick: () => setActiveFilter(filter),
+            children: filter
+          }, filter))
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+          className: "portfolio-grid-search",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
+            type: "search",
+            placeholder: "Search projects...",
+            readOnly: true
+          })
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+        className: "portfolio-grid-inner",
+        children: filteredProjects.map((project, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("article", {
+          className: "portfolio-card",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+            className: "portfolio-card-media",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUpload, {
+              onSelect: media => updateProject(index, "imageUrl", media.url),
+              allowedTypes: ["image"],
+              value: project.imageUrl,
+              render: ({
+                open
+              }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+                isSecondary: true,
+                isSmall: true,
+                className: "portfolio-card-image-button",
+                onClick: open,
+                children: project.imageUrl ? "Change image" : "Add image"
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
+              className: "portfolio-card-image",
+              src: project.imageUrl || DEFAULT_IMAGE,
+              alt: project.title || "Project"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+              tagName: "span",
+              className: "portfolio-card-badge",
+              style: {
+                backgroundColor: project.categoryColor || "#3b82f6"
+              },
+              value: project.category,
+              onChange: value => updateProject(index, "category", value),
+              placeholder: "Category"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+            className: "portfolio-card-content",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+              tagName: "h3",
+              className: "portfolio-card-title",
+              value: project.title,
+              onChange: value => updateProject(index, "title", value),
+              placeholder: "Project title"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+              className: "portfolio-card-footer",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+                tagName: "span",
+                className: "portfolio-card-location",
+                value: project.location,
+                onChange: value => updateProject(index, "location", value),
+                placeholder: "Location"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+                tagName: "span",
+                className: "portfolio-card-year",
+                value: project.year,
+                onChange: value => updateProject(index, "year", value),
+                placeholder: "Year"
+              })]
+            }), project.linkUrl ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
+              className: "portfolio-card-link-indicator",
+              children: "Card link set"
+            }) : null]
+          })]
+        }, index))
+      })]
+    });
+  },
+  save: ({
+    attributes
+  }) => {
+    const {
+      projects = []
+    } = attributes;
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("section", {
+      className: "portfolio-grid-block fade-in-on-scroll",
+      "data-projects": JSON.stringify(projects),
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        className: "portfolio-grid-toolbar",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+          className: "portfolio-grid-filters",
+          children: FILTER_OPTIONS.map(filter => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+            className: `portfolio-filter-btn ${filter === "All Projects" ? "active" : ""}`,
+            "data-filter": filter,
+            children: filter
+          }, filter))
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
+          className: "portfolio-grid-search",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
+            type: "search",
+            placeholder: "Search projects...",
+            "data-portfolio-search": true
+          })
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+        className: "portfolio-grid-inner",
+        children: projects.map((project, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("a", {
+          className: "portfolio-card-link",
+          href: project.linkUrl || "#",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("article", {
+            className: "portfolio-card",
+            "data-category": project.category,
+            "data-title": project.title,
+            "data-location": project.location,
+            "data-year": project.year,
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+              className: "portfolio-card-media",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
+                className: "portfolio-card-image",
+                src: project.imageUrl || DEFAULT_IMAGE,
+                alt: project.title || "Project"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
+                className: "portfolio-card-badge",
+                style: {
+                  backgroundColor: project.categoryColor || "#3b82f6"
+                },
+                children: project.category
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+              className: "portfolio-card-content",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h3", {
+                className: "portfolio-card-title",
+                children: project.title
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                className: "portfolio-card-footer",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
+                  className: "portfolio-card-location",
+                  children: project.location
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
+                  className: "portfolio-card-year",
+                  children: project.year
+                })]
+              })]
+            })]
+          })
+        }, index))
+      })]
+    });
+  }
+});
+
+/***/ },
+
+/***/ "./src/blocks/block-51/index.js"
+/*!**************************************!*\
+  !*** ./src/blocks/block-51/index.js ***!
+  \**************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _global_styles_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../global-styles.scss */ "./src/global-styles.scss");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./block.json */ "./src/blocks/block-51/block.json");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__);
+
+
+
+
+
+
+const DEFAULT_IMAGE = typeof logiweb_blocks !== "undefined" && logiweb_blocks.placeholder_image ? logiweb_blocks.placeholder_image : "https://via.placeholder.com/500x400?text=Project+Image";
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)("logiweb/custom-block-51", {
+  ..._block_json__WEBPACK_IMPORTED_MODULE_4__,
+  attributes: {
+    cards: {
+      type: "array",
+      default: []
+    }
+  },
+  edit: ({
+    attributes,
+    setAttributes
+  }) => {
+    const {
+      cards = []
+    } = attributes;
+    const updateCard = (index, key, value) => {
+      const next = [...cards];
+      next[index] = {
+        ...next[index],
+        [key]: value
+      };
+      setAttributes({
+        cards: next
+      });
+    };
+    const addCard = () => {
+      setAttributes({
+        cards: [...cards, {
+          imageUrl: DEFAULT_IMAGE,
+          category: "Project Category",
+          categoryColor: "#3b82f6",
+          title: "Project Title",
+          location: "Location, State",
+          year: "2025"
+        }]
+      });
+    };
+    const removeCard = index => {
+      setAttributes({
+        cards: cards.filter((_, i) => i !== index)
+      });
+    };
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("section", {
+      className: "portfolio-cards-block fade-in-on-scroll",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+          title: `Portfolio Cards (${cards.length})`,
+          initialOpen: true,
+          children: [cards.map((card, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            style: {
+              marginBottom: "16px",
+              borderBottom: "1px solid #e4e9f3",
+              paddingBottom: "14px"
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
+              style: {
+                margin: "0 0 8px",
+                fontWeight: 600
+              },
+              children: ["Card ", index + 1]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUpload, {
+              onSelect: media => updateCard(index, "imageUrl", media.url),
+              allowedTypes: ["image"],
+              value: card.imageUrl,
+              render: ({
+                open
+              }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+                isSecondary: true,
+                onClick: open,
+                children: card.imageUrl ? "Change Image" : "Select Image"
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Category",
+              value: card.category || "",
+              onChange: value => updateCard(index, "category", value),
+              placeholder: "e.g., Remodeling"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              style: {
+                marginTop: "8px"
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
+                style: {
+                  display: "block",
+                  marginBottom: "8px"
+                },
+                children: "Category Color"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ColorPalette, {
+                colors: [{
+                  name: "Green",
+                  color: "#10b981"
+                }, {
+                  name: "Blue",
+                  color: "#3b82f6"
+                }, {
+                  name: "Amber",
+                  color: "#f59e0b"
+                }, {
+                  name: "Purple",
+                  color: "#8b5cf6"
+                }, {
+                  name: "Pink",
+                  color: "#ec4899"
+                }],
+                value: card.categoryColor,
+                onChange: value => updateCard(index, "categoryColor", value)
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Title",
+              value: card.title || "",
+              onChange: value => updateCard(index, "title", value),
+              placeholder: "Project title"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Location",
+              value: card.location || "",
+              onChange: value => updateCard(index, "location", value),
+              placeholder: "e.g., Cincinnati, OH"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Year",
+              value: card.year || "",
+              onChange: value => updateCard(index, "year", value),
+              placeholder: "e.g., 2025"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+              isSmall: true,
+              isDestructive: true,
+              onClick: () => removeCard(index),
+              children: "Remove card"
+            })]
+          }, index)), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+            isPrimary: true,
+            isSmall: true,
+            onClick: addCard,
+            children: "+ Add card"
+          })]
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        className: "portfolio-cards-inner",
+        children: cards.map((card, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("article", {
+          className: "portfolio-card",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "portfolio-card-media",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUpload, {
+              onSelect: media => updateCard(index, "imageUrl", media.url),
+              allowedTypes: ["image"],
+              value: card.imageUrl,
+              render: ({
+                open
+              }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+                isSecondary: true,
+                isSmall: true,
+                className: "portfolio-card-image-button",
+                onClick: open,
+                children: card.imageUrl ? "Change image" : "Add image"
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
+              className: "portfolio-card-image",
+              src: card.imageUrl || DEFAULT_IMAGE,
+              alt: card.title || "Project"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+              tagName: "span",
+              className: "portfolio-card-badge",
+              style: {
+                backgroundColor: card.categoryColor || "#3b82f6"
+              },
+              value: card.category,
+              onChange: value => updateCard(index, "category", value),
+              placeholder: "Category"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "portfolio-card-content",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+              tagName: "h3",
+              className: "portfolio-card-title",
+              value: card.title,
+              onChange: value => updateCard(index, "title", value),
+              placeholder: "Project title"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              className: "portfolio-card-footer",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+                tagName: "span",
+                className: "portfolio-card-location",
+                value: card.location,
+                onChange: value => updateCard(index, "location", value),
+                placeholder: "Location"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+                tagName: "span",
+                className: "portfolio-card-year",
+                value: card.year,
+                onChange: value => updateCard(index, "year", value),
+                placeholder: "Year"
+              })]
+            })]
+          })]
+        }, index))
+      })]
+    });
+  },
+  save: ({
+    attributes
+  }) => {
+    const {
+      cards = []
+    } = attributes;
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("section", {
+      className: "portfolio-cards-block fade-in-on-scroll",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        className: "portfolio-cards-inner",
+        children: cards.map((card, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("article", {
+          className: "portfolio-card",
+          "data-title": card.title,
+          "data-location": card.location,
+          "data-year": card.year,
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "portfolio-card-media",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
+              className: "portfolio-card-image",
+              src: card.imageUrl || DEFAULT_IMAGE,
+              alt: card.title || "Project"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+              className: "portfolio-card-badge",
+              style: {
+                backgroundColor: card.categoryColor || "#3b82f6"
+              },
+              children: card.category
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "portfolio-card-content",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {
+              className: "portfolio-card-title",
+              children: card.title
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              className: "portfolio-card-footer",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                className: "portfolio-card-location",
+                children: card.location
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                className: "portfolio-card-year",
+                children: card.year
+              })]
+            })]
+          })]
+        }, index))
+      })
     });
   }
 });
@@ -13786,7 +15925,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/tru
   \****************************************/
 (module) {
 
-module.exports = /*#__PURE__*/JSON.parse('{"apiVersion":2,"name":"logiweb/custom-block-43","title":"FAQ Section","category":"common","icon":"editor-help","description":"Frequently Asked Questions grid section.","supports":{"html":false},"attributes":{"sectionTitle":{"type":"string","default":"Frequently Asked Questions"},"sectionSubtitle":{"type":"string","default":"Have questions about our financing process?"},"faqs":{"type":"array","default":[{"question":"Will this affect my credit score?","answer":"No. Our pre-qualification process uses a soft credit pull that will not impact your credit score."},{"question":"How long does approval take?","answer":"Most applicants receive a decision within minutes. Some cases may take up to 24 hours."},{"question":"What if I have bad credit?","answer":"We work with multiple lenders and offer options for various credit profiles, including in-house financing."},{"question":"Can I pay off early?","answer":"Yes! Most of our financing partners allow early payoff without prepayment penalties."}]}},"editorScript":"file:../../index.js","style":"file:../../global-styles.css"}');
+module.exports = /*#__PURE__*/JSON.parse('{"apiVersion":2,"name":"logiweb/custom-block-43","title":"FAQ Section","category":"widgets","icon":"editor-help","description":"Frequently Asked Questions grid section.","supports":{"html":false},"attributes":{"sectionTitle":{"type":"string","default":"Frequently Asked Questions"},"sectionSubtitle":{"type":"string","default":"Have questions about our financing process?"},"faqs":{"type":"array","default":[{"question":"Will this affect my credit score?","answer":"No. Our pre-qualification process uses a soft credit pull that will not impact your credit score."},{"question":"How long does approval take?","answer":"Most applicants receive a decision within minutes. Some cases may take up to 24 hours."},{"question":"What if I have bad credit?","answer":"We work with multiple lenders and offer options for various credit profiles, including in-house financing."},{"question":"Can I pay off early?","answer":"Yes! Most of our financing partners allow early payoff without prepayment penalties."}]}},"editorScript":"file:../../index.js","style":"file:../../global-styles.css"}');
 
 /***/ },
 
@@ -13796,7 +15935,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"apiVersion":2,"name":"logiweb/custom
   \****************************************/
 (module) {
 
-module.exports = /*#__PURE__*/JSON.parse('{"apiVersion":2,"name":"logiweb/custom-block-44","title":"Financing Application Form","category":"common","icon":"form","description":"Form for collecting financing application data.","supports":{"html":false},"attributes":{"formTitle":{"type":"string","default":"Tell Us About Your Project"},"formDescription":{"type":"string","default":"Fill out your information below and we\'ll match you with the best financing options."},"resultsPageUrl":{"type":"string","default":"/select-financing/"},"buttonText":{"type":"string","default":"View Financing Options →"}},"editorScript":"file:../../index.js","style":"file:../../global-styles.css"}');
+module.exports = /*#__PURE__*/JSON.parse('{"apiVersion":2,"name":"logiweb/custom-block-44","title":"Financing Application Form","category":"widgets","icon":"form","description":"Form for collecting financing application data.","supports":{"html":false},"attributes":{"formTitle":{"type":"string","default":"Tell Us About Your Project"},"formDescription":{"type":"string","default":"Fill out your information below and we\'ll match you with the best financing options."},"resultsPageUrl":{"type":"string","default":"/select-your-financing/"},"buttonText":{"type":"string","default":"View Financing Options →"}},"editorScript":"file:../../index.js","style":"file:../../global-styles.css"}');
 
 /***/ },
 
@@ -13806,7 +15945,47 @@ module.exports = /*#__PURE__*/JSON.parse('{"apiVersion":2,"name":"logiweb/custom
   \****************************************/
 (module) {
 
-module.exports = /*#__PURE__*/JSON.parse('{"apiVersion":2,"name":"logiweb/custom-block-45","title":"Financing Results Selector","category":"common","icon":"chart-bar","description":"Display financing options based on submitted application.","supports":{"html":false},"attributes":{"resultsTitle":{"type":"string","default":"Choose Your Financing Partner"},"resultsSubtitle":{"type":"string","default":"We\'ve matched you with financing options based on your project details."},"editBtnText":{"type":"string","default":"Edit Info"},"bottomCta":{"type":"string","default":"Not sure which option is right for you?"},"bottomPhone":{"type":"string","default":"(555) 555-0123"},"bottomMsg":{"type":"string","default":"Speak with a Specialist"}},"editorScript":"file:../../index.js","style":"file:../../global-styles.css"}');
+module.exports = /*#__PURE__*/JSON.parse('{"apiVersion":2,"name":"logiweb/custom-block-45","title":"Financing Results Selector","category":"widgets","icon":"chart-bar","description":"Display financing options based on submitted application.","supports":{"html":false},"attributes":{"resultsTitle":{"type":"string","default":"Choose Your Financing Partner"},"resultsSubtitle":{"type":"string","default":"We\'ve matched you with financing options based on your project details."},"editBtnText":{"type":"string","default":"Edit Info"},"formPageUrl":{"type":"string","default":"/apply-now/"},"bottomCta":{"type":"string","default":"Not sure which option is right for you?"},"bottomPhone":{"type":"string","default":"(555) 555-0123"},"bottomMsg":{"type":"string","default":"Speak with a Specialist"},"options":{"type":"array","default":[{"name":"Greensky","initials":"GS","logoColor":"#22c55e","rating":"4.8","minScore":"640+","apr":"0% - 12.99%","terms":"12 - 120 months","benefitsText":"Same-day approval\\n6% promotional rates\\nNo prepayment penalties","applyUrl":"#"},{"name":"Synchrony","initials":"SY","logoColor":"#2563eb","rating":"4.7","minScore":"600+","apr":"0% - 14.99%","terms":"6 - 84 months","benefitsText":"Promotional financing\\nFlexible terms\\nQuick approval","applyUrl":"#"},{"name":"Wells Fargo","initials":"WF","logoColor":"#dc2626","rating":"4.6","minScore":"660+","apr":"6.99% - 15.99%","terms":"24 - 144 months","benefitsText":"High loan limits\\nCompetitive rates\\nEstablished lender","applyUrl":"#"}]}},"editorScript":"file:../../index.js","style":"file:../../global-styles.css"}');
+
+/***/ },
+
+/***/ "./src/blocks/block-46/block.json"
+/*!****************************************!*\
+  !*** ./src/blocks/block-46/block.json ***!
+  \****************************************/
+(module) {
+
+module.exports = /*#__PURE__*/JSON.parse('{"apiVersion":2,"name":"logiweb/custom-block-46","title":"Portfolio Showcase","category":"widgets","icon":"format-gallery","description":"Project showcase cards with category filter and popup details.","supports":{"html":false},"attributes":{"projects":{"type":"array","default":[{"category":"Painting","title":"Victorian Exterior Revival","imageUrl":"","imageAlt":"Victorian Exterior Revival","description":"Complete exterior transformation of a historic Victorian home, including intricate trim work, shutters, and front porch restoration.","location":"Hyde Park, Cincinnati, OH","size":"4,200 sq ft","duration":"18 days","completed":"March 18, 2026","rating":"5.0","featuresText":"Custom color matching\\nHistoric preservation\\nTrim detail work","badge":"Featured Project","letter":"V","startDate":"March 1, 2026","teamSize":"5 painters","testimonial":"DNH brought our 100-year-old home back to life. The attention to detail was incredible.","testimonialAuthor":"Sarah Mitchell","primaryCtaText":"Start Your Project","primaryCtaUrl":"#","secondaryCtaText":"Explore Financing","secondaryCtaUrl":"#"},{"category":"Remodeling","title":"Modern Kitchen Transformation","imageUrl":"","imageAlt":"Modern Kitchen Transformation","description":"Full kitchen renovation including cabinet refinishing, new countertops, backsplash installation, and updated lighting.","location":"Lexington, KY","size":"380 sq ft","duration":"12 days","completed":"April 9, 2026","rating":"5.0","featuresText":"Cabinet refinishing\\nQuartz countertops\\nNew backsplash","badge":"Top Remodel","letter":"M","startDate":"March 28, 2026","teamSize":"4 specialists","testimonial":"The team kept everything on schedule and the final result exceeded expectations.","testimonialAuthor":"Daniel Carter","primaryCtaText":"Start Your Project","primaryCtaUrl":"#","secondaryCtaText":"Explore Financing","secondaryCtaUrl":"#"}]}},"editorScript":"file:../../index.js","style":"file:../../global-styles.css"}');
+
+/***/ },
+
+/***/ "./src/blocks/block-47/block.json"
+/*!****************************************!*\
+  !*** ./src/blocks/block-47/block.json ***!
+  \****************************************/
+(module) {
+
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"logiweb/custom-block-47","version":"0.1.0","title":"Remodeling Showcase","category":"widgets","icon":"cover-image","description":"Split layout with large image, service highlights and CTA.","supports":{"html":false},"textdomain":"custom-block-47","editorScript":"file:../../index.js","style":"file:../../global-styles.css"}');
+
+/***/ },
+
+/***/ "./src/blocks/block-48/block.json"
+/*!****************************************!*\
+  !*** ./src/blocks/block-48/block.json ***!
+  \****************************************/
+(module) {
+
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"logiweb/custom-block-48","version":"0.1.0","title":"Services Overlay Grid","category":"widgets","icon":"screenoptions","description":"2x2 service cards with photo backgrounds, overlay content and CTA links.","supports":{"html":false},"textdomain":"custom-block-48","editorScript":"file:../../index.js","style":"file:../../global-styles.css"}');
+
+/***/ },
+
+/***/ "./src/blocks/block-49/block.json"
+/*!****************************************!*\
+  !*** ./src/blocks/block-49/block.json ***!
+  \****************************************/
+(module) {
+
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"logiweb/custom-block-49","version":"0.1.0","title":"Centered CTA Strip","category":"widgets","icon":"megaphone","description":"Centered call-to-action section with title, description and button.","supports":{"html":false},"textdomain":"custom-block-49","editorScript":"file:../../index.js","style":"file:../../global-styles.css"}');
 
 /***/ },
 
@@ -13817,6 +15996,26 @@ module.exports = /*#__PURE__*/JSON.parse('{"apiVersion":2,"name":"logiweb/custom
 (module) {
 
 module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/custom-block-5","version":"0.1.0","title":"Custom Block 5","category":"widgets","icon":"smiley","description":"A custom block for displaying a section with a title and content.","example":{},"supports":{"html":false},"textdomain":"custom-block-5","editorScript":"file:./index.js","editorStyle":"file:../../global-styles.scss","style":"file:../../global-styles.scss","viewScript":"file:./view.js"}');
+
+/***/ },
+
+/***/ "./src/blocks/block-50/block.json"
+/*!****************************************!*\
+  !*** ./src/blocks/block-50/block.json ***!
+  \****************************************/
+(module) {
+
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"logiweb/custom-block-50","version":"0.1.0","title":"Portfolio Grid","category":"widgets","icon":"format-gallery","description":"Portfolio grid showcasing multiple projects with images, categories, and details.","supports":{"html":false},"textdomain":"custom-block-50","editorScript":"file:../../index.js","style":"file:../../global-styles.css"}');
+
+/***/ },
+
+/***/ "./src/blocks/block-51/block.json"
+/*!****************************************!*\
+  !*** ./src/blocks/block-51/block.json ***!
+  \****************************************/
+(module) {
+
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"logiweb/custom-block-51","version":"0.1.0","title":"Portfolio Cards","category":"widgets","icon":"format-image","description":"Individual portfolio project cards that can be added and managed per page.","supports":{"html":false},"textdomain":"custom-block-51","editorScript":"file:../../index.js","style":"file:../../global-styles.css"}');
 
 /***/ },
 
@@ -13984,6 +16183,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _blocks_block_43__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./blocks/block-43 */ "./src/blocks/block-43/index.js");
 /* harmony import */ var _blocks_block_44__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./blocks/block-44 */ "./src/blocks/block-44/index.js");
 /* harmony import */ var _blocks_block_45__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./blocks/block-45 */ "./src/blocks/block-45/index.js");
+/* harmony import */ var _blocks_block_46__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./blocks/block-46 */ "./src/blocks/block-46/index.js");
+/* harmony import */ var _blocks_block_47__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./blocks/block-47 */ "./src/blocks/block-47/index.js");
+/* harmony import */ var _blocks_block_48__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./blocks/block-48 */ "./src/blocks/block-48/index.js");
+/* harmony import */ var _blocks_block_49__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./blocks/block-49 */ "./src/blocks/block-49/index.js");
+/* harmony import */ var _blocks_block_50__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./blocks/block-50 */ "./src/blocks/block-50/index.js");
+/* harmony import */ var _blocks_block_51__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ./blocks/block-51 */ "./src/blocks/block-51/index.js");
+
+
+
+
+
+
 
 
 

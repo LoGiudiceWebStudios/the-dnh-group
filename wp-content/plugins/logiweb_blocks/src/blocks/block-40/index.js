@@ -48,6 +48,9 @@ registerBlockType("logiweb/custom-block-40", {
       points = [],
     } = attributes;
 
+    const hasPrimaryText = Boolean((primaryText || "").trim());
+    const hasSecondaryText = Boolean((secondaryText || "").trim());
+
     const updatePoint = (index, field, value) => {
       const next = [...points];
       next[index] = { ...next[index], [field]: value };
@@ -129,21 +132,27 @@ registerBlockType("logiweb/custom-block-40", {
               placeholder="CTA description"
             />
 
-            <div className="ready-start-actions">
-              <a
-                className="ready-start-btn is-primary"
-                href={primaryUrl || "#"}
-              >
-                <span>{primaryText}</span>
-                <i className="fa-solid fa-arrow-right"></i>
-              </a>
-              <a
-                className="ready-start-btn is-secondary"
-                href={secondaryUrl || "#"}
-              >
-                <span>{secondaryText}</span>
-              </a>
-            </div>
+            {(hasPrimaryText || hasSecondaryText) && (
+              <div className="ready-start-actions">
+                {hasPrimaryText && (
+                  <a
+                    className="ready-start-btn is-primary"
+                    href={primaryUrl || "#"}
+                  >
+                    <span>{primaryText}</span>
+                    <i className="fa-solid fa-arrow-right"></i>
+                  </a>
+                )}
+                {hasSecondaryText && (
+                  <a
+                    className="ready-start-btn is-secondary"
+                    href={secondaryUrl || "#"}
+                  >
+                    <span>{secondaryText}</span>
+                  </a>
+                )}
+              </div>
+            )}
 
             <div className="ready-start-points">
               {points.map((point, index) => (
@@ -176,6 +185,9 @@ registerBlockType("logiweb/custom-block-40", {
       points = [],
     } = attributes;
 
+    const hasPrimaryText = Boolean((primaryText || "").trim());
+    const hasSecondaryText = Boolean((secondaryText || "").trim());
+
     return (
       <section className="ready-start-block">
         <div className="ready-start-inner">
@@ -193,18 +205,27 @@ registerBlockType("logiweb/custom-block-40", {
             value={description}
           />
 
-          <div className="ready-start-actions">
-            <a className="ready-start-btn is-primary" href={primaryUrl || "#"}>
-              <span>{primaryText}</span>
-              <i className="fa-solid fa-arrow-right"></i>
-            </a>
-            <a
-              className="ready-start-btn is-secondary"
-              href={secondaryUrl || "#"}
-            >
-              <span>{secondaryText}</span>
-            </a>
-          </div>
+          {(hasPrimaryText || hasSecondaryText) && (
+            <div className="ready-start-actions">
+              {hasPrimaryText && (
+                <a
+                  className="ready-start-btn is-primary"
+                  href={primaryUrl || "#"}
+                >
+                  <span>{primaryText}</span>
+                  <i className="fa-solid fa-arrow-right"></i>
+                </a>
+              )}
+              {hasSecondaryText && (
+                <a
+                  className="ready-start-btn is-secondary"
+                  href={secondaryUrl || "#"}
+                >
+                  <span>{secondaryText}</span>
+                </a>
+              )}
+            </div>
+          )}
 
           <div className="ready-start-points">
             {points.map((point, index) => (

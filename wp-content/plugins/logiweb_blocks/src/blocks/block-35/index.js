@@ -115,7 +115,7 @@ registerBlockType("logiweb/custom-block-35", {
           </PanelBody>
         </InspectorControls>
 
-        <section className="financing-benefits-block">
+        <section className="financing-benefits-block fade-in-on-scroll">
           <div className="financing-benefits-inner">
             <p className="financing-benefits-badge">
               <i className={badgeIcon}></i>

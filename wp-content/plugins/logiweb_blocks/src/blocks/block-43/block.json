@@ -2,7 +2,7 @@
   "apiVersion": 2,
   "name": "logiweb/custom-block-43",
   "title": "FAQ Section",
-  "category": "common",
+  "category": "widgets",
   "icon": "editor-help",
   "description": "Frequently Asked Questions grid section.",
   "supports": { "html": false },

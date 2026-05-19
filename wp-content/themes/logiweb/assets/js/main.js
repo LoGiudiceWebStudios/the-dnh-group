@@ -1,29 +1,80 @@
-document.addEventListener('DOMContentLoaded', function () {
-  console.log('Javascript loaded successfully!');
+document.addEventListener("DOMContentLoaded", function () {
+  var desktopQuery = window.matchMedia("(min-width: 992px)");
 
-  // Per ogni link con dropdown-toggle
-  document.querySelectorAll('.navbar .dropdown-toggle').forEach(function (el) {
-    el.addEventListener('touchstart', function (e) {
-      var parent = el.parentElement;
-      if (!parent.classList.contains('show')) {
-        // Chiudi altri menu aperti
-        document.querySelectorAll('.navbar .dropdown.show').forEach(function (open) {
-          if (open !== parent) open.classList.remove('show');
-        });
-        parent.classList.add('show');
-        e.preventDefault(); // Previeni il click sul link al primo tap
+  function isDesktop() {
+    return desktopQuery.matches;
+  }
+
+  function hasNavigableUrl(link) {
+    if (!link) {
+      return false;
+    }
+    var href = (link.getAttribute("href") || "").trim();
+    return href !== "" && href !== "#" && !href.startsWith("javascript:");
+  }
+
+  // Desktop: click on parent opens the master page (if a real URL exists).
+  document.addEventListener(
+    "click",
+    function (event) {
+      var link = event.target.closest(".navbar .dropdown-toggle");
+      if (!link || !isDesktop()) {
+        return;
       }
-      // Al secondo tap il link funzionerà normalmente
-    });
-    // Chiudi il menu quando si clicca fuori
-    document.addEventListener('touchstart', function (event) {
-      if (!el.parentElement.contains(event.target)) {
-        el.parentElement.classList.remove('show');
+
+      if (hasNavigableUrl(link)) {
+        event.preventDefault();
+        event.stopPropagation();
+        window.location.href = link.getAttribute("href");
       }
+    },
+    true,
+  );
+
+  // Mobile/tablet touch: first tap opens submenu, second tap follows link.
+  document
+    .querySelectorAll(".navbar .dropdown-toggle")
+    .forEach(function (link) {
+      link.addEventListener("touchstart", function (event) {
+        if (isDesktop()) {
+          return;
+        }
+
+        var parent = link.parentElement;
+        if (!parent || !parent.classList.contains("dropdown")) {
+          return;
+        }
+
+        if (!parent.classList.contains("show")) {
+          document
+            .querySelectorAll(".navbar .dropdown.show")
+            .forEach(function (open) {
+              if (open !== parent) {
+                open.classList.remove("show");
+              }
+            });
+
+          parent.classList.add("show");
+          event.preventDefault();
+        }
+      });
     });
+
+  // Close mobile dropdowns when tapping outside.
+  document.addEventListener("touchstart", function (event) {
+    if (isDesktop()) {
+      return;
+    }
+
+    document
+      .querySelectorAll(".navbar .dropdown.show")
+      .forEach(function (open) {
+        if (!open.contains(event.target)) {
+          open.classList.remove("show");
+        }
+      });
   });
 });
-
 
 window.addEventListener("load", function () {
   const preloader = document.getElementById("preloader");

@@ -2,7 +2,7 @@
   "apiVersion": 2,
   "name": "logiweb/custom-block-45",
   "title": "Financing Results Selector",
-  "category": "common",
+  "category": "widgets",
   "icon": "chart-bar",
   "description": "Display financing options based on submitted application.",
   "supports": {
@@ -21,6 +21,10 @@
       "type": "string",
       "default": "Edit Info"
     },
+    "formPageUrl": {
+      "type": "string",
+      "default": "/apply-now/"
+    },
     "bottomCta": {
       "type": "string",
       "default": "Not sure which option is right for you?"
@@ -32,6 +36,44 @@
     "bottomMsg": {
       "type": "string",
       "default": "Speak with a Specialist"
+    },
+    "options": {
+      "type": "array",
+      "default": [
+        {
+          "name": "Greensky",
+          "initials": "GS",
+          "logoColor": "#22c55e",
+          "rating": "4.8",
+          "minScore": "640+",
+          "apr": "0% - 12.99%",
+          "terms": "12 - 120 months",
+          "benefitsText": "Same-day approval\n6% promotional rates\nNo prepayment penalties",
+          "applyUrl": "#"
+        },
+        {
+          "name": "Synchrony",
+          "initials": "SY",
+          "logoColor": "#2563eb",
+          "rating": "4.7",
+          "minScore": "600+",
+          "apr": "0% - 14.99%",
+          "terms": "6 - 84 months",
+          "benefitsText": "Promotional financing\nFlexible terms\nQuick approval",
+          "applyUrl": "#"
+        },
+        {
+          "name": "Wells Fargo",
+          "initials": "WF",
+          "logoColor": "#dc2626",
+          "rating": "4.6",
+          "minScore": "660+",
+          "apr": "6.99% - 15.99%",
+          "terms": "24 - 144 months",
+          "benefitsText": "High loan limits\nCompetitive rates\nEstablished lender",
+          "applyUrl": "#"
+        }
+      ]
     }
   },
   "editorScript": "file:../../index.js",

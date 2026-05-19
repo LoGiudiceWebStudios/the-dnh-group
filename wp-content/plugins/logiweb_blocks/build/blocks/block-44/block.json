@@ -2,7 +2,7 @@
   "apiVersion": 2,
   "name": "logiweb/custom-block-44",
   "title": "Financing Application Form",
-  "category": "common",
+  "category": "widgets",
   "icon": "form",
   "description": "Form for collecting financing application data.",
   "supports": {
@@ -19,7 +19,7 @@
     },
     "resultsPageUrl": {
       "type": "string",
-      "default": "/select-financing/"
+      "default": "/select-your-financing/"
     },
     "buttonText": {
       "type": "string",

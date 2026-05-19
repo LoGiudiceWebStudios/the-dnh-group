@@ -4,40 +4,68 @@ import {
   MediaUpload,
   InspectorControls,
 } from "@wordpress/block-editor";
-import { PanelBody, TextControl, Button } from "@wordpress/components";
+import {
+  PanelBody,
+  TextControl,
+  Button,
+  SelectControl,
+} from "@wordpress/components";
 import { URLInput } from "@wordpress/block-editor";
 import "../../global-styles.scss";
 import metadata from "./block.json";
+
 registerBlockType("logiweb/custom-block-4", {
-  title: "Custom Block 4",
-  icon: "smiley",
-  category: "widgets",
+  ...metadata,
   attributes: {
-    subtitle: { type: "string" },
-    title: { type: "string" },
-    description: { type: "string" },
-    backgroundImage: { type: "string" },
-    primary_btn_text: { type: "string", default: "Learn More" },
+    subtitle: {
+      type: "string",
+      default: "Our Core Service",
+    },
+    title: {
+      type: "string",
+      default: "Interior Painting",
+    },
+    description: {
+      type: "string",
+      default:
+        "Refresh your living spaces with our professional interior painting services. We use premium paints and meticulous techniques to deliver flawless finishes.",
+    },
+    backgroundImage: {
+      type: "string",
+      default:
+        typeof logiweb_blocks !== "undefined" &&
+        logiweb_blocks.placeholder_image
+          ? logiweb_blocks.placeholder_image
+          : "https://via.placeholder.com/400x300?text=Add+Image",
+    },
+    imagePosition: {
+      type: "string",
+      default: "left",
+    },
+    primary_btn_text: { type: "string", default: "Get a Quote" },
     primary_btn_link: { type: "string" },
-    tertiary_btn_text: { type: "string", default: "Get Started" },
-    tertiary_btn_link: { type: "string" },
-    feature1_description: { type: "string" },
-    feature2_description: { type: "string" },
-    feature3_description: { type: "string" },
+    feature1_description: { type: "string", default: "Walls & ceilings" },
+    feature2_description: { type: "string", default: "Trim & molding" },
+    feature3_description: {
+      type: "string",
+      default: "Cabinets & built-ins",
+    },
+    feature4_description: { type: "string", default: "Accent walls" },
   },
+
   edit: ({ attributes, setAttributes }) => {
     const {
       subtitle,
       title,
       description,
       backgroundImage,
+      imagePosition,
       primary_btn_link,
       primary_btn_text,
-      tertiary_btn_text,
-      tertiary_btn_link,
       feature1_description,
       feature2_description,
       feature3_description,
+      feature4_description,
     } = attributes;
 
     const onSelectImage = (media) => {
@@ -56,10 +84,36 @@ registerBlockType("logiweb/custom-block-4", {
                 <Button onClick={open}>Select Image</Button>
               )}
             />
+            <SelectControl
+              label="Image Side"
+              value={imagePosition}
+              options={[
+                { label: "Left", value: "left" },
+                { label: "Right", value: "right" },
+              ]}
+              onChange={(value) => setAttributes({ imagePosition: value })}
+            />
+          </PanelBody>
+
+          <PanelBody title="Primary Button Settings">
+            <TextControl
+              label="Button Text"
+              value={primary_btn_text}
+              onChange={(value) => setAttributes({ primary_btn_text: value })}
+            />
+            <URLInput
+              label="Button Link"
+              value={primary_btn_link}
+              onChange={(value) => setAttributes({ primary_btn_link: value })}
+            />
           </PanelBody>
         </InspectorControls>
 
-        <div className="section-container section-type-4">
+        <div
+          className={`section-container section-type-4 ${
+            imagePosition === "right" ? "image-right" : "image-left"
+          }`}
+        >
           <div className="container-left">
             <RichText
               tagName="div"
@@ -85,9 +139,12 @@ registerBlockType("logiweb/custom-block-4", {
 
             <div className="benefits-list">
               <div className="benefits-list-item">
+                <span className="benefit-check" aria-hidden="true">
+                  <i className="fa-solid fa-check"></i>
+                </span>
                 <RichText
                   tagName="div"
-                  className="description"
+                  className="description-small"
                   value={feature1_description}
                   onChange={(value) =>
                     setAttributes({ feature1_description: value })
@@ -97,9 +154,12 @@ registerBlockType("logiweb/custom-block-4", {
               </div>
 
               <div className="benefits-list-item">
+                <span className="benefit-check" aria-hidden="true">
+                  <i className="fa-solid fa-check"></i>
+                </span>
                 <RichText
                   tagName="div"
-                  className="description"
+                  className="description-small"
                   value={feature2_description}
                   onChange={(value) =>
                     setAttributes({ feature2_description: value })
@@ -109,9 +169,12 @@ registerBlockType("logiweb/custom-block-4", {
               </div>
 
               <div className="benefits-list-item">
+                <span className="benefit-check" aria-hidden="true">
+                  <i className="fa-solid fa-check"></i>
+                </span>
                 <RichText
                   tagName="div"
-                  className="description"
+                  className="description-small"
                   value={feature3_description}
                   onChange={(value) =>
                     setAttributes({ feature3_description: value })
@@ -119,45 +182,23 @@ registerBlockType("logiweb/custom-block-4", {
                   placeholder="Add Text"
                 />
               </div>
+
+              <div className="benefits-list-item">
+                <span className="benefit-check" aria-hidden="true">
+                  <i className="fa-solid fa-check"></i>
+                </span>
+                <RichText
+                  tagName="div"
+                  className="description-small"
+                  value={feature4_description}
+                  onChange={(value) =>
+                    setAttributes({ feature4_description: value })
+                  }
+                  placeholder="Add Text"
+                />
+              </div>
             </div>
 
-            <InspectorControls>
-              <PanelBody title="Primary Button Settings">
-                <TextControl
-                  label="Button Text"
-                  value={primary_btn_text}
-                  onChange={(value) =>
-                    setAttributes({ primary_btn_text: value })
-                  }
-                />
-                <URLInput
-                  label="Button Link"
-                  value={primary_btn_link}
-                  onChange={(value) =>
-                    setAttributes({ primary_btn_link: value })
-                  }
-                />
-              </PanelBody>
-            </InspectorControls>
-
-            <InspectorControls>
-              <PanelBody title="Tertiary Button Settings">
-                <TextControl
-                  label="Button Text"
-                  value={tertiary_btn_text}
-                  onChange={(value) =>
-                    setAttributes({ tertiary_btn_text: value })
-                  }
-                />
-                <URLInput
-                  label="Button Link"
-                  value={tertiary_btn_link}
-                  onChange={(value) =>
-                    setAttributes({ tertiary_btn_link: value })
-                  }
-                />
-              </PanelBody>
-            </InspectorControls>
             <div className="buttons">
               <RichText
                 tagName="button"
@@ -165,18 +206,6 @@ registerBlockType("logiweb/custom-block-4", {
                 value={primary_btn_text}
                 onChange={(value) => setAttributes({ primary_btn_text: value })}
                 placeholder="Button Text"
-                href={primary_btn_link}
-              />
-
-              <RichText
-                tagName="button"
-                className="btn-tertiary"
-                value={tertiary_btn_text}
-                onChange={(value) =>
-                  setAttributes({ tertiary_btn_text: value })
-                }
-                placeholder="Button Text"
-                href={tertiary_btn_link}
               />
             </div>
           </div>
@@ -185,13 +214,7 @@ registerBlockType("logiweb/custom-block-4", {
             className="container-right"
             style={{ backgroundImage: `url(${backgroundImage})` }}
           >
-            <img
-              src={
-                window.location.origin +
-                "/wp-content/plugins/logiweb_blocks/assets/Placeholder_Image_4.png"
-              }
-              alt="Placeholder Image"
-            />
+            <img src={backgroundImage} alt={title || "Service image"} />
           </div>
         </div>
       </>
@@ -204,50 +227,75 @@ registerBlockType("logiweb/custom-block-4", {
       title,
       description,
       backgroundImage,
+      imagePosition,
       primary_btn_link,
       primary_btn_text,
-      tertiary_btn_text,
-      tertiary_btn_link,
       feature1_description,
       feature2_description,
       feature3_description,
+      feature4_description,
     } = attributes;
 
     return (
-      <div className="section-container section-type-4">
+      <div
+        className={`section-container section-type-4 ${
+          imagePosition === "right" ? "image-right" : "image-left"
+        }`}
+      >
         <div className="container-left">
           <div className="subtitle">{subtitle}</div>
           <div className="title">{title}</div>
           <div className="description">
             <RichText.Content value={description} tagName="div" />
           </div>
+
           <div className="benefits-list">
             <div className="benefits-list-item">
-              <i class="fa-solid fa-cube"></i>
+              <span className="benefit-check" aria-hidden="true">
+                <i className="fa-solid fa-check"></i>
+              </span>
               <div className="description-small">
                 <RichText.Content value={feature1_description} tagName="div" />
               </div>
             </div>
             <div className="benefits-list-item">
-              <i class="fa-solid fa-cube"></i>
+              <span className="benefit-check" aria-hidden="true">
+                <i className="fa-solid fa-check"></i>
+              </span>
               <div className="description-small">
                 <RichText.Content value={feature2_description} tagName="div" />
               </div>
             </div>
             <div className="benefits-list-item">
-              <i class="fa-solid fa-cube"></i>
+              <span className="benefit-check" aria-hidden="true">
+                <i className="fa-solid fa-check"></i>
+              </span>
               <div className="description-small">
                 <RichText.Content value={feature3_description} tagName="div" />
               </div>
             </div>
+            <div className="benefits-list-item">
+              <span className="benefit-check" aria-hidden="true">
+                <i className="fa-solid fa-check"></i>
+              </span>
+              <div className="description-small">
+                <RichText.Content value={feature4_description} tagName="div" />
+              </div>
+            </div>
           </div>
+
           <div className="buttons">
-            <a className="btn-primary" href={primary_btn_link}>
-              {primary_btn_text}
-            </a>
-            <a className="btn-tertiary" href={tertiary_btn_link}>
-                {tertiary_btn_text} <span className="material-symbols-outlined notranslate">chevron_right</span>
-            </a>
+            {primary_btn_text && (
+              <a className="btn-primary" href={primary_btn_link}>
+                {primary_btn_text}
+                <span
+                  className="material-symbols-outlined notranslate"
+                  aria-hidden="true"
+                >
+                  chevron_right
+                </span>
+              </a>
+            )}
           </div>
         </div>
 
@@ -255,13 +303,7 @@ registerBlockType("logiweb/custom-block-4", {
           className="container-right"
           style={{ backgroundImage: `url(${backgroundImage})` }}
         >
-          <img
-            src={
-              window.location.origin +
-              "/wp-content/plugins/logiweb_blocks/assets/Placeholder_Image_4.png"
-            }
-            alt="Placeholder Image"
-          />
+          <img src={backgroundImage} alt={title || "Service image"} />
         </div>
       </div>
     );

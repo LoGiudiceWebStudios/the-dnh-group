@@ -24,6 +24,62 @@ add_action('init', function() {
     ));
 });
 
+add_action( 'rest_api_init', function() {
+    register_rest_route( 'logiweb/v1', '/financing-app', array(
+        'methods'             => 'POST',
+        'callback'            => 'logiweb_submit_financing_application',
+        'permission_callback' => '__return_true',
+    ) );
+} );
+
+function logiweb_submit_financing_application( WP_REST_Request $request ) {
+    $raw = $request->get_json_params();
+    $data = is_array( $raw ) ? $raw : array();
+
+    $first_name = isset( $data['firstName'] ) ? sanitize_text_field( (string) $data['firstName'] ) : '';
+    $last_name  = isset( $data['lastName'] ) ? sanitize_text_field( (string) $data['lastName'] ) : '';
+
+    if ( '' === $first_name || '' === $last_name ) {
+        return new WP_REST_Response( array(
+            'message' => 'First Name and Last Name are required.',
+        ), 400 );
+    }
+
+    $clean_data = array(
+        'firstName'      => $first_name,
+        'lastName'       => $last_name,
+        'email'          => isset( $data['email'] ) ? sanitize_email( (string) $data['email'] ) : '',
+        'phone'          => isset( $data['phone'] ) ? sanitize_text_field( (string) $data['phone'] ) : '',
+        'street'         => isset( $data['street'] ) ? sanitize_text_field( (string) $data['street'] ) : '',
+        'city'           => isset( $data['city'] ) ? sanitize_text_field( (string) $data['city'] ) : '',
+        'state'          => isset( $data['state'] ) ? sanitize_text_field( (string) $data['state'] ) : '',
+        'zip'            => isset( $data['zip'] ) ? sanitize_text_field( (string) $data['zip'] ) : '',
+        'projectType'    => isset( $data['projectType'] ) ? sanitize_text_field( (string) $data['projectType'] ) : '',
+        'projectDetails' => isset( $data['projectDetails'] ) ? sanitize_textarea_field( (string) $data['projectDetails'] ) : '',
+        'projectAmount'  => isset( $data['projectAmount'] ) ? sanitize_text_field( (string) $data['projectAmount'] ) : '',
+        'startDate'      => isset( $data['startDate'] ) ? sanitize_text_field( (string) $data['startDate'] ) : '',
+    );
+
+    $post_id = wp_insert_post( array(
+        'post_type'   => 'financing_app',
+        'post_status' => 'private',
+        'post_title'  => sprintf( '%s %s - %s', $first_name, $last_name, gmdate( 'Y-m-d H:i:s' ) ),
+    ), true );
+
+    if ( is_wp_error( $post_id ) ) {
+        return new WP_REST_Response( array(
+            'message' => $post_id->get_error_message(),
+        ), 500 );
+    }
+
+    update_post_meta( $post_id, '_app_data', $clean_data );
+
+    return new WP_REST_Response( array(
+        'id'      => $post_id,
+        'message' => 'Application submitted successfully.',
+    ), 201 );
+}
+
 add_action('wp_enqueue_scripts', function() {
     wp_enqueue_style(
         'font-awesome',
@@ -59,9 +115,24 @@ add_action('wp_enqueue_scripts', function() {
         filemtime( plugin_dir_path( __FILE__ ) . 'static/financing-form.js' ),
         true
     );
+    wp_enqueue_script(
+        'logiweb-portfolio-showcase-init',
+        plugins_url('static/portfolio-showcase-init.js', __FILE__),
+        array(),
+        filemtime( plugin_dir_path( __FILE__ ) . 'static/portfolio-showcase-init.js' ),
+        true
+    );
+    wp_enqueue_script(
+        'logiweb-portfolio-grid-init',
+        plugins_url('portfolio-grid-init.js', __FILE__),
+        array(),
+        filemtime( plugin_dir_path( __FILE__ ) . 'portfolio-grid-init.js' ),
+        true
+    );
     wp_localize_script('logiweb-financing-form', 'logiweb_rest', array(
         'nonce' => wp_create_nonce('wp_rest'),
         'base_url' => rest_url(),
+        'submit_endpoint' => rest_url( 'logiweb/v1/financing-app' ),
     ));
 });
 
@@ -80,6 +151,15 @@ add_action('enqueue_block_editor_assets', function() {
         true
     );
 
+    wp_localize_script(
+        'logiweb-blocks-editor',
+        'logiweb_blocks',
+        array(
+            'plugin_url' => plugins_url( '', __FILE__ ),
+            'placeholder_image' => plugins_url( 'assets/Placeholder_Image_4.png', __FILE__ ),
+        )
+    );
+
     wp_enqueue_style(
         'logiweb-blocks-editor-styles',
         plugins_url( 'build/index.css', __FILE__ ),
@@ -93,30 +173,6 @@ add_action('enqueue_block_editor_assets', function() {
         [],
         '6.5.1'
     );
-
-    if ( current_user_can( 'manage_options' ) ) {
-        $all_blocks = WP_Block_Type_Registry::get_instance()->get_all_registered();
-        $logiweb_blocks = array_values( array_filter( array_keys( $all_blocks ), static function( $name ) {
-            return 0 === strpos( $name, 'logiweb/' );
-        } ) );
-
-        $debug_data = array(
-            'count'  => count( $logiweb_blocks ),
-            'blocks' => $logiweb_blocks,
-        );
-
-        wp_add_inline_script(
-            'logiweb-blocks-editor',
-            'window.logiwebBlockDebug = ' . wp_json_encode( $debug_data ) . ';',
-            'before'
-        );
-
-        wp_add_inline_script(
-            'logiweb-blocks-editor',
-            "(function(){if(!window.logiwebBlockDebug){return;}var d=window.logiwebBlockDebug;console.info('Logiweb block debug:', d);if(window.wp&&wp.data&&wp.data.dispatch){wp.data.dispatch('core/notices').createNotice('info','Logiweb debug: '+d.count+' blocks registered (open browser console).',{isDismissible:true});}})();",
-            'after'
-        );
-    }
 });
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -400,6 +456,36 @@ function logiweb_register_blocks() {
         'style'           => 'logiweb-blocks-frontend-styles',
         'render_callback' => 'logiweb_render_financing_results',
     ));
+    register_block_type( 'logiweb/custom-block-46', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-47', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-48', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-49', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-50', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-51', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
 
 }
 add_action( 'init', 'logiweb_register_blocks' );
@@ -483,7 +569,7 @@ function logiweb_render_application_form( $attributes ) {
     $defaults = array(
         'formTitle' => 'Tell Us About Your Project',
         'formDescription' => "Fill out your information below and we'll match you with the best financing options.",
-        'resultsPageUrl' => '/select-financing/',
+        'resultsPageUrl' => '/select-your-financing/',
         'buttonText' => 'View Financing Options →',
     );
 
@@ -499,6 +585,16 @@ function logiweb_render_application_form( $attributes ) {
         }
     }
 
+    $results_page_url = isset( $a['resultsPageUrl'] ) ? trim( (string) $a['resultsPageUrl'] ) : '';
+    if ( '' === $results_page_url ) {
+        $results_page_url = '/select-your-financing/';
+    }
+
+    // If a relative path is provided, resolve it against WordPress home URL.
+    if ( false === strpos( $results_page_url, '://' ) ) {
+        $results_page_url = home_url( '/' . ltrim( $results_page_url, '/' ) );
+    }
+
     ob_start();
     ?>
     <section class="financing-app-form-block">
@@ -506,7 +602,7 @@ function logiweb_render_application_form( $attributes ) {
             <h2 class="financing-app-form-title"><?php echo wp_kses_post( $a['formTitle'] ); ?></h2>
             <p class="financing-app-form-description"><?php echo wp_kses_post( $a['formDescription'] ); ?></p>
 
-            <form class="financing-app-form" data-redirect="<?php echo esc_attr( $a['resultsPageUrl'] ); ?>">
+            <form class="financing-app-form" data-redirect="<?php echo esc_url( $results_page_url ); ?>">
                 <!-- Personal Information -->
                 <div class="form-row">
                     <div>
@@ -665,9 +761,45 @@ function logiweb_render_financing_results( $attributes ) {
         'resultsTitle' => 'Choose Your Financing Partner',
         'resultsSubtitle' => "We've matched you with financing options based on your project details.",
         'editBtnText' => 'Edit Info',
+        'formPageUrl' => '/apply-now/',
         'bottomCta' => 'Not sure which option is right for you?',
         'bottomPhone' => '(555) 555-0123',
         'bottomMsg' => 'Speak with a Specialist',
+        'options' => array(
+            array(
+                'name' => 'Greensky',
+                'initials' => 'GS',
+                'logoColor' => '#22c55e',
+                'rating' => '4.8',
+                'minScore' => '640+',
+                'apr' => '0% - 12.99%',
+                'terms' => '12 - 120 months',
+                'benefitsText' => "Same-day approval\n6% promotional rates\nNo prepayment penalties",
+                'applyUrl' => '#',
+            ),
+            array(
+                'name' => 'Synchrony',
+                'initials' => 'SY',
+                'logoColor' => '#2563eb',
+                'rating' => '4.7',
+                'minScore' => '600+',
+                'apr' => '0% - 14.99%',
+                'terms' => '6 - 84 months',
+                'benefitsText' => "Promotional financing\nFlexible terms\nQuick approval",
+                'applyUrl' => '#',
+            ),
+            array(
+                'name' => 'Wells Fargo',
+                'initials' => 'WF',
+                'logoColor' => '#dc2626',
+                'rating' => '4.6',
+                'minScore' => '660+',
+                'apr' => '6.99% - 15.99%',
+                'terms' => '24 - 144 months',
+                'benefitsText' => "High loan limits\nCompetitive rates\nEstablished lender",
+                'applyUrl' => '#',
+            ),
+        ),
     );
 
     $a = wp_parse_args( is_array( $attributes ) ? $attributes : array(), $defaults );
@@ -683,76 +815,61 @@ function logiweb_render_financing_results( $attributes ) {
     }
 
     $app_data = get_post_meta( $post->ID, '_app_data', true );
+    $form_page_url = isset( $a['formPageUrl'] ) ? trim( (string) $a['formPageUrl'] ) : '';
+    if ( '' === $form_page_url ) {
+        $form_page_url = '/apply-now/';
+    }
+    if ( false === strpos( $form_page_url, '://' ) ) {
+        $form_page_url = home_url( '/' . ltrim( $form_page_url, '/' ) );
+    }
+    $edit_info_url = add_query_arg( array( 'edit' => $app_id ), $form_page_url );
 
-    // Mock financing options - you can fetch from DB/API based on app_data
-    $financing_options = array(
-        array(
-            'name' => 'Greensky',
-            'initials' => 'GS',
-            'logo_color' => '#22c55e',
-            'rating' => 4.8,
-            'min_score' => '640+',
-            'apr' => '0% - 12.99%',
-            'terms' => '12 - 120 months',
-            'benefits' => array( 'Same-day approval', '6% promotional rates', 'No prepayment penalties' ),
-            'apply_url' => '#'
-        ),
-        array(
-            'name' => 'Synchrony',
-            'initials' => 'SY',
-            'logo_color' => '#2563eb',
-            'rating' => 4.7,
-            'min_score' => '600+',
-            'apr' => '0% - 14.99%',
-            'terms' => '6 - 84 months',
-            'benefits' => array( 'Promotional financing', 'Flexible terms', 'Quick approval' ),
-            'apply_url' => '#'
-        ),
-        array(
-            'name' => 'Wells Fargo',
-            'initials' => 'WF',
-            'logo_color' => '#dc2626',
-            'rating' => 4.6,
-            'min_score' => '660+',
-            'apr' => '6.99% - 15.99%',
-            'terms' => '24 - 144 months',
-            'benefits' => array( 'High loan limits', 'Competitive rates', 'Established lender' ),
-            'apply_url' => '#'
-        ),
-        array(
-            'name' => 'EnerBank',
-            'initials' => 'EB',
-            'logo_color' => '#f59e0b',
-            'rating' => 4.5,
-            'min_score' => '620+',
-            'apr' => '8.99% - 17.99%',
-            'terms' => '12 - 180 months',
-            'benefits' => array( 'Home improvement focus', 'Long terms available', 'Fast funding' ),
-            'apply_url' => '#'
-        ),
-        array(
-            'name' => 'Service Finance',
-            'initials' => 'SF',
-            'logo_color' => '#a855f7',
-            'rating' => 4.4,
-            'min_score' => '580+',
-            'apr' => '9.99% - 21.99%',
-            'terms' => '12 - 96 months',
-            'benefits' => array( 'Flexible credit options', 'Multiple programs', 'Quick funding' ),
-            'apply_url' => '#'
-        ),
-        array(
-            'name' => 'DNH In-House',
-            'initials' => 'DNH',
-            'logo_color' => '#1e293b',
-            'rating' => 5.0,
-            'min_score' => 'Any',
-            'apr' => 'Varies',
-            'terms' => 'Custom',
-            'benefits' => array( 'No minimum score', 'Personalized solutions', 'Direct financing' ),
-            'apply_url' => '#'
-        ),
-    );
+    $raw_options = isset( $a['options'] ) && is_array( $a['options'] ) ? $a['options'] : array();
+    $financing_options = array();
+
+    foreach ( $raw_options as $raw_option ) {
+        if ( ! is_array( $raw_option ) ) {
+            continue;
+        }
+
+        $logo_color = isset( $raw_option['logoColor'] ) ? sanitize_hex_color( (string) $raw_option['logoColor'] ) : '';
+        if ( ! $logo_color ) {
+            $logo_color = '#3654de';
+        }
+
+        $benefits_text = isset( $raw_option['benefitsText'] ) ? (string) $raw_option['benefitsText'] : '';
+        $benefits = array_values( array_filter( array_map( 'trim', preg_split( '/\r\n|\r|\n/', $benefits_text ) ) ) );
+
+        if ( empty( $benefits ) ) {
+            $benefits = array( 'Flexible options', 'Transparent terms', 'Fast application' );
+        }
+
+        $financing_options[] = array(
+            'name' => isset( $raw_option['name'] ) ? sanitize_text_field( (string) $raw_option['name'] ) : 'Partner',
+            'initials' => isset( $raw_option['initials'] ) ? sanitize_text_field( (string) $raw_option['initials'] ) : 'NA',
+            'logo_color' => $logo_color,
+            'rating' => isset( $raw_option['rating'] ) ? sanitize_text_field( (string) $raw_option['rating'] ) : '4.5',
+            'min_score' => isset( $raw_option['minScore'] ) ? sanitize_text_field( (string) $raw_option['minScore'] ) : 'N/A',
+            'apr' => isset( $raw_option['apr'] ) ? sanitize_text_field( (string) $raw_option['apr'] ) : 'N/A',
+            'terms' => isset( $raw_option['terms'] ) ? sanitize_text_field( (string) $raw_option['terms'] ) : 'N/A',
+            'benefits' => $benefits,
+            'apply_url' => isset( $raw_option['applyUrl'] ) ? esc_url_raw( (string) $raw_option['applyUrl'] ) : '#',
+        );
+    }
+
+    if ( empty( $financing_options ) ) {
+        $financing_options[] = array(
+            'name' => 'Partner',
+            'initials' => 'NA',
+            'logo_color' => '#3654de',
+            'rating' => '4.5',
+            'min_score' => 'N/A',
+            'apr' => 'N/A',
+            'terms' => 'N/A',
+            'benefits' => array( 'Flexible options', 'Transparent terms', 'Fast application' ),
+            'apply_url' => '#',
+        );
+    }
 
     ob_start();
     ?>
@@ -765,7 +882,7 @@ function logiweb_render_financing_results( $attributes ) {
                 <div class="financing-results-summary">
                     <div class="summary-item">
                         <span>Project for</span>
-                        <strong><?php echo esc_html( $app_data['firstName'] . ' ' . $app_data['lastName'] ?? 'Applicant' ); ?></strong>
+                        <strong><?php echo esc_html( trim( (string) ( $app_data['firstName'] ?? '' ) . ' ' . (string) ( $app_data['lastName'] ?? '' ) ) ?: 'Applicant' ); ?></strong>
                     </div>
                     <div class="summary-item">
                         <span>Project Type</span>
@@ -775,7 +892,7 @@ function logiweb_render_financing_results( $attributes ) {
                         <span>Amount</span>
                         <strong>$<?php echo esc_html( number_format( intval( $app_data['projectAmount'] ?? 0 )) ); ?></strong>
                     </div>
-                    <a href="<?php echo add_query_arg( array( 'edit' => $app_id ), get_page_link() ); ?>" class="btn-edit-info">
+                    <a href="<?php echo esc_url( $edit_info_url ); ?>" class="btn-edit-info">
                         ✎ <?php echo esc_html( $a['editBtnText'] ); ?>
                     </a>
                 </div>

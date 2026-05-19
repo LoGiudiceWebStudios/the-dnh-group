@@ -4,25 +4,68 @@ import {
   InspectorControls,
   RichText,
 } from "@wordpress/block-editor";
-import { PanelBody, TextControl } from "@wordpress/components";
+import {
+  PanelBody,
+  TextControl,
+  TextareaControl,
+  Button,
+} from "@wordpress/components";
 import metadata from "./block.json";
 
-registerBlockType(metadata.name, {
+registerBlockType("logiweb/custom-block-45", {
+  ...metadata,
   edit({ attributes, setAttributes }) {
     const {
       resultsTitle,
       resultsSubtitle,
       editBtnText,
+      formPageUrl,
       bottomCta,
       bottomPhone,
       bottomMsg,
+      options = [],
     } = attributes;
     const blockProps = useBlockProps({ className: "financing-results-editor" });
+
+    const updateOption = (index, key, value) => {
+      const next = [...options];
+      next[index] = { ...next[index], [key]: value };
+      setAttributes({ options: next });
+    };
+
+    const addOption = () => {
+      const next = [
+        ...options,
+        {
+          name: "New Partner",
+          initials: "NP",
+          logoColor: "#3654de",
+          rating: "4.5",
+          minScore: "620+",
+          apr: "8.99% - 17.99%",
+          terms: "12 - 120 months",
+          benefitsText: "Benefit one\nBenefit two\nBenefit three",
+          applyUrl: "#",
+        },
+      ];
+      setAttributes({ options: next });
+    };
+
+    const removeOption = (index) => {
+      const next = options.filter((_, i) => i !== index);
+      setAttributes({ options: next });
+    };
 
     return (
       <>
         <InspectorControls>
           <PanelBody title="Settings" initialOpen={true}>
+            <TextControl
+              label="Form Page URL (for Edit Info)"
+              value={formPageUrl || ""}
+              onChange={(v) => setAttributes({ formPageUrl: v })}
+              help="Example: /apply-now/"
+            />
             <TextControl
               label="Bottom CTA Text"
               value={bottomCta}
@@ -38,6 +81,75 @@ registerBlockType(metadata.name, {
               value={bottomMsg}
               onChange={(v) => setAttributes({ bottomMsg: v })}
             />
+          </PanelBody>
+
+          <PanelBody
+            title={`Financing Options (${options.length})`}
+            initialOpen={false}
+          >
+            {options.map((option, i) => (
+              <div
+                key={i}
+                style={{
+                  marginBottom: "14px",
+                  borderBottom: "1px solid #e3e8f2",
+                  paddingBottom: "14px",
+                }}
+              >
+                <TextControl
+                  label={`Option ${i + 1} Name`}
+                  value={option.name || ""}
+                  onChange={(v) => updateOption(i, "name", v)}
+                />
+                <TextControl
+                  label="Initials"
+                  value={option.initials || ""}
+                  onChange={(v) => updateOption(i, "initials", v)}
+                />
+                <TextControl
+                  label="Logo Color"
+                  value={option.logoColor || ""}
+                  onChange={(v) => updateOption(i, "logoColor", v)}
+                />
+                <TextControl
+                  label="Rating"
+                  value={option.rating || ""}
+                  onChange={(v) => updateOption(i, "rating", v)}
+                />
+                <TextControl
+                  label="Min Score"
+                  value={option.minScore || ""}
+                  onChange={(v) => updateOption(i, "minScore", v)}
+                />
+                <TextControl
+                  label="APR"
+                  value={option.apr || ""}
+                  onChange={(v) => updateOption(i, "apr", v)}
+                />
+                <TextControl
+                  label="Terms"
+                  value={option.terms || ""}
+                  onChange={(v) => updateOption(i, "terms", v)}
+                />
+                <TextareaControl
+                  label="Benefits (one per line)"
+                  value={option.benefitsText || ""}
+                  onChange={(v) => updateOption(i, "benefitsText", v)}
+                />
+                <TextControl
+                  label="Apply URL"
+                  value={option.applyUrl || ""}
+                  onChange={(v) => updateOption(i, "applyUrl", v)}
+                />
+                <Button isDestructive isSmall onClick={() => removeOption(i)}>
+                  Remove Option
+                </Button>
+              </div>
+            ))}
+
+            <Button isPrimary isSmall onClick={addOption}>
+              + Add Option
+            </Button>
           </PanelBody>
         </InspectorControls>
 
@@ -61,19 +173,24 @@ registerBlockType(metadata.name, {
             </div>
 
             <div className="financing-results-grid">
-              {[...Array(6)].map((_, i) => (
+              {options.map((option, i) => (
                 <div
                   key={i}
                   className="financing-option-card"
                   style={{ opacity: 0.6 }}
                 >
-                  <div className="option-logo">GS</div>
-                  <h3>Partner Name</h3>
-                  <p className="option-rating">⭐ 4.8</p>
+                  <div
+                    className="option-logo"
+                    style={{ backgroundColor: option.logoColor || "#3654de" }}
+                  >
+                    {option.initials || "NA"}
+                  </div>
+                  <h3>{option.name || "Partner Name"}</h3>
+                  <p className="option-rating">⭐ {option.rating || "4.5"}</p>
                   <ul style={{ fontSize: "0.85rem", color: "#666" }}>
-                    <li>Min. Credit Score</li>
-                    <li>APR Range</li>
-                    <li>Terms</li>
+                    <li>Min. Credit Score: {option.minScore || "N/A"}</li>
+                    <li>APR Range: {option.apr || "N/A"}</li>
+                    <li>Terms: {option.terms || "N/A"}</li>
                   </ul>
                   <button
                     disabled

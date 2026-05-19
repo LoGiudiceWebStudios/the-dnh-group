@@ -1,64 +1,76 @@
 import { registerBlockType } from "@wordpress/blocks";
-import {
-  MediaUpload,
-  MediaUploadCheck,
-  InspectorControls,
-  RichText,
-} from "@wordpress/block-editor";
+import { InspectorControls, RichText } from "@wordpress/block-editor";
 import { PanelBody, Button, TextControl } from "@wordpress/components";
-import { useState, useEffect, useRef } from "@wordpress/element";
 import "../../global-styles.scss";
 import metadata from "./block.json";
 
+const DEFAULT_COMPANIES = [
+  { name: "Microsoft", badgeText: "M", badgeColor: "#dbe7ff" },
+  { name: "Google", badgeText: "G", badgeColor: "#fbe1e1" },
+  { name: "Amazon", badgeText: "A", badgeColor: "#f6e3bf" },
+  { name: "Meta", badgeText: "F", badgeColor: "#d9e2ff" },
+  { name: "Apple", badgeText: "A", badgeColor: "#ececf1" },
+  { name: "Netflix", badgeText: "N", badgeColor: "#f5d9dc" },
+  { name: "Spotify", badgeText: "S", badgeColor: "#dbf0da" },
+  { name: "Slack", badgeText: "Sl", badgeColor: "#e2daf9" },
+];
+
+const norm = (value = "") => String(value).trim();
+
+const getBadgeText = (company) => {
+  const explicit = norm(company?.badgeText);
+  if (explicit) {
+    return explicit;
+  }
+  const fromName = norm(company?.name).charAt(0).toUpperCase();
+  return fromName || "A";
+};
+
 registerBlockType("logiweb/custom-block-10", {
-  title: "Certifications Carousel",
-  icon: "admin-site",
-  category: "widgets",
+  ...metadata,
   attributes: {
     title: {
       type: "string",
       default: "Trusted by Industry Leaders",
     },
-    images: {
+    companies: {
       type: "array",
-      default: [],
+      default: DEFAULT_COMPANIES,
     },
   },
 
   edit: ({ attributes, setAttributes }) => {
-    const { title = "", images = [] } = attributes;
-    const [startIndex, setStartIndex] = useState(0);
-    const intervalRef = useRef();
+    const { title = "", companies = DEFAULT_COMPANIES } = attributes;
 
-    const onSelectImages = (media) => {
-      setAttributes({
-        images: media.map((img) => ({
-          id: img.id,
-          url: img.url,
-          alt: img.alt || "",
-          caption: img.caption?.raw || img.caption || img.title || "",
-        })),
-      });
-      setStartIndex(0);
+    const updateCompany = (index, key, value) => {
+      const next = [...companies];
+      next[index] = {
+        ...next[index],
+        [key]: value,
+      };
+      setAttributes({ companies: next });
     };
 
-    // Show 5 items for desktop preview
-    const visibleImages = images.slice(startIndex, startIndex + 5);
+    const addCompany = () => {
+      setAttributes({
+        companies: [
+          ...companies,
+          { name: "New Brand", badgeText: "N", badgeColor: "#e8ecf5" },
+        ],
+      });
+    };
 
-    // Auto-scroll simulation in editor
-    useEffect(() => {
-      if (images.length <= 5) return;
-      intervalRef.current = setInterval(() => {
-        setStartIndex((prev) => (prev + 1) % images.length);
-      }, 3000);
-      return () => clearInterval(intervalRef.current);
-    }, [images.length]);
+    const removeCompany = (index) => {
+      if (companies.length <= 1) {
+        return;
+      }
+      setAttributes({ companies: companies.filter((_, i) => i !== index) });
+    };
+
+    const editorLoopItems = [...companies, ...companies];
 
     return (
-      <div
-        className="block-editor-container"
-        style={{ width: "100%", padding: "2rem 0" }}
-      >
+      <section className="certifications-carousel">
         <InspectorControls>
           <PanelBody title="Carousel Settings">
             <TextControl
@@ -66,103 +78,92 @@ registerBlockType("logiweb/custom-block-10", {
               value={title}
               onChange={(val) => setAttributes({ title: val })}
             />
-            <MediaUploadCheck>
-              <MediaUpload
-                onSelect={onSelectImages}
-                allowedTypes={["image"]}
-                multiple
-                gallery
-                value={images.map((img) => img.id)}
-                render={({ open }) => (
-                  <Button onClick={open} isPrimary>
-                    {images.length ? "Edit Images" : "Add Images"}
-                  </Button>
-                )}
-              />
-            </MediaUploadCheck>
+            {companies.map((company, index) => (
+              <div
+                key={index}
+                style={{
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                  borderBottom: "1px solid #e5e9f2",
+                  paddingBottom: "10px",
+                }}
+              >
+                <TextControl
+                  label={`Brand ${index + 1} Name`}
+                  value={company.name || ""}
+                  onChange={(value) => updateCompany(index, "name", value)}
+                />
+                <TextControl
+                  label="Badge Text"
+                  value={company.badgeText || ""}
+                  onChange={(value) => updateCompany(index, "badgeText", value)}
+                />
+                <TextControl
+                  label="Badge Color"
+                  value={company.badgeColor || "#e8ecf5"}
+                  onChange={(value) =>
+                    updateCompany(index, "badgeColor", value)
+                  }
+                />
+                <Button
+                  isSmall
+                  isDestructive
+                  onClick={() => removeCompany(index)}
+                  disabled={companies.length <= 1}
+                >
+                  Remove brand
+                </Button>
+              </div>
+            ))}
+            <Button isPrimary isSmall onClick={addCompany}>
+              + Add brand
+            </Button>
           </PanelBody>
         </InspectorControls>
 
-        <div style={{ textAlign: "center", marginBottom: "2rem" }}>
-          <p
-            style={{
-              fontSize: "0.85rem",
-              color: "#999",
-              margin: 0,
-              marginBottom: "0.5rem",
-            }}
-          >
-            TRUSTED BY INDUSTRY LEADERS
-          </p>
-          <h2 style={{ fontSize: "1.8rem", fontWeight: 600, margin: 0 }}>
-            {title}
-          </h2>
-        </div>
+        <div className="certifications-content">
+          <div className="certifications-header">
+            <RichText
+              tagName="p"
+              className="certifications-subtitle"
+              value={title}
+              onChange={(value) => setAttributes({ title: value })}
+              placeholder="Trusted by industry leaders"
+            />
+          </div>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "1.5rem",
-            overflow: "hidden",
-            padding: "1rem",
-          }}
-        >
-          {visibleImages.length > 0 ? (
-            visibleImages.map((img, idx) => (
-              <div
-                key={img.id || idx}
-                style={{
-                  flex: "0 0 auto",
-                  width: "120px",
-                  height: "120px",
-                  background: "#f5f5f5",
-                  borderRadius: "8px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "0.5rem",
-                  overflow: "hidden",
-                  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
-                  padding: "0.75rem 0.5rem",
-                }}
-              >
-                <img
-                  src={img.url}
-                  alt={img.alt}
-                  style={{
-                    maxWidth: "80%",
-                    maxHeight: "80%",
-                    objectFit: "contain",
-                  }}
-                />
-                {img.caption ? (
+          <div className="certifications-marquee">
+            <div className="certifications-track">
+              {editorLoopItems.map((company, idx) => (
+                <div
+                  className="certification-item"
+                  key={`${idx}-${company.name}`}
+                >
                   <span
-                    style={{
-                      fontSize: "0.72rem",
-                      fontWeight: 600,
-                      lineHeight: 1.2,
-                      textAlign: "center",
-                      color: "#2d3748",
-                    }}
+                    className="certification-badge"
+                    style={{ backgroundColor: company.badgeColor || "#e8ecf5" }}
                   >
-                    {img.caption}
+                    {getBadgeText(company)}
                   </span>
-                ) : null}
-              </div>
-            ))
-          ) : (
-            <p style={{ color: "#999" }}>Add images to start</p>
-          )}
+                  <span className="certification-caption">
+                    {company.name || "Brand"}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
     );
   },
 
   save: ({ attributes }) => {
-    const { title = "Trusted by Industry Leaders", images = [] } = attributes;
+    const {
+      title = "Trusted by Industry Leaders",
+      companies = DEFAULT_COMPANIES,
+    } = attributes;
+    const loopItems = [...companies, ...companies];
+
     return (
       <section
         className="certifications-carousel fade-in-on-scroll"
@@ -170,29 +171,29 @@ registerBlockType("logiweb/custom-block-10", {
       >
         <div className="certifications-content">
           <div className="certifications-header">
-            <p className="certifications-subtitle">
-              Trusted by Industry Leaders
-            </p>
-            <h2 className="certifications-title">{title}</h2>
+            <p className="certifications-subtitle">{title}</p>
           </div>
 
-          <div className="certifications-track" data-carousel-track>
-            {images.map((img, idx) => (
-              <div
-                key={img.id || idx}
-                className="certification-item"
-                data-carousel-item
-              >
-                <img
-                  src={img.url}
-                  alt={img.alt || "Certification"}
-                  className="certification-logo"
-                />
-                {img.caption ? (
-                  <span className="certification-caption">{img.caption}</span>
-                ) : null}
-              </div>
-            ))}
+          <div className="certifications-marquee" aria-label="Trusted brands">
+            <div className="certifications-track" data-carousel-track>
+              {loopItems.map((company, idx) => (
+                <div
+                  key={`${idx}-${company.name}`}
+                  className="certification-item"
+                  data-carousel-item
+                >
+                  <span
+                    className="certification-badge"
+                    style={{ backgroundColor: company.badgeColor || "#e8ecf5" }}
+                  >
+                    {getBadgeText(company)}
+                  </span>
+                  <span className="certification-caption">
+                    {company.name || "Brand"}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

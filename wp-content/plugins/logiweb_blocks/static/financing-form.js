@@ -10,37 +10,46 @@ document.addEventListener("DOMContentLoaded", function () {
     const data = Object.fromEntries(formData);
 
     // Get redirect URL from data attribute
-    const redirectUrl = form.dataset.redirect || "/select-financing/";
-    const nonce = logiweb_rest.nonce;
-    const baseUrl = logiweb_rest.base_url;
+    const redirectUrl = form.dataset.redirect || "/select-your-financing/";
+    const submitEndpoint =
+      (window.logiweb_rest && window.logiweb_rest.submit_endpoint) ||
+      "/wp-json/logiweb/v1/financing-app";
 
     try {
-      // Submit via WordPress REST API
-      const response = await fetch(baseUrl + "wp/v2/financing_app", {
+      const response = await fetch(submitEndpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-WP-Nonce": nonce,
         },
-        body: JSON.stringify({
-          title: `${data.firstName} ${data.lastName} - ${new Date().toLocaleDateString()}`,
-          meta: {
-            _app_data: data,
-          },
-        }),
+        body: JSON.stringify(data),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to submit application");
+      let payload = null;
+      try {
+        payload = await response.json();
+      } catch (jsonError) {
+        payload = null;
       }
 
-      const app = await response.json();
+      if (!response.ok) {
+        const message =
+          (payload && (payload.message || payload.error)) ||
+          `Failed to submit application (HTTP ${response.status})`;
+        throw new Error(message);
+      }
 
-      // Redirect to results page with app ID
-      window.location.href = redirectUrl + `?app=${app.id}`;
+      const app = payload;
+      if (!app || !app.id) {
+        throw new Error("Application saved but missing ID in response.");
+      }
+
+      // Redirect to results page with app ID.
+      const redirectTarget = new URL(redirectUrl, window.location.origin);
+      redirectTarget.searchParams.set("app", String(app.id));
+      window.location.href = redirectTarget.toString();
     } catch (error) {
       console.error("Form submission error:", error);
-      alert("Error submitting form. Please try again.");
+      alert(error.message || "Error submitting form. Please try again.");
     }
   });
 });

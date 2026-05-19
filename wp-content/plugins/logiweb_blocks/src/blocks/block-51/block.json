@@ -1,0 +1,16 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-51",
+  "version": "0.1.0",
+  "title": "Portfolio Cards",
+  "category": "widgets",
+  "icon": "format-image",
+  "description": "Individual portfolio project cards that can be added and managed per page.",
+  "supports": {
+    "html": false
+  },
+  "textdomain": "custom-block-51",
+  "editorScript": "file:../../index.js",
+  "style": "file:../../global-styles.css"
+}

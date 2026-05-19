@@ -7,7 +7,8 @@ import {
 import { PanelBody, TextControl } from "@wordpress/components";
 import metadata from "./block.json";
 
-registerBlockType(metadata.name, {
+registerBlockType("logiweb/custom-block-44", {
+  ...metadata,
   edit({ attributes, setAttributes }) {
     const { formTitle, formDescription, resultsPageUrl, buttonText } =
       attributes;

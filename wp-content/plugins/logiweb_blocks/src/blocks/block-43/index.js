@@ -12,7 +12,8 @@ import {
 } from "@wordpress/components";
 import metadata from "./block.json";
 
-registerBlockType(metadata.name, {
+registerBlockType("logiweb/custom-block-43", {
+  ...metadata,
   edit({ attributes, setAttributes }) {
     const { sectionTitle, sectionSubtitle, faqs } = attributes;
     const blockProps = useBlockProps({ className: "faq-block-editor" });

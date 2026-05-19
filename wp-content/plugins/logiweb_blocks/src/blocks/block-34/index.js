@@ -35,6 +35,9 @@ registerBlockType("logiweb/custom-block-34", {
       secondaryUrl,
     } = attributes;
 
+    const hasPrimaryText = Boolean((primaryText || "").trim());
+    const hasSecondaryText = Boolean((secondaryText || "").trim());
+
     return (
       <div className="financing-hero-editor">
         <InspectorControls>
@@ -104,21 +107,27 @@ registerBlockType("logiweb/custom-block-34", {
               placeholder="Add financing description"
             />
 
-            <div className="financing-hero-actions">
-              <a
-                className="financing-hero-btn primary"
-                href={primaryUrl || "#"}
-              >
-                <span>{primaryText}</span>
-                <i className="fa-solid fa-arrow-right"></i>
-              </a>
-              <a
-                className="financing-hero-btn secondary"
-                href={secondaryUrl || "#"}
-              >
-                {secondaryText}
-              </a>
-            </div>
+            {(hasPrimaryText || hasSecondaryText) && (
+              <div className="financing-hero-actions">
+                {hasPrimaryText && (
+                  <a
+                    className="financing-hero-btn primary"
+                    href={primaryUrl || "#"}
+                  >
+                    <span>{primaryText}</span>
+                    <i className="fa-solid fa-arrow-right"></i>
+                  </a>
+                )}
+                {hasSecondaryText && (
+                  <a
+                    className="financing-hero-btn secondary"
+                    href={secondaryUrl || "#"}
+                  >
+                    {secondaryText}
+                  </a>
+                )}
+              </div>
+            )}
           </div>
         </section>
       </div>
@@ -137,6 +146,9 @@ registerBlockType("logiweb/custom-block-34", {
       secondaryText,
       secondaryUrl,
     } = attributes;
+
+    const hasPrimaryText = Boolean((primaryText || "").trim());
+    const hasSecondaryText = Boolean((secondaryText || "").trim());
 
     return (
       <section className="financing-hero-block">
@@ -159,18 +171,27 @@ registerBlockType("logiweb/custom-block-34", {
             value={description}
           />
 
-          <div className="financing-hero-actions">
-            <a className="financing-hero-btn primary" href={primaryUrl || "#"}>
-              <span>{primaryText}</span>
-              <i className="fa-solid fa-arrow-right"></i>
-            </a>
-            <a
-              className="financing-hero-btn secondary"
-              href={secondaryUrl || "#"}
-            >
-              {secondaryText}
-            </a>
-          </div>
+          {(hasPrimaryText || hasSecondaryText) && (
+            <div className="financing-hero-actions">
+              {hasPrimaryText && (
+                <a
+                  className="financing-hero-btn primary"
+                  href={primaryUrl || "#"}
+                >
+                  <span>{primaryText}</span>
+                  <i className="fa-solid fa-arrow-right"></i>
+                </a>
+              )}
+              {hasSecondaryText && (
+                <a
+                  className="financing-hero-btn secondary"
+                  href={secondaryUrl || "#"}
+                >
+                  {secondaryText}
+                </a>
+              )}
+            </div>
+          )}
         </div>
       </section>
     );

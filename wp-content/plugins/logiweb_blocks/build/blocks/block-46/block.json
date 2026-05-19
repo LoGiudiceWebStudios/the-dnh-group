@@ -1,19 +1,66 @@
 {
-  "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 3,
-  "name": "create-block/custom-block-46",
-  "version": "0.1.0",
-  "title": "Custom Block 46",
+  "apiVersion": 2,
+  "name": "logiweb/custom-block-46",
+  "title": "Portfolio Showcase",
   "category": "widgets",
-  "icon": "smiley",
-  "description": "A custom block for displaying a section with a title and content.",
-  "example": {},
+  "icon": "format-gallery",
+  "description": "Project showcase cards with category filter and popup details.",
   "supports": {
     "html": false
   },
-  "textdomain": "custom-block-46",
-  "editorScript": "file:./index.js",
-  "editorStyle": "file:../../global-styles.scss",
-  "style": "file:../../global-styles.scss",
-  "viewScript": "file:./view.js"
+  "attributes": {
+    "projects": {
+      "type": "array",
+      "default": [
+        {
+          "category": "Painting",
+          "title": "Victorian Exterior Revival",
+          "imageUrl": "",
+          "imageAlt": "Victorian Exterior Revival",
+          "description": "Complete exterior transformation of a historic Victorian home, including intricate trim work, shutters, and front porch restoration.",
+          "location": "Hyde Park, Cincinnati, OH",
+          "size": "4,200 sq ft",
+          "duration": "18 days",
+          "completed": "March 18, 2026",
+          "rating": "5.0",
+          "featuresText": "Custom color matching\nHistoric preservation\nTrim detail work",
+          "badge": "Featured Project",
+          "letter": "V",
+          "startDate": "March 1, 2026",
+          "teamSize": "5 painters",
+          "testimonial": "DNH brought our 100-year-old home back to life. The attention to detail was incredible.",
+          "testimonialAuthor": "Sarah Mitchell",
+          "primaryCtaText": "Start Your Project",
+          "primaryCtaUrl": "#",
+          "secondaryCtaText": "Explore Financing",
+          "secondaryCtaUrl": "#"
+        },
+        {
+          "category": "Remodeling",
+          "title": "Modern Kitchen Transformation",
+          "imageUrl": "",
+          "imageAlt": "Modern Kitchen Transformation",
+          "description": "Full kitchen renovation including cabinet refinishing, new countertops, backsplash installation, and updated lighting.",
+          "location": "Lexington, KY",
+          "size": "380 sq ft",
+          "duration": "12 days",
+          "completed": "April 9, 2026",
+          "rating": "5.0",
+          "featuresText": "Cabinet refinishing\nQuartz countertops\nNew backsplash",
+          "badge": "Top Remodel",
+          "letter": "M",
+          "startDate": "March 28, 2026",
+          "teamSize": "4 specialists",
+          "testimonial": "The team kept everything on schedule and the final result exceeded expectations.",
+          "testimonialAuthor": "Daniel Carter",
+          "primaryCtaText": "Start Your Project",
+          "primaryCtaUrl": "#",
+          "secondaryCtaText": "Explore Financing",
+          "secondaryCtaUrl": "#"
+        }
+      ]
+    }
+  },
+  "editorScript": "file:../../index.js",
+  "style": "file:../../global-styles.css"
 }
