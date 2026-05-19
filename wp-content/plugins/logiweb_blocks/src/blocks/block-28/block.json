@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-28",
+  "title": "Team Stats + Join CTA",
+  "category": "widgets",
+  "icon": "groups",
+  "description": "Two-part section with animated team stats and career call-to-action",
+  "editorScript": "file:../../../build/index.js",
+  "editorStyle": "file:../../../build/index.css",
+  "style": "file:../../../build/index.css"
+}

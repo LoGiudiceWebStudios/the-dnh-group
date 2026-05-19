@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-22",
+  "title": "CTA Hero - Let's Work Together",
+  "category": "widgets",
+  "icon": "megaphone",
+  "description": "Full-width dark CTA section with badge, title, description, two buttons and stats row",
+  "editorScript": "file:../../../build/index.js",
+  "editorStyle": "file:../../../build/index.css",
+  "style": "file:../../../build/index.css"
+}

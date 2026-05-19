@@ -1,0 +1,31 @@
+{
+  "apiVersion": 2,
+  "name": "logiweb/custom-block-44",
+  "title": "Financing Application Form",
+  "category": "common",
+  "icon": "form",
+  "description": "Form for collecting financing application data.",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "formTitle": {
+      "type": "string",
+      "default": "Tell Us About Your Project"
+    },
+    "formDescription": {
+      "type": "string",
+      "default": "Fill out your information below and we'll match you with the best financing options."
+    },
+    "resultsPageUrl": {
+      "type": "string",
+      "default": "/select-financing/"
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "View Financing Options →"
+    }
+  },
+  "editorScript": "file:../../index.js",
+  "style": "file:../../global-styles.css"
+}

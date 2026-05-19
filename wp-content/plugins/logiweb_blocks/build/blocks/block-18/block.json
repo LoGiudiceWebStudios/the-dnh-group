@@ -2,17 +2,38 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "logiweb/custom-block-18",
-  "version": "0.1.0",
   "title": "Services Cards Showcase",
   "category": "widgets",
   "icon": "screenoptions",
-  "description": "A services section with subtitle, title, description, repeatable cards and a footer CTA.",
-  "example": {},
-  "supports": {
-    "html": false
-  },
-  "textdomain": "custom-block-18",
-  "editorScript": "file:./index.js",
-  "editorStyle": "file:../../global-styles.scss",
-  "style": "file:../../global-styles.scss"
+  "description": "Display services with cards, images, and CTA button",
+  "attributes": {
+    "subtitle": {
+      "type": "string",
+      "default": "OUR SERVICES"
+    },
+    "title": {
+      "type": "string",
+      "default": "Comprehensive Home Solutions"
+    },
+    "description": {
+      "type": "string",
+      "default": "From painting to remodeling, we provide everything you need to maintain, improve, and beautify your home."
+    },
+    "cards": {
+      "type": "array",
+      "default": []
+    },
+    "footerText": {
+      "type": "string",
+      "default": "Not sure which service you need? We're here to help."
+    },
+    "footerButtonText": {
+      "type": "string",
+      "default": "Get a Free Consultation"
+    },
+    "footerButtonUrl": {
+      "type": "string",
+      "default": "#contact"
+    }
+  }
 }

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-35",
+  "title": "Financing Benefits Grid",
+  "category": "widgets",
+  "icon": "screenoptions",
+  "description": "Why choose financing section with four benefit cards.",
+  "editorScript": "file:../../../build/index.js",
+  "editorStyle": "file:../../../build/index.css",
+  "style": "file:../../../build/index.css"
+}

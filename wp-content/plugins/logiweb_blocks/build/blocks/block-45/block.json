@@ -1,0 +1,39 @@
+{
+  "apiVersion": 2,
+  "name": "logiweb/custom-block-45",
+  "title": "Financing Results Selector",
+  "category": "common",
+  "icon": "chart-bar",
+  "description": "Display financing options based on submitted application.",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "resultsTitle": {
+      "type": "string",
+      "default": "Choose Your Financing Partner"
+    },
+    "resultsSubtitle": {
+      "type": "string",
+      "default": "We've matched you with financing options based on your project details."
+    },
+    "editBtnText": {
+      "type": "string",
+      "default": "Edit Info"
+    },
+    "bottomCta": {
+      "type": "string",
+      "default": "Not sure which option is right for you?"
+    },
+    "bottomPhone": {
+      "type": "string",
+      "default": "(555) 555-0123"
+    },
+    "bottomMsg": {
+      "type": "string",
+      "default": "Speak with a Specialist"
+    }
+  },
+  "editorScript": "file:../../index.js",
+  "style": "file:../../global-styles.css"
+}

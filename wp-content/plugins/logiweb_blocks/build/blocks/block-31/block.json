@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-31",
+  "title": "Open Positions Board",
+  "category": "widgets",
+  "icon": "list-view",
+  "description": "Filterable careers board with expandable role details and sidebar cards",
+  "editorScript": "file:../../../build/index.js",
+  "editorStyle": "file:../../../build/index.css",
+  "style": "file:../../../build/index.css"
+}

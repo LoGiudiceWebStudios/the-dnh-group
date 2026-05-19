@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-36",
+  "title": "Financing Steps Process",
+  "category": "widgets",
+  "icon": "editor-ol",
+  "description": "Horizontal four-step financing process section.",
+  "editorScript": "file:../../../build/index.js",
+  "editorStyle": "file:../../../build/index.css",
+  "style": "file:../../../build/index.css"
+}

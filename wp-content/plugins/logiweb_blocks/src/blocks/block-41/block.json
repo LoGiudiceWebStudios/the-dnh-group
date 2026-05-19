@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-41",
+  "title": "Apply Financing Banner",
+  "category": "widgets",
+  "icon": "money-alt",
+  "description": "Blue financing application banner with trust feature strip.",
+  "editorScript": "file:../../../build/index.js",
+  "editorStyle": "file:../../../build/index.css",
+  "style": "file:../../../build/index.css"
+}

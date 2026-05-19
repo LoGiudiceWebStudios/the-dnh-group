@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-29",
+  "title": "Join Team Career Panel",
+  "category": "widgets",
+  "icon": "id-alt",
+  "description": "Career recruitment panel with stats and alert signup card",
+  "editorScript": "file:../../../build/index.js",
+  "editorStyle": "file:../../../build/index.css",
+  "style": "file:../../../build/index.css"
+}

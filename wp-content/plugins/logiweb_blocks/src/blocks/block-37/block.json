@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-37",
+  "title": "Credit Score Options Grid",
+  "category": "widgets",
+  "icon": "table-col-after",
+  "description": "Four-column financing options by credit score.",
+  "editorScript": "file:../../../build/index.js",
+  "editorStyle": "file:../../../build/index.css",
+  "style": "file:../../../build/index.css"
+}

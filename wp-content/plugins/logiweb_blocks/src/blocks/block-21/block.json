@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-21",
+  "title": "Featured Projects Grid",
+  "category": "widgets",
+  "icon": "grid-view",
+  "description": "2x2 portfolio project cards grid with image, tags, title, description and CTA",
+  "editorScript": "file:../../../build/index.js",
+  "editorStyle": "file:../../../build/index.css",
+  "style": "file:../../../build/index.css"
+}

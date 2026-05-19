@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-38",
+  "title": "Financing Partners Grid",
+  "category": "widgets",
+  "icon": "networking",
+  "description": "Grid of financing partners with rates, terms, and trust badges.",
+  "editorScript": "file:../../../build/index.js",
+  "editorStyle": "file:../../../build/index.css",
+  "style": "file:../../../build/index.css"
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-40",
+  "title": "Ready To Start CTA",
+  "category": "widgets",
+  "icon": "yes-alt",
+  "description": "Green call-to-action section with dual buttons and trust points.",
+  "editorScript": "file:../../../build/index.js",
+  "editorStyle": "file:../../../build/index.css",
+  "style": "file:../../../build/index.css"
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-19",
+  "title": "Why Choose Us - Stats & Benefits",
+  "category": "widgets",
+  "icon": "chart-pie",
+  "description": "Display statistics with counting effect and editable benefits",
+  "attributes": {
+    "subtitle": {
+      "type": "string",
+      "default": "WHY CHOOSE US"
+    },
+    "title": {
+      "type": "string",
+      "default": "The DNH Difference"
+    },
+    "description": {
+      "type": "string",
+      "default": "We're not just another contractor. We're your partners in creating the home you've always wanted."
+    },
+    "stats": {
+      "type": "array",
+      "default": []
+    },
+    "benefits": {
+      "type": "array",
+      "default": []
+    }
+  }
+}

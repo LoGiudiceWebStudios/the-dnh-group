@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-25",
+  "title": "Journey Timeline",
+  "category": "widgets",
+  "icon": "schedule",
+  "description": "Scrollable timeline with animated progress line and reveal cards",
+  "editorScript": "file:../../../build/index.js",
+  "editorStyle": "file:../../../build/index.css",
+  "style": "file:../../../build/index.css"
+}

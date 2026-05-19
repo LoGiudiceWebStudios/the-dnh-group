@@ -1,0 +1,44 @@
+{
+  "apiVersion": 2,
+  "name": "logiweb/custom-block-43",
+  "title": "FAQ Section",
+  "category": "common",
+  "icon": "editor-help",
+  "description": "Frequently Asked Questions grid section.",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "sectionTitle": {
+      "type": "string",
+      "default": "Frequently Asked Questions"
+    },
+    "sectionSubtitle": {
+      "type": "string",
+      "default": "Have questions about our financing process?"
+    },
+    "faqs": {
+      "type": "array",
+      "default": [
+        {
+          "question": "Will this affect my credit score?",
+          "answer": "No. Our pre-qualification process uses a soft credit pull that will not impact your credit score."
+        },
+        {
+          "question": "How long does approval take?",
+          "answer": "Most applicants receive a decision within minutes. Some cases may take up to 24 hours."
+        },
+        {
+          "question": "What if I have bad credit?",
+          "answer": "We work with multiple lenders and offer options for various credit profiles, including in-house financing."
+        },
+        {
+          "question": "Can I pay off early?",
+          "answer": "Yes! Most of our financing partners allow early payoff without prepayment penalties."
+        }
+      ]
+    }
+  },
+  "editorScript": "file:../../index.js",
+  "style": "file:../../global-styles.css"
+}

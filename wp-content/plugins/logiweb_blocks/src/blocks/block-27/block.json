@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-27",
+  "title": "Team Members Showcase",
+  "category": "widgets",
+  "icon": "groups",
+  "description": "Filterable team members grid with photos, roles and experience",
+  "editorScript": "file:../../../build/index.js",
+  "editorStyle": "file:../../../build/index.css",
+  "style": "file:../../../build/index.css"
+}

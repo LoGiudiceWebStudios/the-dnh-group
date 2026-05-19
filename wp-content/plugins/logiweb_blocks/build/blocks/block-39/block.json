@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-39",
+  "title": "Monthly Payment Estimator",
+  "category": "widgets",
+  "icon": "chart-line",
+  "description": "Two-column financing estimator layout with sliders and monthly payment summary.",
+  "editorScript": "file:../../../build/index.js",
+  "editorStyle": "file:../../../build/index.css",
+  "style": "file:../../../build/index.css"
+}
