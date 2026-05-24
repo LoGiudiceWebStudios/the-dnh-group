@@ -22,6 +22,8 @@ module.exports = {
     "blocks/block-16": "./src/blocks/block-16/index.js",
     "blocks/block-17": "./src/blocks/block-17/index.js",
     "blocks/block-19": "./src/blocks/block-19/index.js",
+    "blocks/block-66/frontend": "./src/blocks/block-66/frontend.js",
+    "blocks/block-71/frontend": "./src/blocks/block-71/frontend.js",
   },
 
   output: {

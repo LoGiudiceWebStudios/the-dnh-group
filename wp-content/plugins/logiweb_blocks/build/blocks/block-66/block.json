@@ -1,0 +1,34 @@
+{
+  "apiVersion": 2,
+  "name": "logiweb/custom-block-66",
+  "title": "Blog & Articles Filter",
+  "category": "widgets",
+  "icon": "media-document",
+  "description": "Blog/case studies listing with category filter tabs, connected to WordPress posts filtered by tag.",
+  "supports": {
+    "html": false
+  },
+  "textdomain": "logiweb-blocks",
+  "attributes": {
+    "postsPerPage": {
+      "type": "number",
+      "default": 9
+    },
+    "showExcerpt": {
+      "type": "boolean",
+      "default": true
+    },
+    "showAuthor": {
+      "type": "boolean",
+      "default": true
+    },
+    "showReadTime": {
+      "type": "boolean",
+      "default": true
+    },
+    "filterLabel": {
+      "type": "string",
+      "default": "All"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-59",
+  "version": "0.1.0",
+  "title": "Contact Split Form + Info",
+  "category": "widgets",
+  "icon": "email",
+  "description": "Contact section with CF7 form and right-side info cards.",
+  "supports": {
+    "html": false
+  },
+  "textdomain": "custom-block-59",
+  "editorScript": "file:../../index.js",
+  "style": "file:../../global-styles.css"
+}

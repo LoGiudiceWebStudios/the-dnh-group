@@ -40,7 +40,9 @@ add_action('after_setup_theme', 'logiweb_theme_setup');
 function logiweb_register_menus() {
     register_nav_menus(array(
         'primary' => __('Desktop Primary Navbar', 'logiweb'),
-        'footer'  => __('Footer Menu Items', 'logiweb')
+        'footer'  => __('Footer Menu Items', 'logiweb'),
+        'company' => __('Footer Company Menu', 'logiweb'),
+        'financing' => __('Footer Financing Menu', 'logiweb'),
     ));
 }
 add_action('init', 'logiweb_register_menus');
@@ -636,6 +638,9 @@ class Footer_Nav_Walker extends Walker_Nav_Menu {
         $output .= "</li>\n";
     }
 }
+
+
+
 
 
 /**

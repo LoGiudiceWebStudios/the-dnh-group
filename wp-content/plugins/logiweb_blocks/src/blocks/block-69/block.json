@@ -1,0 +1,16 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-69",
+  "version": "0.1.0",
+  "title": "Ohio Trusted Hero",
+  "category": "widgets",
+  "icon": "cover-image",
+  "description": "Dark hero with image mosaic, CTA, phone and stats.",
+  "supports": {
+    "html": false
+  },
+  "textdomain": "logiweb-blocks",
+  "editorScript": "file:../../index.js",
+  "style": "file:../../global-styles.css"
+}

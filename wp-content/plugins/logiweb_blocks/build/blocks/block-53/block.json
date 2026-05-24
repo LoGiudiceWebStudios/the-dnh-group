@@ -1,0 +1,16 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-53",
+  "version": "0.1.0",
+  "title": "Reviews Grid",
+  "category": "widgets",
+  "icon": "star-filled",
+  "description": "Filterable customer reviews grid with service category pills.",
+  "supports": {
+    "html": false
+  },
+  "textdomain": "custom-block-53",
+  "editorScript": "file:../../index.js",
+  "style": "file:../../global-styles.css"
+}

@@ -1,0 +1,49 @@
+{
+  "apiVersion": 2,
+  "name": "logiweb/custom-block-67",
+  "title": "DNH Video Log",
+  "category": "widgets",
+  "icon": "video-alt3",
+  "description": "Video gallery with badge, title, tagline and a 3-column grid of video cards with play button, duration and title.",
+  "supports": {
+    "html": false
+  },
+  "textdomain": "logiweb-blocks",
+  "attributes": {
+    "badge": {
+      "type": "string",
+      "default": "Behind the Scenes"
+    },
+    "title": {
+      "type": "string",
+      "default": "DNH Video Log"
+    },
+    "tagline": {
+      "type": "string",
+      "default": "Watch our crew in action"
+    },
+    "videos": {
+      "type": "array",
+      "default": [
+        {
+          "url": "",
+          "thumbnail": "",
+          "duration": "3:24",
+          "title": "Morning Prep on a Exterior Job Site"
+        },
+        {
+          "url": "",
+          "thumbnail": "",
+          "duration": "2:18",
+          "title": "Kitchen Cabinet Install Time-Lapse"
+        },
+        {
+          "url": "",
+          "thumbnail": "",
+          "duration": "4:45",
+          "title": "Roof Tear-Off & Replacement Day 1"
+        }
+      ]
+    }
+  }
+}

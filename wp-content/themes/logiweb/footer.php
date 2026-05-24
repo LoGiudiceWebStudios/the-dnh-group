@@ -44,7 +44,7 @@ $show_terms_of_service = get_theme_mod('show_terms_of_service', false);
 
         <div class="footer-subcontainer container">
             <div class="quick-links">
-                <div class="bold title-small">Link Veloci</div>
+                <div class="bold title-small">SERVICES</div>
                 <?php
                     wp_nav_menu(array(
                         'theme_location' => 'footer',
@@ -55,7 +55,48 @@ $show_terms_of_service = get_theme_mod('show_terms_of_service', false);
                 ?>
             </div>
 
-            <div class="connect-with-us">
+            <div class="quick-links">
+                <div class="bold title-small">COMPANY</div>
+                <?php
+                    wp_nav_menu(array(
+                        'theme_location' => 'company',
+                        'depth' => 1, // no dropdown
+                        'items_wrap' => '<ul class="footer-navigation">%3$s</ul>',
+                        'walker' => new Footer_Nav_Walker(), // Use the custom walker
+                    ));
+                ?>
+            </div>
+
+            <div class="quick-links">
+                <div class="bold title-small">FINANCING</div>
+                <?php
+                    wp_nav_menu(array(
+                        'theme_location' => 'financing',
+                        'depth' => 1, // no dropdown
+                        'items_wrap' => '<ul class="footer-navigation">%3$s</ul>',
+                        'walker' => new Footer_Nav_Walker(), // Use the custom walker
+                    ));
+                    $contact_items = [
+                        'phone'  => 'fa-phone',
+                        'email' => 'fa-envelope',
+                        'working_hours'   => 'fa-clock',
+                        'address'  => 'fa-location-dot',
+                        'custom'   => 'fa-info-circle',
+                    ];
+
+                    foreach ($contact_items as $name => $icon) {
+                        $show = get_theme_mod("show_{$name}");
+                        $info  = get_theme_mod("{$name}_info");
+
+                        if ($show && $info) {
+                            echo '<div class="item"><i class="fa-solid ' . esc_attr($icon) . '"></i><span>  </span>' . esc_html($info) . '</span></div>';
+                        }
+                    }
+
+                ?>
+            </div>
+
+            <div class="connect-with-us" style="display: none;">
                 <div class="bold title-small">Contattaci</div>
                 <?php
                 $contact_items = [
@@ -78,7 +119,7 @@ $show_terms_of_service = get_theme_mod('show_terms_of_service', false);
 
             </div>
 
-            <div class="stay-updated">
+            <div class="stay-updated" style="display: none;">
                 <div class="bold title-small">Socials</div>
 
                 <?php

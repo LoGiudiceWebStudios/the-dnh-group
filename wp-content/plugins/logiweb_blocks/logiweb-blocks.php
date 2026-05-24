@@ -129,6 +129,20 @@ add_action('wp_enqueue_scripts', function() {
         filemtime( plugin_dir_path( __FILE__ ) . 'portfolio-grid-init.js' ),
         true
     );
+    wp_enqueue_script(
+        'logiweb-reviews-grid-init',
+        plugins_url('reviews-grid-init.js', __FILE__),
+        array(),
+        filemtime( plugin_dir_path( __FILE__ ) . 'reviews-grid-init.js' ),
+        true
+    );
+    wp_enqueue_script(
+        'logiweb-video-testimonials-init',
+        plugins_url('video-testimonials-init.js', __FILE__),
+        array(),
+        filemtime( plugin_dir_path( __FILE__ ) . 'video-testimonials-init.js' ),
+        true
+    );
     wp_localize_script('logiweb-financing-form', 'logiweb_rest', array(
         'nonce' => wp_create_nonce('wp_rest'),
         'base_url' => rest_url(),
@@ -486,6 +500,154 @@ function logiweb_register_blocks() {
         'editor_style'  => 'logiweb-blocks-editor-styles',
         'style'         => 'logiweb-blocks-frontend-styles',
     ));
+    register_block_type( 'logiweb/custom-block-52', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-53', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-54', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-55', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-56', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-57', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-58', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-59', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+        'render_callback' => 'logiweb_render_block_59',
+    ));
+    register_block_type( 'logiweb/custom-block-60', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-61', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-62', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-63', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-64', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-65', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-66', array(
+        'editor_script'   => 'logiweb-blocks-editor',
+        'editor_style'    => 'logiweb-blocks-editor-styles',
+        'style'           => 'logiweb-blocks-frontend-styles',
+        'render_callback' => 'logiweb_render_block_66',
+        'attributes'      => array(
+            'postsPerPage'  => array( 'type' => 'number',  'default' => 9 ),
+            'showExcerpt'   => array( 'type' => 'boolean', 'default' => true ),
+            'showAuthor'    => array( 'type' => 'boolean', 'default' => true ),
+            'showReadTime'  => array( 'type' => 'boolean', 'default' => true ),
+            'filterLabel'   => array( 'type' => 'string',  'default' => 'All' ),
+        ),
+    ));
+
+    register_block_type( 'logiweb/custom-block-67', array(
+        'editor_script'   => 'logiweb-blocks-editor',
+        'editor_style'    => 'logiweb-blocks-editor-styles',
+        'style'           => 'logiweb-blocks-frontend-styles',
+        'render_callback' => 'logiweb_render_block_67',
+        'attributes'      => array(
+            'badge'   => array( 'type' => 'string', 'default' => 'Behind the Scenes' ),
+            'title'   => array( 'type' => 'string', 'default' => 'DNH Video Log' ),
+            'tagline' => array( 'type' => 'string', 'default' => 'Watch our crew in action' ),
+            'videos'  => array( 'type' => 'array',  'default' => array() ),
+        ),
+    ));
+    register_block_type( 'logiweb/custom-block-68', array(
+        'editor_script'   => 'logiweb-blocks-editor',
+        'editor_style'    => 'logiweb-blocks-editor-styles',
+        'style'           => 'logiweb-blocks-frontend-styles',
+        'render_callback' => 'logiweb_render_block_68',
+        'attributes'      => array(
+            'leftTitle'    => array( 'type' => 'string', 'default' => 'Why Request a Quote from DNH Group?' ),
+            'bullet1'      => array( 'type' => 'string', 'default' => 'Free, no-obligation estimates' ),
+            'bullet2'      => array( 'type' => 'string', 'default' => 'Detailed, transparent pricing' ),
+            'bullet3'      => array( 'type' => 'string', 'default' => 'Expert recommendations tailored to your needs' ),
+            'bullet4'      => array( 'type' => 'string', 'default' => 'Flexible scheduling to fit your timeline' ),
+            'bullet5'      => array( 'type' => 'string', 'default' => 'Financing options available' ),
+            'callTitle'    => array( 'type' => 'string', 'default' => 'Prefer to Call?' ),
+            'callPhone'    => array( 'type' => 'string', 'default' => '(555) 123-4567' ),
+            'callHours'    => array( 'type' => 'string', 'default' => 'Mon-Fri 8am-6pm, Sat 9am-2pm' ),
+            'formTitle'    => array( 'type' => 'string', 'default' => 'Project Information' ),
+            'cf7Shortcode' => array( 'type' => 'string', 'default' => '' ),
+            'privacyText'  => array( 'type' => 'string', 'default' => 'By submitting, you agree to our Privacy Policy and Terms of Service' ),
+        ),
+    ));
+    register_block_type( 'logiweb/custom-block-69', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-70', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-71', array(
+        'editor_script'   => 'logiweb-blocks-editor',
+        'editor_style'    => 'logiweb-blocks-editor-styles',
+        'style'           => 'logiweb-blocks-frontend-styles',
+        'render_callback' => 'logiweb_render_block_71',
+        'attributes'      => array(
+            'badgeText' => array( 'type' => 'string', 'default' => 'Ohio Project Showcase' ),
+            'title'     => array( 'type' => 'string', 'default' => 'Recent Work Across Ohio' ),
+            'projects'  => array( 'type' => 'array',  'default' => array() ),
+        ),
+    ));
+    register_block_type( 'logiweb/custom-block-72', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-73', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
 
 }
 add_action( 'init', 'logiweb_register_blocks' );
@@ -556,6 +718,96 @@ function logiweb_render_block_29( $attributes ) {
                     </a>
                     <p class="career-join-privacy"><?php echo esc_html( $a['privacyText'] ); ?></p>
                 <?php endif; ?>
+            </div>
+        </div>
+    </section>
+    <?php
+
+    return ob_get_clean();
+}
+
+function logiweb_render_block_59( $attributes ) {
+    $defaults = array(
+        'sectionTitle' => 'Send Us a Message',
+        'sectionSubtitle' => "Fill out the form below and we'll respond as soon as possible.",
+        'contactForm7Shortcode' => '',
+        'scheduleTitle' => 'Prefer to Talk?',
+        'scheduleButtonText' => 'Schedule a Call',
+        'scheduleButtonUrl' => '#',
+        'officeTitle' => 'Office Hours',
+        'officeHours' => array(
+            array( 'day' => 'Monday - Friday', 'time' => '8:00 AM - 6:00 PM' ),
+            array( 'day' => 'Saturday', 'time' => '9:00 AM - 2:00 PM' ),
+            array( 'day' => 'Sunday', 'time' => 'Closed' ),
+        ),
+        'serviceAreasTitle' => 'Service Areas',
+        'serviceAreas' => array(
+            'Ohio - Cincinnati, Columbus, Cleveland',
+            'Kentucky - Louisville, Lexington',
+            'Indiana - Indianapolis, Fort Wayne',
+        ),
+    );
+
+    $a = wp_parse_args( is_array( $attributes ) ? $attributes : array(), $defaults );
+    $office_hours = is_array( $a['officeHours'] ) ? $a['officeHours'] : array();
+    $service_areas = is_array( $a['serviceAreas'] ) ? $a['serviceAreas'] : array();
+    $shortcode = isset( $a['contactForm7Shortcode'] ) ? trim( (string) $a['contactForm7Shortcode'] ) : '';
+
+    ob_start();
+    ?>
+    <section class="contact-split-block fade-in-on-scroll" data-block="contact-split">
+        <div class="contact-split-inner">
+            <div class="contact-split-form-card">
+                <h2 class="contact-split-title"><?php echo esc_html( $a['sectionTitle'] ); ?></h2>
+                <p class="contact-split-subtitle"><?php echo esc_html( $a['sectionSubtitle'] ); ?></p>
+
+                <div class="contact-split-cf7-wrap">
+                    <?php
+                    if ( '' !== $shortcode ) {
+                        echo do_shortcode( $shortcode );
+                    } else {
+                        ?>
+                        <p class="contact-split-shortcode-empty">
+                            Add a Contact Form 7 shortcode in block settings.
+                        </p>
+                        <?php
+                    }
+                    ?>
+                </div>
+            </div>
+
+            <div class="contact-split-side-stack">
+                <article class="contact-split-side-card">
+                    <h3 class="contact-split-side-title"><?php echo esc_html( $a['scheduleTitle'] ); ?></h3>
+                    <a class="contact-split-outline-btn" href="<?php echo esc_url( $a['scheduleButtonUrl'] ); ?>">
+                        <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+                        <?php echo esc_html( $a['scheduleButtonText'] ); ?>
+                    </a>
+                </article>
+
+                <article class="contact-split-side-card">
+                    <h3 class="contact-split-side-title"><?php echo esc_html( $a['officeTitle'] ); ?></h3>
+                    <div class="contact-split-hours-list">
+                        <?php foreach ( $office_hours as $item ) :
+                            $day = isset( $item['day'] ) ? (string) $item['day'] : '';
+                            $time = isset( $item['time'] ) ? (string) $item['time'] : '';
+                        ?>
+                            <div class="contact-split-hours-row">
+                                <span><?php echo esc_html( $day ); ?></span>
+                                <strong><?php echo esc_html( $time ); ?></strong>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </article>
+
+                <article class="contact-split-side-card">
+                    <h3 class="contact-split-side-title"><?php echo esc_html( $a['serviceAreasTitle'] ); ?></h3>
+                    <div class="contact-split-areas-list">
+                        <?php foreach ( $service_areas as $area ) : ?>
+                            <p><?php echo esc_html( (string) $area ); ?></p>
+                        <?php endforeach; ?>
+                    </div>
+                </article>
             </div>
         </div>
     </section>
@@ -948,3 +1200,382 @@ function logiweb_render_financing_results( $attributes ) {
 }
 
 
+
+/* ============================================================
+   Block-66 – Blog & Articles Filter (dynamic, server-side)
+   ============================================================ */
+function logiweb_render_block_66( $attributes ) {
+    $per_page    = isset( $attributes['postsPerPage'] )  ? intval( $attributes['postsPerPage'] )   : 9;
+    $all_label   = isset( $attributes['filterLabel'] )   ? sanitize_text_field( $attributes['filterLabel'] ) : 'All';
+
+    $args = array(
+        'post_type'      => 'post',
+        'post_status'    => 'publish',
+        'posts_per_page' => $per_page,
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+    );
+    $query = new WP_Query( $args );
+    $total = $query->found_posts;
+
+    $nonce    = wp_create_nonce( 'wp_rest' );
+    $rest_url = esc_url( rest_url( 'wp/v2' ) );
+
+    ob_start();
+    ?>
+    <section
+        class="blog-filter-block"
+        data-nonce="<?php echo esc_attr( $nonce ); ?>"
+        data-per-page="<?php echo esc_attr( $per_page ); ?>"
+        data-show-excerpt="<?php echo ! empty( $attributes['showExcerpt'] )   ? 'true' : 'false'; ?>"
+        data-show-author="<?php echo ! empty( $attributes['showAuthor'] )    ? 'true' : 'false'; ?>"
+        data-show-readtime="<?php echo ! empty( $attributes['showReadTime'] ) ? 'true' : 'false'; ?>"
+        data-all-label="<?php echo esc_attr( $all_label ); ?>"
+        data-total="<?php echo esc_attr( $total ); ?>"
+    >
+        <div class="blog-filter-tabs">
+            <button class="blog-filter-tab blog-filter-tab--active" data-tag-id="" data-tag-label="<?php echo esc_attr( $all_label ); ?>">
+                <?php echo esc_html( $all_label ); ?> <span class="blog-filter-tab-count"><?php echo esc_html( $total ); ?></span>
+            </button>
+        </div>
+
+        <div class="blog-filter-body">
+            <?php if ( $query->have_posts() ) : ?>
+                <div class="blog-filter-body-inner">
+                    <div class="blog-filter-group-header">
+                        <h2 class="blog-filter-group-title"><?php echo esc_html( $all_label ); ?></h2>
+                        <span class="blog-filter-group-count"><?php echo esc_html( $total ); ?> article<?php echo $total !== 1 ? 's' : ''; ?></span>
+                    </div>
+                    <div class="blog-filter-grid">
+                        <?php while ( $query->have_posts() ) : $query->the_post();
+                            $thumb      = has_post_thumbnail() ? get_the_post_thumbnail_url( null, 'large' ) : '';
+                            $tags       = get_the_tags();
+                            $tag_name   = $tags ? $tags[0]->name : '';
+                            $author     = get_the_author();
+                            $word_count = str_word_count( wp_strip_all_tags( get_the_content() ) );
+                            $read_time  = max( 1, round( $word_count / 200 ) ) . ' min read';
+                        ?>
+                        <article class="blog-filter-card">
+                            <a href="<?php the_permalink(); ?>" class="blog-filter-card-link">
+                                <div class="blog-filter-card-image<?php echo $thumb ? '' : ' blog-filter-card-image--placeholder'; ?>"
+                                     <?php echo $thumb ? 'style="background-image:url(' . esc_attr( $thumb ) . ')"' : ''; ?>>
+                                    <?php if ( $tag_name ) : ?>
+                                        <span class="blog-filter-card-badge"><?php echo esc_html( $tag_name ); ?></span>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="blog-filter-card-body">
+                                    <h3 class="blog-filter-card-title"><?php the_title(); ?></h3>
+                                    <?php if ( ! empty( $attributes['showExcerpt'] ) ) : ?>
+                                        <p class="blog-filter-card-excerpt"><?php echo esc_html( wp_trim_words( get_the_excerpt(), 22 ) ); ?></p>
+                                    <?php endif; ?>
+                                    <div class="blog-filter-card-meta">
+                                        <?php if ( ! empty( $attributes['showAuthor'] ) ) : ?>
+                                            <span class="blog-filter-card-author"><i class="fa fa-user"></i> <?php echo esc_html( $author ); ?></span>
+                                        <?php endif; ?>
+                                        <?php if ( ! empty( $attributes['showReadTime'] ) ) : ?>
+                                            <span class="blog-filter-card-readtime"><i class="fa fa-clock-o"></i> <?php echo esc_html( $read_time ); ?></span>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </a>
+                        </article>
+                        <?php endwhile; wp_reset_postdata(); ?>
+                    </div>
+                </div>
+            <?php else : ?>
+                <p class="blog-filter-empty">No articles found.</p>
+            <?php endif; ?>
+        </div>
+    </section>
+
+    <script>
+        window.logiwebBlogFilter = window.logiwebBlogFilter || {};
+        window.logiwebBlogFilter.restUrl = <?php echo wp_json_encode( rest_url( 'wp/v2' ) ); ?>;
+    </script>
+    <?php
+    return ob_get_clean();
+}
+
+/* Enqueue block-66 frontend JS */
+add_action( 'wp_enqueue_scripts', function () {
+    if ( ! has_block( 'logiweb/custom-block-66' ) ) return;
+    $plugin_url = plugin_dir_url( __FILE__ );
+    wp_enqueue_script(
+        'logiweb-block-66-frontend',
+        $plugin_url . 'build/blocks/block-66/frontend.js',
+        array(),
+        filemtime( plugin_dir_path( __FILE__ ) . 'build/blocks/block-66/frontend.js' ),
+        true
+    );
+} );
+
+/* ============================================================
+   Block-67 – DNH Video Log
+   ============================================================ */
+function logiweb_render_block_67( $attributes ) {
+    $badge   = isset( $attributes['badge'] )   ? sanitize_text_field( $attributes['badge'] )   : 'Behind the Scenes';
+    $title   = isset( $attributes['title'] )   ? sanitize_text_field( $attributes['title'] )   : 'DNH Video Log';
+    $tagline = isset( $attributes['tagline'] ) ? sanitize_text_field( $attributes['tagline'] ) : 'Watch our crew in action';
+    $videos  = isset( $attributes['videos'] )  ? $attributes['videos']                         : array();
+
+    if ( empty( $videos ) ) {
+        $videos = array(
+            array( 'url' => '', 'thumbnail' => '', 'duration' => '3:24', 'title' => 'Morning Prep on a Exterior Job Site' ),
+            array( 'url' => '', 'thumbnail' => '', 'duration' => '2:18', 'title' => 'Kitchen Cabinet Install Time-Lapse' ),
+            array( 'url' => '', 'thumbnail' => '', 'duration' => '4:45', 'title' => 'Roof Tear-Off & Replacement Day 1' ),
+        );
+    }
+
+    ob_start();
+    ?>
+    <div class="vlog-block">
+        <div class="vlog-header">
+            <div class="vlog-header-left">
+                <span class="vlog-badge"><span class="vlog-badge-icon">▷</span> <?php echo esc_html( $badge ); ?></span>
+                <h2 class="vlog-title"><?php echo esc_html( $title ); ?></h2>
+            </div>
+            <p class="vlog-tagline"><?php echo esc_html( $tagline ); ?></p>
+        </div>
+
+        <div class="vlog-grid">
+            <?php foreach ( $videos as $idx => $video ) :
+                $thumb   = ! empty( $video['thumbnail'] ) ? esc_url( $video['thumbnail'] ) : '';
+                $dur     = ! empty( $video['duration'] )  ? sanitize_text_field( $video['duration'] ) : '';
+                $vtitle  = ! empty( $video['title'] )     ? sanitize_text_field( $video['title'] ) : '';
+                $vurl    = ! empty( $video['url'] )       ? esc_url( $video['url'] ) : '';
+
+                // Detect YouTube embed
+                $is_youtube = preg_match( '/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/', $vurl, $yt_match );
+                $yt_id      = $is_youtube ? $yt_match[1] : '';
+                if ( $yt_id && ! $thumb ) {
+                    $thumb = 'https://img.youtube.com/vi/' . $yt_id . '/hqdefault.jpg';
+                }
+            ?>
+            <div class="vlog-card" data-url="<?php echo esc_attr( $vurl ); ?>" data-yt="<?php echo esc_attr( $yt_id ); ?>">
+                <div class="vlog-card-thumb"<?php echo $thumb ? ' style="background-image:url(' . $thumb . ')"' : ''; ?>>
+                    <button class="vlog-play-btn" aria-label="Play video">
+                        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="24" cy="24" r="24" fill="white" fill-opacity="0.92"/>
+                            <path d="M20 16L33 24L20 32V16Z" fill="#111827"/>
+                        </svg>
+                    </button>
+                    <?php if ( $dur ) : ?>
+                        <span class="vlog-duration"><?php echo esc_html( $dur ); ?></span>
+                    <?php endif; ?>
+                </div>
+                <p class="vlog-card-title"><?php echo esc_html( $vtitle ); ?></p>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <script>
+    (function(){
+        document.querySelectorAll('.vlog-card[data-url]').forEach(function(card){
+            var btn   = card.querySelector('.vlog-play-btn');
+            var ytId  = card.getAttribute('data-yt');
+            var vUrl  = card.getAttribute('data-url');
+            if (!btn || (!ytId && !vUrl)) return;
+            btn.addEventListener('click', function(){
+                var thumb = card.querySelector('.vlog-card-thumb');
+                if (ytId) {
+                    var iframe = document.createElement('iframe');
+                    iframe.src = 'https://www.youtube.com/embed/' + ytId + '?autoplay=1';
+                    iframe.allow = 'autoplay; encrypted-media';
+                    iframe.allowFullscreen = true;
+                    iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;';
+                    thumb.style.position = 'relative';
+                    thumb.innerHTML = '';
+                    thumb.appendChild(iframe);
+                } else if (vUrl) {
+                    window.open(vUrl, '_blank');
+                }
+            });
+        });
+    })();
+    </script>
+    <?php
+    return ob_get_clean();
+}
+
+/* ============================================================
+   Block-68 – Quote Request + Contact Form 7
+   ============================================================ */
+function logiweb_render_block_68( $attributes ) {
+    $defaults = array(
+        'leftTitle'    => 'Why Request a Quote from DNH Group?',
+        'bullet1'      => 'Free, no-obligation estimates',
+        'bullet2'      => 'Detailed, transparent pricing',
+        'bullet3'      => 'Expert recommendations tailored to your needs',
+        'bullet4'      => 'Flexible scheduling to fit your timeline',
+        'bullet5'      => 'Financing options available',
+        'callTitle'    => 'Prefer to Call?',
+        'callPhone'    => '(555) 123-4567',
+        'callHours'    => 'Mon-Fri 8am-6pm, Sat 9am-2pm',
+        'formTitle'    => 'Project Information',
+        'cf7Shortcode' => '',
+        'privacyText'  => 'By submitting, you agree to our Privacy Policy and Terms of Service',
+    );
+
+    $a = wp_parse_args( is_array( $attributes ) ? $attributes : array(), $defaults );
+
+    $left_title = sanitize_text_field( $a['leftTitle'] );
+    $bullets = array_filter( array(
+        sanitize_text_field( $a['bullet1'] ),
+        sanitize_text_field( $a['bullet2'] ),
+        sanitize_text_field( $a['bullet3'] ),
+        sanitize_text_field( $a['bullet4'] ),
+        sanitize_text_field( $a['bullet5'] ),
+    ) );
+    $call_title   = sanitize_text_field( $a['callTitle'] );
+    $call_phone   = sanitize_text_field( $a['callPhone'] );
+    $call_hours   = sanitize_text_field( $a['callHours'] );
+    $form_title   = sanitize_text_field( $a['formTitle'] );
+    $privacy_text = sanitize_text_field( $a['privacyText'] );
+    $cf7_shortcode = isset( $a['cf7Shortcode'] ) ? trim( wp_kses_post( $a['cf7Shortcode'] ) ) : '';
+
+    $cf7_html = '';
+    if ( ! empty( $cf7_shortcode ) && strpos( $cf7_shortcode, '[contact-form-7' ) !== false ) {
+        $cf7_html = do_shortcode( $cf7_shortcode );
+    }
+
+    ob_start();
+    ?>
+    <section class="quote-cf7-block">
+        <div class="quote-cf7-inner">
+            <div class="quote-cf7-left">
+                <h2 class="quote-cf7-left-title"><?php echo esc_html( $left_title ); ?></h2>
+                <?php if ( ! empty( $bullets ) ) : ?>
+                    <ul class="quote-cf7-benefits">
+                        <?php foreach ( $bullets as $item ) : ?>
+                            <li class="quote-cf7-benefit-item">
+                                <span class="quote-cf7-check" aria-hidden="true">&#10003;</span>
+                                <span><?php echo esc_html( $item ); ?></span>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+
+                <div class="quote-cf7-callbox">
+                    <h3><?php echo esc_html( $call_title ); ?></h3>
+                    <p class="quote-cf7-phone"><?php echo esc_html( $call_phone ); ?></p>
+                    <p class="quote-cf7-hours"><?php echo esc_html( $call_hours ); ?></p>
+                </div>
+            </div>
+
+            <div class="quote-cf7-form-card">
+                <h3 class="quote-cf7-form-title"><?php echo esc_html( $form_title ); ?></h3>
+
+                <?php if ( ! empty( $cf7_html ) ) : ?>
+                    <div class="quote-cf7-form-wrap">
+                        <?php echo $cf7_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                    </div>
+                <?php else : ?>
+                    <div class="quote-cf7-fallback-preview">
+                        <div class="quote-cf7-row">
+                            <input type="text" placeholder="First Name *" readonly />
+                            <input type="text" placeholder="Last Name *" readonly />
+                        </div>
+                        <div class="quote-cf7-row">
+                            <input type="email" placeholder="Email Address *" readonly />
+                            <input type="text" placeholder="Phone Number *" readonly />
+                        </div>
+                        <input type="text" placeholder="Address" readonly />
+                        <div class="quote-cf7-row quote-cf7-row--small">
+                            <select disabled>
+                                <option>Select a Service *</option>
+                            </select>
+                            <select disabled>
+                                <option>Project Timeline</option>
+                            </select>
+                        </div>
+                        <textarea placeholder="Tell us about your project..." readonly></textarea>
+                        <button type="button" class="quote-cf7-submit-preview">Get My Free Quote</button>
+                    </div>
+                <?php endif; ?>
+
+                <p class="quote-cf7-privacy"><?php echo esc_html( $privacy_text ); ?></p>
+            </div>
+        </div>
+    </section>
+    <?php
+
+    return ob_get_clean();
+}
+
+/* ============================================================
+   Block-71 – Recent Work Slider
+   ============================================================ */
+function logiweb_render_block_71( $attributes ) {
+    $defaults = array(
+        'badgeText' => 'Ohio Project Showcase',
+        'title'     => 'Recent Work Across Ohio',
+        'projects'  => array(
+            array(
+                'tag'         => 'Full Exterior Painting - Hyde Park',
+                'title'       => 'Cincinnati Colonial Revival',
+                'description' => 'Before & After transformation with premium Sherwin-Williams Duration paint system.',
+                'image'       => 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=80',
+            ),
+            array(
+                'tag'         => 'Complete Remodel - Custom Cabinetry',
+                'title'       => 'Indian Hill Kitchen Renovation',
+                'description' => 'Open-concept kitchen with quartz countertops and brass hardware.',
+                'image'       => 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80',
+            ),
+            array(
+                'tag'         => 'Whole Home Interior Painting',
+                'title'       => 'Dublin Interior Refresh',
+                'description' => 'Modern greige palette throughout 4,200 sq ft home.',
+                'image'       => 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=80',
+            ),
+            array(
+                'tag'         => 'GAF Timberline HDZ - Hail Damage',
+                'title'       => 'West Chester Roof Replacement',
+                'description' => 'Full tear-off and replacement with insurance coordination.',
+                'image'       => 'https://images.unsplash.com/photo-1632759145351-1d5920be8f4a?w=1200&q=80',
+            ),
+        ),
+    );
+
+    $a = wp_parse_args( is_array( $attributes ) ? $attributes : array(), $defaults );
+    $badge = sanitize_text_field( $a['badgeText'] );
+    $title = sanitize_text_field( $a['title'] );
+    $projects = is_array( $a['projects'] ) && ! empty( $a['projects'] ) ? $a['projects'] : $defaults['projects'];
+
+    ob_start();
+    ?>
+    <section class="recent-work-slider-block">
+        <div class="recent-work-slider-header">
+            <div>
+                <p class="recent-work-slider-badge">
+                    <i class="fa-regular fa-star" aria-hidden="true"></i>
+                    <span><?php echo esc_html( $badge ); ?></span>
+                </p>
+                <h2 class="recent-work-slider-title"><?php echo esc_html( $title ); ?></h2>
+            </div>
+        </div>
+
+        <div class="recent-work-slider-track">
+            <?php foreach ( $projects as $project ) :
+                $tag = isset( $project['tag'] ) ? sanitize_text_field( $project['tag'] ) : '';
+                $project_title = isset( $project['title'] ) ? sanitize_text_field( $project['title'] ) : '';
+                $desc = isset( $project['description'] ) ? sanitize_text_field( $project['description'] ) : '';
+                $img = isset( $project['image'] ) ? esc_url( $project['image'] ) : '';
+            ?>
+                <article class="recent-work-slider-card">
+                    <div class="recent-work-slider-image"<?php echo $img ? ' style="background-image:url(' . esc_attr( $img ) . ')"' : ''; ?>></div>
+                    <div class="recent-work-slider-content">
+                        <p class="recent-work-slider-tag"><?php echo esc_html( $tag ); ?></p>
+                        <h3 class="recent-work-slider-card-title"><?php echo esc_html( $project_title ); ?></h3>
+                        <p class="recent-work-slider-description"><?php echo esc_html( $desc ); ?></p>
+                    </div>
+                </article>
+            <?php endforeach; ?>
+        </div>
+    </section>
+
+    <?php
+
+    return ob_get_clean();
+}

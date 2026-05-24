@@ -1,0 +1,66 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-68",
+  "version": "0.1.0",
+  "title": "Quote Request + CF7",
+  "category": "widgets",
+  "icon": "forms",
+  "description": "Two-column quote request section connected to Contact Form 7 via shortcode.",
+  "supports": {
+    "html": false
+  },
+  "textdomain": "logiweb-blocks",
+  "editorScript": "file:../../index.js",
+  "style": "file:../../global-styles.css",
+  "attributes": {
+    "leftTitle": {
+      "type": "string",
+      "default": "Why Request a Quote from DNH Group?"
+    },
+    "bullet1": {
+      "type": "string",
+      "default": "Free, no-obligation estimates"
+    },
+    "bullet2": {
+      "type": "string",
+      "default": "Detailed, transparent pricing"
+    },
+    "bullet3": {
+      "type": "string",
+      "default": "Expert recommendations tailored to your needs"
+    },
+    "bullet4": {
+      "type": "string",
+      "default": "Flexible scheduling to fit your timeline"
+    },
+    "bullet5": {
+      "type": "string",
+      "default": "Financing options available"
+    },
+    "callTitle": {
+      "type": "string",
+      "default": "Prefer to Call?"
+    },
+    "callPhone": {
+      "type": "string",
+      "default": "(555) 123-4567"
+    },
+    "callHours": {
+      "type": "string",
+      "default": "Mon-Fri 8am-6pm, Sat 9am-2pm"
+    },
+    "formTitle": {
+      "type": "string",
+      "default": "Project Information"
+    },
+    "cf7Shortcode": {
+      "type": "string",
+      "default": ""
+    },
+    "privacyText": {
+      "type": "string",
+      "default": "By submitting, you agree to our Privacy Policy and Terms of Service"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-61",
+  "version": "0.1.0",
+  "title": "Peace of Mind - Three Pillars",
+  "category": "widgets",
+  "icon": "grid-view",
+  "description": "Three feature cards with icons highlighting key service benefits",
+  "supports": {
+    "html": false
+  },
+  "textdomain": "custom-block-61",
+  "editorScript": "file:../../index.js",
+  "style": "file:../../global-styles.css"
+}

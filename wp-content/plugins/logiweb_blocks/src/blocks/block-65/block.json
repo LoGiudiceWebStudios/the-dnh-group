@@ -1,0 +1,16 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-65",
+  "version": "0.1.0",
+  "title": "Blog & Case Studies Subscribe",
+  "category": "widgets",
+  "icon": "email-alt2",
+  "description": "Dark hero section with blog intro and newsletter signup card.",
+  "supports": {
+    "html": false
+  },
+  "textdomain": "custom-block-65",
+  "editorScript": "file:../../index.js",
+  "style": "file:../../global-styles.css"
+}

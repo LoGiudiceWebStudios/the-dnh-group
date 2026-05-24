@@ -1,0 +1,16 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-54",
+  "version": "0.1.0",
+  "title": "Review Story CTA",
+  "category": "widgets",
+  "icon": "megaphone",
+  "description": "Centered call-to-action section inviting users to share their review.",
+  "supports": {
+    "html": false
+  },
+  "textdomain": "custom-block-54",
+  "editorScript": "file:../../index.js",
+  "style": "file:../../global-styles.css"
+}

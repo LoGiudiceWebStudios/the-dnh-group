@@ -1,0 +1,16 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-73",
+  "version": "0.1.0",
+  "title": "Ohio Testimonials Grid",
+  "category": "widgets",
+  "icon": "format-quote",
+  "description": "Centered testimonials section with rating cards.",
+  "supports": {
+    "html": false
+  },
+  "textdomain": "logiweb-blocks",
+  "editorScript": "file:../../index.js",
+  "style": "file:../../global-styles.css"
+}
