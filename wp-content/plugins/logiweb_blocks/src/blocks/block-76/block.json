@@ -1,0 +1,11 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-76",
+  "title": "DNH Difference – Trust Signals",
+  "category": "widgets",
+  "icon": "awards",
+  "description": "Why Choose Us section with animated stats row and a 2×2 feature card grid.",
+  "editorScript": "file:../../index.js",
+  "style": "file:../../global-styles.css"
+}

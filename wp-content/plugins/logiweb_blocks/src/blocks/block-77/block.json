@@ -1,0 +1,11 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-77",
+  "title": "Customer Reviews Spotlight",
+  "category": "widgets",
+  "icon": "star-filled",
+  "description": "Reviews section with summary stats and a 3-slide testimonial carousel.",
+  "editorScript": "file:../../index.js",
+  "style": "file:../../global-styles.css"
+}

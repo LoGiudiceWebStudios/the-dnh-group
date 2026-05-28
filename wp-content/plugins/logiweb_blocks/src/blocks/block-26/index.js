@@ -1,10 +1,14 @@
 import { registerBlockType } from "@wordpress/blocks";
-import { InspectorControls, RichText } from "@wordpress/block-editor";
+import {
+  InspectorControls,
+  RichText,
+  useBlockProps,
+} from "@wordpress/block-editor";
 import { PanelBody, TextControl } from "@wordpress/components";
 import "../../global-styles.scss";
 import metadata from "./block.json";
 
-registerBlockType("logiweb/custom-block-26", {
+registerBlockType(metadata.name, {
   ...metadata,
   attributes: {
     titleStart: {
@@ -49,8 +53,10 @@ registerBlockType("logiweb/custom-block-26", {
       secondaryBtnUrl,
     } = attributes;
 
+    const blockProps = useBlockProps({ className: "project-cta-editor" });
+
     return (
-      <div className="project-cta-editor">
+      <div {...blockProps}>
         <InspectorControls>
           <PanelBody title="Content" initialOpen={true}>
             <TextControl
@@ -125,20 +131,20 @@ registerBlockType("logiweb/custom-block-26", {
             />
 
             <div className="project-cta-actions">
-              <a
+              <button
+                type="button"
                 className="project-cta-btn project-cta-btn-primary"
-                href={primaryBtnUrl}
               >
                 {primaryBtnText}
                 <i className="fa-solid fa-arrow-right"></i>
-              </a>
+              </button>
 
-              <a
+              <button
+                type="button"
                 className="project-cta-btn project-cta-btn-secondary"
-                href={secondaryBtnUrl}
               >
                 {secondaryBtnText}
-              </a>
+              </button>
             </div>
           </div>
         </section>

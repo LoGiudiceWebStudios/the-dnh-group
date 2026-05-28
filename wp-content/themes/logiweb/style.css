@@ -29,7 +29,7 @@ body {
 
 
     /* FONTS */
-    --main-font: "Lexend Deca", sans-serif;
+    --main-font: Inter, system-ui, -apple-system, sans-serif ;
 
     --font-weight-regular: 300;
     --font-weight-bold: 500;
@@ -42,6 +42,50 @@ body {
     --font-size-description: 4.2vw;
 
     --rounded-full: 9999px;
+
+    /* HOME HERO TOKENS */
+    --hero-shell-max-width: 1160px;
+    --hero-shell-gap: clamp(28px, 3.3vw, 44px);
+    --hero-overlay-padding: clamp(24px, 4vw, 56px);
+    --hero-overlay-bg: linear-gradient(120deg, rgba(9, 18, 40, 0.82) 0%, rgba(9, 18, 40, 0.66) 48%, rgba(9, 18, 40, 0.28) 100%);
+
+    --hero-title-size: clamp(2.5rem, 5vw, 4.85rem);
+    --hero-title-line-height: 0.96;
+    --hero-title-max-width: 18ch;
+    --hero-title-highlight-gradient: linear-gradient(90deg, #9bb4ff 0%, #6f96ff 50%, #7ea6ff 100%);
+
+    --hero-copy-gap: 16px;
+    --hero-description-size: clamp(1rem, 1.15vw, 1.08rem);
+    --hero-description-max-width: 44rem;
+
+    --hero-badge-font-size: 0.88rem;
+    --hero-badge-padding-y: 10px;
+    --hero-badge-padding-x: 16px;
+    --hero-badge-radius: 999px;
+    --hero-badge-dot-size: 8px;
+    --hero-badge-dot-color: #6fd26e;
+
+    --hero-benefits-row-gap: 12px;
+    --hero-benefits-col-gap: 18px;
+    --hero-benefit-font-size: 0.92rem;
+    --hero-benefit-icon-size: 1.06rem;
+
+    --hero-button-min-height: 48px;
+    --hero-button-padding-x: 22px;
+    --hero-button-font-size: 0.95rem;
+
+    --hero-form-card-width: 100%;
+    --hero-form-card-max-width: 428px;
+    --hero-form-card-radius: 20px;
+    --hero-form-card-padding: clamp(24px, 2.5vw, 34px);
+    --hero-form-card-gap: 10px;
+
+    --hero-form-title-size: clamp(2rem, 2.25vw, 2.3rem);
+    --hero-form-description-size: 0.93rem;
+    --hero-form-control-height: 48px;
+    --hero-form-control-radius: 11px;
+    --hero-form-control-font-size: 0.75rem;
+    --hero-form-submit-height: 40px;
 }
 
 /* UTILITY CLASSES */
@@ -335,25 +379,25 @@ h3 {
     width: 100%;
     display: flex;
     align-items: center;
-    padding: clamp(24px, 4vw, 56px);
-    background: linear-gradient(120deg, rgba(9, 18, 40, 0.82) 0%, rgba(9, 18, 40, 0.66) 48%, rgba(9, 18, 40, 0.28) 100%);
+    padding: var(--hero-overlay-padding);
+    background: var(--hero-overlay-bg);
     color: white;
 }
 
 .hero-overlay .overlay-content.hero-shell {
     width: 100%;
-    max-width: 1140px;
+    max-width: var(--hero-shell-max-width);
     margin: 0 auto;
     display: grid;
     grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.85fr);
-    gap: clamp(20px, 3.2vw, 40px);
+    gap: var(--hero-shell-gap);
     align-items: center;
 }
 
 .hero-copy {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: var(--hero-copy-gap);
     color: white;
 }
 
@@ -362,37 +406,67 @@ h3 {
     align-items: center;
     gap: 10px;
     width: fit-content;
-    padding: 10px 16px;
-    border-radius: 999px;
+    padding: var(--hero-badge-padding-y) var(--hero-badge-padding-x);
+    border-radius: var(--hero-badge-radius);
     background: rgba(255, 255, 255, 0.13);
     border: 1px solid rgba(255, 255, 255, 0.18);
     color: rgba(255, 255, 255, 0.9);
-    font-size: 0.85rem;
+    font-size: var(--hero-badge-font-size);
     font-weight: 600;
     letter-spacing: 0.01em;
     backdrop-filter: blur(8px);
 }
 
-.hero-copy h1 {
-    color: white;
-    font-size: clamp(2.4rem, 4.8vw, 4.8rem);
-    line-height: 0.95;
-    margin: 0;
-    max-width: 11.5ch;
+.hero-badge-dot {
+    width: var(--hero-badge-dot-size);
+    height: var(--hero-badge-dot-size);
+    border-radius: var(--rounded-full);
+    background: var(--hero-badge-dot-color);
+    flex: 0 0 auto;
 }
 
+.hero-copy h1 {
+    color: white;
+    font-size: var(--hero-title-size);
+    line-height: var(--hero-title-line-height);
+    margin: 0;
+    max-width: var(--hero-title-max-width);
+}
+
+.hero-title-highlight {
+    background-image: var(--hero-title-highlight-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+
+@media (min-width: 1024px) {
+    .hero-copy h1 {
+        font-size: 3.5rem;
+    }
+}
+
+@media (min-width: 640px) {
+    .hero-copy h1 {
+        font-size: 3rem;
+        line-height: 1;
+    }
+}
+
+
 .hero-copy p {
-    max-width: 44rem;
+    max-width: var(--hero-description-max-width);
     margin: 0;
     color: rgba(255, 255, 255, 0.84);
-    font-size: clamp(0.96rem, 1.15vw, 1.08rem);
+    font-size: var(--hero-description-size);
     line-height: 1.65;
 }
 
 .hero-benefits {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px 16px;
+    gap: var(--hero-benefits-row-gap) var(--hero-benefits-col-gap);
     margin: 6px 0 0;
     padding: 0;
     list-style: none;
@@ -403,18 +477,31 @@ h3 {
     align-items: flex-start;
     gap: 10px;
     color: rgba(255, 255, 255, 0.92);
-    font-size: 0.92rem;
+    font-size: var(--hero-benefit-font-size);
     line-height: 1.4;
 }
 
 .hero-benefit-icon {
     flex: 0 0 auto;
-    width: 1rem;
-    height: 1rem;
+    width: var(--hero-benefit-icon-size);
+    height: var(--hero-benefit-icon-size);
     margin-top: 0.2rem;
-    border-radius: 999px;
+    border-radius: var(--rounded-full);
     background: linear-gradient(135deg, #2f55ff 0%, #6b86ff 100%);
     box-shadow: 0 0 0 4px rgba(47, 85, 255, 0.18);
+    position: relative;
+}
+
+.hero-benefit-icon::after {
+    content: "\2713";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 0.62rem;
+    font-weight: 700;
 }
 
 .hero-buttons {
@@ -430,13 +517,18 @@ h3 {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 48px;
-    padding: 0 20px;
-    border-radius: 999px;
+    min-height: var(--hero-button-min-height);
+    padding: 0 var(--hero-button-padding-x);
+    border-radius: var(--rounded-full);
     text-decoration: none;
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: var(--hero-button-font-size);
     transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.hero-button-arrow {
+    margin-left: 8px;
+    font-size: 0.95em;
 }
 
 .hero-buttons .btn-primary {
@@ -499,9 +591,14 @@ h3 {
 .hero-form-card {
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    padding: clamp(20px, 2.5vw, 28px);
-    border-radius: 24px;
+    gap: var(--hero-form-card-gap);
+    width: var(--hero-form-card-width);
+    max-width: var(--hero-form-card-max-width);
+    justify-self: end;
+    padding: var(--hero-form-card-padding);
+    padding-top: calc((1.5)*var(--hero-form-card-padding));
+    padding-bottom: calc((1.5)*var(--hero-form-card-padding));
+    border-radius: var(--hero-form-card-radius);
     background: rgba(255, 255, 255, 0.98);
     color: #1d2430;
     box-shadow: 0 28px 80px rgba(0, 0, 0, 0.3);
@@ -510,13 +607,17 @@ h3 {
 .hero-form-card h2 {
     margin: 0;
     color: #1d2430;
-    font-size: clamp(1.45rem, 1.9vw, 2rem);
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    text-align: center;
+    font-weight: 700;
 }
 
 .hero-form-card > p {
     margin: 0;
     color: #6b7280;
-    font-size: 0.92rem;
+    text-align: center;
+    font-size: var(--hero-form-description-size);
     line-height: 1.5;
 }
 
@@ -646,6 +747,7 @@ h3 {
 .hero-form-card small {
     color: #9ca3af;
     text-align: center;
+    font-size: 0.75rem;
     line-height: 1.5;
 }
 
@@ -656,7 +758,15 @@ h3 {
     gap: 8px;
     color: #4b5563;
     text-decoration: none;
-    font-weight: 600;
+    font-size: 0.875rem;
+    font-weight: 300;
+}
+
+.w-4 {
+    width: 1rem;
+}
+.h-4 {
+    height: 1rem;
 }
 
 /* Contact Form 7 Integration */
@@ -680,11 +790,11 @@ h3 {
 .hero-quote-form-container textarea,
 .hero-quote-form-container select {
     width: 100%;
-    height: 44px;
-    border-radius: 11px;
+    height: var(--hero-form-control-height);
+    border-radius: var(--hero-form-control-radius);
     border: 1px solid #e5e7eb;
     padding: 0 14px;
-    font-size: 0.88rem;
+    font-size: var(--hero-form-control-font-size);
     font-weight: 600;
     color: #111827;
     background: #ffffff;
@@ -714,9 +824,9 @@ h3 {
 .hero-quote-form-container input[type="submit"],
 .hero-quote-form-container button[type="submit"] {
     width: 100%;
-    min-height: 48px;
+    min-height: var(--hero-form-submit-height);
     border: none;
-    border-radius: 11px;
+    border-radius: var(--hero-form-control-radius);
     background: #2f55ff;
     color: white;
     font-size: 0.95rem;
@@ -771,6 +881,10 @@ h3 {
 @media (max-width: 980px) {
     .hero-overlay .overlay-content.hero-shell {
         grid-template-columns: 1fr;
+    }
+
+    .hero-form-card {
+        justify-self: start;
     }
 
     .hero-overlay {
@@ -831,6 +945,7 @@ h3 {
         border-radius: 20px;
         gap: 12px;
         padding: 18px 16px;
+        max-width: 100%;
     }
 
     .hero-form-card h2 {
@@ -1077,7 +1192,7 @@ h3 {
 
 .nav-link {
     font-family: var(--main-font);
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     font-weight: 300;
 }
 
@@ -2021,10 +2136,15 @@ section {
     /* NAVBAR */
 
     header {
-        padding: 5px 1.5rem 5px 1.5rem !important;
+        padding: 0px 1.5rem 0px 1.5rem !important;
         background-color: rgba(var(--bs-tertiary-bg-rgb), var(--bs-bg-opacity)) !important;
         --bs-bg-opacity: 1;
     }
+
+    .ms-auto {
+        margin-left: 3rem !important;
+    }
+
 
     @media screen and (min-width: 990px) {
         header {
@@ -2057,7 +2177,7 @@ section {
 
     .nav-link {
         font-family: var(--main-font);
-        font-size: 0.8vw;
+        font-size: 0.7vw;
         font-weight: 300;
     }
 
@@ -2508,4 +2628,27 @@ section {
 
 .wp-block-gallery{
     padding: 5%;
+}
+
+
+
+/* CONACT FORM STYLES */
+
+.contact-form-7 .row p{
+    margin-bottom: 0.6rem !important;
+}
+
+
+.contact-form-7 .row-btn p{
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    height: fit-content !important; 
+}
+
+.contact-form-7 br{
+    display: inline;
+}
+
+.wpcf7-spinner{
+    display: none;
 }

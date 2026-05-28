@@ -106,6 +106,19 @@ function logiweb_enqueue_google_fonts() {
 }
 add_action('wp_enqueue_scripts', 'logiweb_enqueue_google_fonts');
 
+function logiweb_enqueue_google_fonts_editor() {
+    $main_font = get_theme_mod('main_font_family', 'Lexend Deca');
+    $font_url_name = str_replace(' ', '+', $main_font);
+
+    wp_enqueue_style(
+        'logiweb-google-fonts-editor',
+        'https://fonts.googleapis.com/css2?family=' . $font_url_name . ':wght@100..900&display=swap',
+        array(),
+        null
+    );
+}
+add_action('enqueue_block_editor_assets', 'logiweb_enqueue_google_fonts_editor');
+
 
 // =============================================================================
 // SANITIZATION & HELPER FUNCTIONS
@@ -292,7 +305,7 @@ function logiweb_typography_customizer($wp_customize) {
             'Lato'             => 'Lato',
             'Montserrat'       => 'Montserrat',
             'Poppins'          => 'Poppins',
-            'Inter'            => 'Inter',
+            'Inter, system-ui, -apple-system' => 'Inter',
             'Raleway'          => 'Raleway',
             'Nunito'           => 'Nunito',
             'Playfair Display' => 'Playfair Display',

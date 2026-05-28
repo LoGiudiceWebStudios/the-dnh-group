@@ -3,7 +3,7 @@
     --primary: #8cad7e;
 
     /* FONTS */
-    --main-font: "Lexend Deca", sans-serif;
+    --main-font: Inter, system-ui, -apple-system, sans-serif ;
 
     --font-weight-regular: 300;
     --font-weight-bold: 500;
@@ -20,8 +20,8 @@
     --logiweb-block-subtitle-font-family: var(--main-font);
     --logiweb-block-text-font-family: var(--main-font);
 
-    --logiweb-block-title-font-weight: 450;
-    --logiweb-block-title-font-weight-strong: 500;
+    --logiweb-block-title-font-weight: 700;
+    --logiweb-block-title-font-weight-strong: 700;
     --logiweb-block-subtitle-font-weight: 500;
     --logiweb-block-text-font-weight: 400;
 
@@ -39,16 +39,18 @@
     --logiweb-block-accent-green-soft: rgba(103, 179, 84, 0.14);
     --logiweb-block-accent-blue-soft: rgba(76, 112, 234, 0.12);
 
-    --logiweb-block-title-size-hero: clamp(2.5rem, 3.75vw, 4rem);
-    --logiweb-block-title-size-section: clamp(2rem, 2.25vw, 2.3rem);
+    --logiweb-block-title-size-hero: 3rem;
+    --logiweb-block-title-size-section: 2rem;  //clamp(2rem, 2.25vw, 2.3rem);
     --logiweb-block-title-size-card: clamp(1.55rem, 2.3vw, 2.35rem);
+    --logiweb-block-description: clamp(1rem, 1.35vw, 1.15rem);
     --logiweb-block-title-size-small: 1.22rem;
     --logiweb-block-subtitle-size: 0.9rem;
     --logiweb-block-subtitle-size-sm: 0.82rem;
-    --logiweb-block-text-size-lg: 1.125rem;
+    --logiweb-block-text-size-xlg: 1.875rem;
+    --logiweb-block-text-size-lg: 1.1rem;
     --logiweb-block-text-size-md: 1.05rem;
-    --logiweb-block-text-size-sm: 0.92rem;
-
+    --logiweb-block-text-size-sm: 0.85rem;
+    --logiweb-block-text-size-xs: 0.70rem;
 
     --logiweb-block-card-background: #ffffff;
     --logiweb-block-muted-background: #f3f5f8;
@@ -59,6 +61,13 @@
     --logiweb-block-timeline-line: #e7ebf5;
     --logiweb-block-dark-background: linear-gradient(90deg, #10245e 0%, #0f2668 35%, #182f9f 100%);
     --logiweb-block-dark-background-mobile: linear-gradient(180deg, #11245f 0%, #132d82 100%);
+
+    --logiweb-block-hero-badge-background: rgba(36, 64, 126, 0.46);
+    --logiweb-block-hero-badge-border: rgba(114, 150, 255, 0.44);
+    --logiweb-block-hero-overlay-left: linear-gradient(90deg, rgba(7, 26, 74, 0.9) 0%, rgba(8, 28, 76, 0.78) 32%, rgba(11, 31, 77, 0.56) 57%, rgba(9, 25, 66, 0.38) 77%, rgba(8, 21, 55, 0.28) 100%);
+    --logiweb-block-hero-overlay-bottom: linear-gradient(180deg, rgba(4, 14, 37, 0) 54%, rgba(4, 14, 37, 0.65) 100%);
+    --logiweb-block-hero-overlay-accent: radial-gradient(88% 82% at 23% 87%, rgba(27, 70, 191, 0.36) 0%, rgba(14, 41, 107, 0) 72%);
+    --logiweb-block-hero-cta-shadow: 0 12px 28px rgba(55, 112, 255, 0.44);
 
     /* BUTTON TOKENS */
     --logiweb-btn-primary-bg: #3a83f6;
@@ -76,6 +85,11 @@
     --rounded-full: 9999px;
 
 }
+
+html{
+  font-family: Inter, system-ui, -apple-system, sans-serif !important; 
+}
+
 
 html,
 body {
@@ -426,112 +440,156 @@ body {
 
 /** SECTION TYPE 4 */
   .section-type-4{
-    width: min(1280px, 94vw);
+    position: relative;
+    width: min(100%, 1920px);
+    min-height: clamp(540px, 62vw, 700px);
+    margin-top: 0;
+    margin-bottom: 0;
     margin-left: auto;
     margin-right: auto;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    align-items: stretch;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    padding: clamp(2.8rem, 7vw, 7rem) clamp(1.2rem, 7.2vw, 8.2rem);
+    overflow: hidden;
+    background: #0a1f52;
   }
 
   .section-type-4.image-left{
-    flex-direction: column-reverse;
+    flex-direction: column;
   }
 
     .section-type-4 .container-left{
-        display: flex;
-        flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 0.95rem;
+      position: relative;
+      z-index: 2;
+      width: min(100%, 620px);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: clamp(0.9rem, 1.4vw, 1.3rem);
     }
 
     .section-type-4 .container-left .subtitle{
-    font-size: 0.72rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #8b95a7;
-    font-weight: 700;
+    align-self: flex-start;
+    font-family: var(--logiweb-block-subtitle-font-family);
+    font-size: clamp(0.72rem, 0.85vw, 0.87rem);
+    letter-spacing: 0.01em;
+    text-transform: none;
+    color: var(--logiweb-block-subtitle-color-inverse);
+    font-weight: var(--logiweb-block-subtitle-font-weight);
+    line-height: 1;
+    margin: 0;
+    padding: 0.56rem 1rem;
+    border-radius: var(--rounded-full);
+    border: 1px solid var(--logiweb-block-hero-badge-border);
+    background: var(--logiweb-block-hero-badge-background);
+    backdrop-filter: blur(2px);
     }
 
   .section-type-4 .container-left .title{
-    font-size: var(--logiweb-block-title-size-section);
+    font-family: var(--logiweb-block-title-font-family);
+    font-size: clamp(2.65rem, 5.7vw, 5.05rem);
+    font-weight: var(--logiweb-block-title-font-weight);
     margin: 0;
-    color: #0f213f;
-    line-height: 1.1;
+    color: var(--logiweb-block-title-color-inverse);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .section-type-4 .container-left .title strong,
+  .section-type-4 .container-left .title em,
+  .section-type-4 .container-left .title mark{
+    color: var(--logiweb-block-title-highlight-color-inverse);
+    font-style: normal;
+    background: transparent;
   }
 
   .section-type-4 .container-left .description{
     margin: 0;
-    color: #485c7a;
-    line-height: 1.55;
-    max-width: 64ch;
+    max-width: 39ch;
+    color: var(--logiweb-block-text-color-inverse);
+    font-size: clamp(1.02rem, 1.18vw, 1.58rem);
+    line-height: 1.47;
+    text-wrap: pretty;
   }
 
     .section-type-4 .benefits-list{
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-    justify-content: flex-start;
-    gap: 0.7rem;
-    margin-top: 0.2rem;
+      display: none;
     }
 
     .section-type-4 .benefits-list .benefits-list-item{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-    gap: 0.68rem;
-    color: #304a6f;
+      display: none;
   }
 
   .section-type-4 .benefits-list .description-small{
-    margin: 0;
-    color: #304a6f;
-    line-height: 1.3;
+    display: none;
   }
 
   .section-type-4 .benefits-list .benefit-check{
-    width: 1.6rem;
-    height: 1.6rem;
-    border-radius: 999px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: #e5ebff;
-    color: #4a63de;
-    font-size: 0.72rem;
-    flex: 0 0 auto;
+    display: none;
     }
 
     .section-type-4 .container-left .buttons{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-    width: auto;
-    margin-top: 0.4rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      width: auto;
+      margin-top: clamp(0.55rem, 1.1vw, 1rem);
   }
 
   .section-type-4 .container-left .buttons .btn-primary{
+    font-family: var(--logiweb-block-text-font-family);
+    font-size: clamp(0.92rem, 0.94vw, 1.02rem);
+    font-weight: 600;
+    line-height: 1;
+    color: var(--logiweb-btn-primary-text);
+    background: linear-gradient(135deg, #3d7cff 0%, #5d8cff 100%);
+    border: 1px solid rgba(129, 163, 255, 0.5);
     border-radius: 999px;
-    padding: 0.66rem 1.15rem;
+    padding: 1.08rem 1.85rem;
+    padding-right: 1.58rem;
     display: inline-flex;
     align-items: center;
-    gap: 0.45rem;
-    font-weight: 600;
+    gap: 0.72rem;
+    box-shadow: var(--logiweb-block-hero-cta-shadow);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
+  .section-type-4 .container-left .buttons .btn-primary:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 14px 30px rgba(63, 125, 255, 0.5);
+  }
+
+  .section-type-4 .container-left .buttons .btn-primary .material-symbols-outlined{
+    font-size: 1.15rem;
+    line-height: 1;
+  }
+
     .section-type-4 .container-right{
-        width: 100%;
-    aspect-ratio: 16 / 11;
-    border-radius: 20px;
-    overflow: hidden;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+      overflow: hidden;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      z-index: 0;
+    }
+
+    .section-type-4 .container-right::before{
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--logiweb-block-hero-overlay-left), var(--logiweb-block-hero-overlay-bottom), var(--logiweb-block-hero-overlay-accent);
+      z-index: 1;
+      pointer-events: none;
     }
 
     /* Backward compatibility for previously saved block-4 markup */
@@ -542,11 +600,11 @@ body {
     }
     
     .section-type-4 .container-right img{
-        width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    opacity: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0;
   }
 
     /* Old markup used a transparent placeholder image over background-image */
@@ -843,49 +901,62 @@ body {
 
     /** SECTION TYPE 4 */
         .section-type-4{
-            flex-direction: row;
-            justify-content: space-between;
-        gap: 3.2vw;
+            min-height: clamp(560px, 53vw, 690px);
+            padding-left: clamp(3rem, 8.4vw, 9.2rem);
+            padding-right: clamp(3rem, 8.4vw, 9.2rem);
+            padding-top: clamp(3.6rem, 7vw, 6.8rem);
+            padding-bottom: clamp(3.6rem, 6vw, 5.8rem);
         }
 
       .section-type-4.image-left{
-        flex-direction: row-reverse;
+        flex-direction: row;
       }
 
         .section-type-4 .container-left{
-        width: 46%;
+        width: min(100%, 680px);
             align-items: flex-start;
         justify-content: center;
-        gap: 0.9vw;
+        gap: clamp(0.95rem, 1.35vw, 1.35rem);
+        }
+
+        .section-type-4 .container-left .subtitle{
+          padding: 0.62rem 1.12rem;
+          font-size: clamp(0.75rem, 0.72vw, 0.84rem);
         }
         
-        .section-type-4 .container-right{
-        width: 54%;
-        border-radius: 18px;
+        .section-type-4 .container-left .title{
+          font-size: clamp(3rem, 4.35vw, 5.25rem);
+          line-height: 0.96;
         }
 
+        .section-type-4 .container-left .description{
+          max-width: 38ch;
+          font-size: clamp(1.12rem, 1.2vw, 1.45rem);
+          line-height: 1.5;
+        }
+
+        .section-type-4 .container-left .buttons{
+          margin-top: clamp(0.75rem, 1.2vw, 1.2rem);
+        }
+
+        .section-type-4 .container-left .buttons .btn-primary{
+          font-size: clamp(0.95rem, 0.92vw, 1.06rem);
+          padding: 1.13rem 1.95rem;
+          padding-right: 1.68rem;
+          gap: 0.82rem;
+        }
+
+        .section-type-4 .container-right{
+          width: 100%;
+          border-radius: 0;
+        }
 
         .section-type-4 .benefits-list .benefits-list-item{
-        gap: 0.65vw;
+        display: none;
         }
 
         .section-type-4 .benefits-list{
-        gap: 0.65vw;
-        margin-top: 0.45vw;
-        }
-
-      .section-type-4 .container-left .title{
-        font-size: var(--logiweb-block-title-size-section);
-        }
-
-      .section-type-4 .container-left .description,
-      .section-type-4 .benefits-list .description-small{
-        font-size: clamp(0.95rem, 1.08vw, 1.16rem);
-        }
-
-      .section-type-4 .container-right img{
-        width: 100%;
-        height: 100%;
+          display: none;
       }
         
     /** SECTION TYPE 5 */
@@ -1555,9 +1626,10 @@ body {
 
 /* FAQ V2 (categorized) */
 .faqv2-block {
-  max-width: 1160px;
+  max-width: 900px;
   margin: 0 auto;
   padding: clamp(20px, 3.5vw, 36px) clamp(10px, 2vw, 20px);
+  background: none;
 }
 
 .faqv2-filter-bar {
@@ -1570,8 +1642,8 @@ body {
 
 .faqv2-filter-pill {
   appearance: none;
-  border: 1px solid #d9e0f2;
-  background: #ffffff;
+  border: none !important;
+  background: rgb(243 244 246);
   color: #42506d;
   display: inline-flex;
   align-items: center;
@@ -1580,7 +1652,7 @@ body {
   min-height: 48px;
   padding: 0.8rem 1.15rem;
   border-radius: 999px;
-  font-size: 0.95rem;
+  font-size: 0.875rem;
   font-weight: 600;
   line-height: 1;
   cursor: pointer;
@@ -1619,10 +1691,7 @@ body {
 
 .faqv2-category {
   padding: clamp(18px, 2.8vw, 30px);
-  border: 1px solid #e8ecf7;
-  border-radius: 28px;
-  background: linear-gradient(180deg, #ffffff 0%, #fbfcff 100%);
-  box-shadow: 0 20px 50px rgba(28, 41, 70, 0.06);
+
   margin-bottom: clamp(22px, 3vw, 30px);
 }
 
@@ -1639,6 +1708,7 @@ body {
   align-items: center;
   gap: 0.8rem;
   margin-bottom: 1.1rem;
+  background: none !important;
 }
 
 .faqv2-category-icon-wrap {
@@ -1656,7 +1726,7 @@ body {
 .faqv2-category-title {
   margin: 0;
   color: #1f2944;
-  font-size: clamp(1.45rem, 2.4vw, 2.15rem);
+  font-size: var(--logiweb-block-text-size-lg);
   line-height: 1.15;
   font-weight: 700;
 }
@@ -1670,7 +1740,6 @@ body {
 .faqv2-item {
   border: 1px solid #e7ebf5;
   border-radius: 18px;
-  background: #f7f9fc;
   overflow: hidden;
   transition:
     border-color 0.2s ease,
@@ -1710,7 +1779,7 @@ body {
 .faqv2-question {
   flex: 1;
   color: #2d3650;
-  font-size: clamp(0.98rem, 1.35vw, 1.08rem);
+  font-size: var(--logiweb-block-text-size-sm);
   font-weight: 600;
 }
 
@@ -1735,6 +1804,10 @@ body {
   background: #ffffff;
 }
 
+.faqv2-answer{
+  font-size: var(--logiweb-block-text-size-sm);
+}
+
 .faqv2-answer-row p:last-child,
 .faqv2-answer > *:last-child {
   margin-bottom: 0;
@@ -1754,6 +1827,7 @@ body {
     min-height: 44px;
     padding: 0.75rem 1rem;
     font-size: 0.9rem;
+    background: rgb(243 244 246)
   }
 
   .faqv2-category {
@@ -2012,7 +2086,7 @@ body {
 .certification-badge {
   width: 32px;
   height: 32px;
-  border-radius: 999px;
+  border-radius: .75rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2022,8 +2096,8 @@ body {
 }
 
 .certification-caption {
-  font-size: clamp(1rem, 1.2vw, 1.75rem);
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 500;
   color: #535c6b;
   line-height: 1;
 }
@@ -2036,10 +2110,6 @@ body {
   to {
     transform: translateX(calc(-50% - (var(--cert-gap) / 2)));
   }
-}
-
-.certifications-carousel:hover .certifications-track {
-  animation-play-state: paused;
 }
 
 @media (max-width: 1024px) {
@@ -2113,7 +2183,7 @@ body {
 }
 
 .services-showcase-title {
-  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-size: var(--logiweb-block-title-size-section);
   font-weight: var(--logiweb-block-title-font-weight);
   color: var(--logiweb-block-title-color);
   margin: 0;
@@ -2122,7 +2192,7 @@ body {
 }
 
 .services-showcase-description {
-  font-size: clamp(1rem, 2vw, 1.1rem);
+  font-size: var(--logiweb-block-description-font-size);
   color: var(--logiweb-block-description-color, #666);
   margin: 1rem 0 0 0;
   line-height: 1.6;
@@ -2532,10 +2602,11 @@ body {
    ============================================================================ */
 
 .process-timeline {
-  width: 80%;
+  width: 100%;
+  border-radius: 0;
   padding: clamp(40px, 6vw, 72px) clamp(16px, 5vw, 40px);
   background: #0f1b3d;
-  border-radius: 20px;
+  border-radius: 0px;
   box-sizing: border-box;
 }
 
@@ -2550,7 +2621,7 @@ body {
 }
 
 .process-timeline-title {
-  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-size: var(--logiweb-block-title-size-section);
   font-weight: 700;
   color: #fff;
   margin: 0 0 0.75rem;
@@ -2741,7 +2812,7 @@ body {
 }
 
 .fp-inner {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 clamp(16px, 5vw, 40px);
 }
@@ -2812,7 +2883,7 @@ body {
   position: relative;
   border-radius: 16px;
   overflow: hidden;
-  min-height: 320px;
+  min-height: 288px;
   background-color: var(--logiweb-block-title-color);
   background-size: cover;
   background-position: center;
@@ -2868,6 +2939,7 @@ body {
   i {
     font-size: 0.65rem;
   }
+;
 }
 
 .fp-tag-stat {
@@ -3065,6 +3137,7 @@ body {
 }
 
 .cta-hero-badge {
+  display: none!important;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -3084,7 +3157,7 @@ body {
 }
 
 .cta-hero-title {
-  font-size: var(--logiweb-block-title-size-section);
+  font-size: 2.5rem;
   font-weight: var(--logiweb-block-title-font-weight-strong);
   color: #fff;
   line-height: 1.15;
@@ -3156,8 +3229,7 @@ body {
 }
 
 .cta-hero-divider {
-  width: 100%;
-  max-width: 420px;
+  width: 1920px;
   height: 1px;
   background: rgba(255, 255, 255, 0.1);
 }
@@ -3166,7 +3238,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(2rem, 5vw, 4rem);
+  gap: clamp(4rem, 10vw, 8rem);
 }
 
 .cta-hero-stat {
@@ -3296,37 +3368,37 @@ body {
 
 .family-trust {
   width: 100%;
-  padding: clamp(44px, 6vw, 88px) 0;
+  padding: clamp(52px, 6vw, 90px) 0;
 }
 
 .family-trust-inner {
-  max-width: 1180px;
+  max-width: 1140px;
   margin: 0 auto;
-  padding: 0 clamp(16px, 5vw, 40px);
+  padding: 0 clamp(16px, 4vw, 32px);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(24px, 4vw, 54px);
-  align-items: start;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(24px, 3.4vw, 44px);
+  align-items: center;
 }
 
 .family-trust-image-wrap {
   position: relative;
-  border-radius: 24px;
+  border-radius: 16px;
   overflow: visible;
 }
 
 .family-trust-image {
   width: 100%;
-  aspect-ratio: 4 / 3.7;
+  aspect-ratio: 16 / 11.2;
   object-fit: cover;
-  border-radius: 24px;
+  border-radius: 16px;
   display: block;
 }
 
 .family-trust-image-placeholder {
   width: 100%;
-  aspect-ratio: 4 / 3.7;
-  border-radius: 24px;
+  aspect-ratio: 16 / 11.2;
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3338,13 +3410,14 @@ body {
 
 .family-trust-testimonial {
   position: absolute;
-  right: -20px;
-  bottom: -20px;
-  max-width: 275px;
+  left: 16px;
+  bottom: 14px;
+  max-width: 290px;
   background: var(--logiweb-block-card-background);
-  border-radius: 14px;
-  box-shadow: var(--logiweb-block-surface-shadow);
-  padding: 14px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--logiweb-block-surface-border);
+  box-shadow: 0 14px 24px rgba(18, 35, 64, 0.12);
+  padding: 12px 14px;
   display: flex;
   gap: 10px;
   align-items: flex-start;
@@ -3367,36 +3440,37 @@ body {
   margin: 0;
   color: var(--logiweb-block-title-color);
   font-family: var(--logiweb-block-text-font-family);
-  font-size: var(--logiweb-block-subtitle-size);
+  font-size: var(--logiweb-block-text-size-sm);
   font-weight: var(--logiweb-block-subtitle-font-weight);
-  line-height: 1.35;
+  line-height: 1.32;
+  font-style: italic;
 }
 
 .family-trust-testimonial-author {
-  margin: 4px 0 0;
-  color: var(--logiweb-block-text-color);
-  font-family: var(--logiweb-block-text-font-family);
-  font-size: var(--logiweb-block-text-size-sm);
-  font-weight: var(--logiweb-block-text-font-weight);
+  margin: 0 0 4px;
+  color: var(--logiweb-block-title-color);
+  font-family: var(--logiweb-block-title-font-family);
+  font-size: var(--logiweb-block-text-size-md);
+  font-weight: var(--logiweb-block-title-font-weight-strong);
 }
 
 .family-trust-subtitle {
-  margin: 0 0 0.8rem;
+  margin: 0 0 0.65rem;
   color: var(--logiweb-block-subtitle-color);
   font-family: var(--logiweb-block-subtitle-font-family);
-  font-size: var(--logiweb-block-subtitle-size-sm);
+  font-size: var(--logiweb-block-subtitle-size);
   font-weight: var(--logiweb-block-subtitle-font-weight);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
 }
 
 .family-trust-title {
   margin: 0;
   color: var(--logiweb-block-title-color);
   font-family: var(--logiweb-block-title-font-family);
-  font-size: var(--logiweb-block-title-size-hero);
+  font-size: var(--logiweb-block-title-size-section);
   font-weight: var(--logiweb-block-title-font-weight-strong);
-  line-height: 1.18;
+  line-height: 1.14;
   letter-spacing: -0.01em;
 }
 
@@ -3405,33 +3479,32 @@ body {
 }
 
 .family-trust-description {
-  margin: 1.05rem 0 0;
+  margin: 0.95rem 0 0;
   color: var(--logiweb-block-text-color);
   font-family: var(--logiweb-block-text-font-family);
-  font-size: var(--logiweb-block-text-size-md);
+  font-size: var(--logiweb-block-text-size-sm);
   font-weight: var(--logiweb-block-text-font-weight);
-  line-height: 1.62;
+  line-height: 1.56;
 }
 
 .family-trust-description-second {
-  margin-top: 0.9rem;
+  margin-top: 0.7rem;
 }
 
 .family-trust-badges {
-  margin-top: 1.2rem;
+  margin-top: 1rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.55rem;
+  gap: 0.62rem;
 }
 
 .family-trust-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.42rem;
-  border-radius: 50px;
-  padding: 0.33rem 0.72rem;
-  background: var(--logiweb-block-muted-background);
-  color: var(--logiweb-block-title-color);
+  border-radius: 8px;
+  padding: 0.38rem 0.78rem;
+  background: color-mix(in srgb, currentColor 11%, #ffffff 89%);
   font-family: var(--logiweb-block-text-font-family);
   font-size: var(--logiweb-block-text-size-sm);
   font-weight: var(--logiweb-block-subtitle-font-weight);
@@ -3442,36 +3515,35 @@ body {
 }
 
 .family-trust-cards {
-  margin-top: 1.25rem;
+  margin-top: 1.05rem;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.95rem;
 }
 
 .family-trust-card {
-  background: var(--logiweb-block-muted-background);
-  border: 1px solid var(--logiweb-block-surface-border);
-  border-radius: 12px;
-  padding: 16px 16px 18px;
+  background: color-mix(in srgb, var(--logiweb-block-card-background) 35%, var(--logiweb-block-muted-background) 65%);
+  border-radius: 14px;
+  padding: 14px 16px 16px;
 }
 
 .family-trust-card-icon {
-  width: 26px;
-  height: 26px;
-  border-radius: 8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: var(--logiweb-block-title-highlight-color);
-  background: var(--logiweb-block-accent-blue-soft);
+  background: transparent;
   font-size: var(--logiweb-block-text-size-sm);
 }
 
 .family-trust-card-title {
-  margin: 10px 0 6px;
+  margin: 8px 0 4px;
   color: var(--logiweb-block-title-color);
   font-family: var(--logiweb-block-title-font-family);
-  font-size: var(--logiweb-block-title-size-card);
+  font-size: var(--logiweb-block-text-size-lg);
   font-weight: var(--logiweb-block-title-font-weight-strong);
   line-height: 1.2;
 }
@@ -3480,9 +3552,9 @@ body {
   margin: 0;
   color: var(--logiweb-block-text-color);
   font-family: var(--logiweb-block-text-font-family);
-  font-size: var(--logiweb-block-text-size-md);
+  font-size: var(--logiweb-block-text-size-sm);
   font-weight: var(--logiweb-block-text-font-weight);
-  line-height: 1.55;
+  line-height: 1.45;
 }
 
 .family-trust-editor .family-trust {
@@ -3504,7 +3576,7 @@ body {
   }
 
   .family-trust-testimonial {
-    right: 12px;
+    left: 12px;
     bottom: 12px;
   }
 }
@@ -3575,7 +3647,7 @@ body {
   margin: 0;
   color: var(--logiweb-block-title-color);
   font-family: var(--logiweb-block-title-font-family);
-  font-size: var(--logiweb-block-title-size-hero);
+  font-size: var(--logiweb-block-title-size-section);
   font-weight: var(--logiweb-block-title-font-weight-strong);
   line-height: 1.16;
 }
@@ -3632,7 +3704,6 @@ body {
 .journey-item-card {
   background: var(--logiweb-block-card-background);
   border-radius: 18px;
-  overflow: hidden;
   box-shadow: var(--logiweb-block-surface-shadow);
   border: 1px solid var(--logiweb-block-surface-border);
   opacity: 0;
@@ -3653,25 +3724,8 @@ body {
   grid-column: 3;
 }
 
-.journey-item-image {
-  width: 100%;
-  height: clamp(160px, 20vw, 210px);
-  object-fit: cover;
-  display: block;
-}
-
-.journey-item-image-placeholder {
-  background: var(--logiweb-block-placeholder-background);
-  color: var(--logiweb-block-placeholder-text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--logiweb-block-text-font-family);
-  font-weight: var(--logiweb-block-subtitle-font-weight);
-}
-
 .journey-item-content {
-  padding: 14px 18px 18px;
+  padding: 18px;
 }
 
 .journey-item-tag {
@@ -3690,7 +3744,7 @@ body {
   margin: 0.55rem 0 0.4rem;
   color: var(--logiweb-block-title-color);
   font-family: var(--logiweb-block-title-font-family);
-  font-size: var(--logiweb-block-title-size-card);
+  font-size: var(--logiweb-block-text-size-lg);
   font-weight: var(--logiweb-block-title-font-weight-strong);
   line-height: 1.25;
 }
@@ -3752,7 +3806,7 @@ body {
     grid-column: 1 / -1;
     justify-self: unset;
     left: 50%;
-    top: calc(clamp(160px, 20vw, 210px) / 2);
+    top: 50%;
     transform: translate(-50%, -50%);
     margin-top: 0;
   }
@@ -3767,7 +3821,7 @@ body {
   .journey-item {
     grid-template-columns: 92px minmax(0, 1fr);
     gap: 0.7rem;
-    align-items: start;
+    align-items: center;
   }
 
   .journey-item.is-left .journey-item-card,
@@ -3784,7 +3838,7 @@ body {
     top: auto;
     left: auto;
     transform: none;
-    margin-top: calc((clamp(160px, 20vw, 210px) - 62px) / 2);
+    margin-top: 0;
   }
 
   .journey-item-node::after {
@@ -3897,8 +3951,9 @@ body {
 }
 
 .project-cta-btn-secondary {
-  background: rgba(255, 255, 255, 0.96);
-  color: var(--logiweb-block-title-color);
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.96);
+  color: white;
   min-width: 170px;
 
   &:hover {
@@ -3945,15 +4000,14 @@ body {
   width: 100%;
   padding: clamp(42px, 6vw, 76px) clamp(16px, 4vw, 32px);
   box-sizing: border-box;
-  background: #f5f6fa;
 }
 
 .team-members-filters {
-  max-width: 980px;
+  max-width: 1200px;
   margin: 0 auto clamp(24px, 3vw, 32px);
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 0.45rem;
 }
@@ -3984,27 +4038,28 @@ body {
 }
 
 .team-members-grid {
-  max-width: 980px;
+  max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: clamp(12px, 2vw, 20px);
 }
 
 .team-member-card {
   display: flex;
   flex-direction: column;
-  background: #ffffff;
-  border: 1px solid #e9edf6;
-  border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 10px 24px rgba(16, 25, 49, 0.08);
 }
 
 .team-member-media {
   position: relative;
   aspect-ratio: 4 / 4.2;
+  border-radius: 18px;
   background: #eef2fb;
+}
+
+.team-member-image{
+  border-radius: 18px !important;
 }
 
 .team-member-hover-action {
@@ -4139,8 +4194,8 @@ body {
 
 .team-profile-modal-dialog {
   position: relative;
-  width: min(100%, 980px);
-  max-height: 92vh;
+  width: min(100%, 780px);
+  max-height: 112vh;
   background: #ffffff;
   border-radius: 18px;
   overflow: hidden;
@@ -4255,17 +4310,21 @@ body {
   padding: 0;
   list-style: none;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 0.45rem;
 }
 
 .team-profile-modal-list li {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  color: #4d7e56;
-  font-size: 0.8rem;
+  gap: 0.4rem;
+  color: #3a7d48;
+  font-size: 0.75rem;
   font-weight: 600;
+  border: 1.5px solid #4d7e56;
+  border-radius: 999px;
+  padding: 0.28rem 0.7rem;
+  background: transparent;
 }
 
 .team-profile-modal-contact {
@@ -4331,13 +4390,15 @@ body {
 
 .team-join-stats-row {
   width: 100%;
-  background: var(--logiweb-block-title-color);
+  background: rgb(15 23 42);
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(12px, 2vw, 24px);
   align-items: center;
   justify-items: center;
   padding: clamp(28px, 3.7vw, 44px) clamp(16px, 4.5vw, 60px);
+  padding-left:20%;
+  padding-right: 20%;
   border-top: 1px solid rgba(255, 255, 255, 0.18);
 }
 
@@ -4349,7 +4410,7 @@ body {
   margin: 0;
   color: var(--logiweb-block-title-color-inverse);
   font-family: var(--logiweb-block-title-font-family);
-  font-size: var(--logiweb-block-title-size-hero);
+  font-size: var(--logiweb-block-title-size-section);
   line-height: 1;
   font-weight: var(--logiweb-block-title-font-weight-strong);
   letter-spacing: -0.01em;
@@ -4366,9 +4427,7 @@ body {
 
 .team-join-cta-panel {
   width: 100%;
-  background:
-    radial-gradient(ellipse 50% 55% at 50% 50%, rgba(124, 143, 255, 0.25) 0%, rgba(124, 143, 255, 0) 70%),
-    linear-gradient(90deg, #2f44f1 0%, #3e50f2 50%, #2f44f1 100%);
+  background:rgb(30 58 138);
   text-align: center;
   padding: clamp(52px, 6vw, 90px) clamp(16px, 4.5vw, 44px) clamp(56px, 7vw, 100px);
   border-top: 2px solid rgba(0, 0, 0, 0.14);
@@ -4378,7 +4437,7 @@ body {
   margin: 0;
   color: var(--logiweb-block-title-color-inverse);
   font-family: var(--logiweb-block-title-font-family);
-  font-size: var(--logiweb-block-title-size-hero);
+  font-size: var(--logiweb-block-title-size-section);
   font-weight: var(--logiweb-block-title-font-weight-strong);
   line-height: 1.12;
 }
@@ -4572,7 +4631,7 @@ body {
   align-items: center;
   gap: 0.6rem;
   font-family: var(--logiweb-block-title-font-family);
-  font-size: var(--logiweb-block-title-size-card);
+  font-size: var(--logiweb-block-text-size-lg);
   font-weight: var(--logiweb-block-title-font-weight-strong);
 }
 
@@ -4748,7 +4807,6 @@ body {
 
 .career-benefits-block {
   width: 100%;
-  background: var(--logiweb-block-muted-background);
   padding: clamp(48px, 6.5vw, 94px) clamp(16px, 5vw, 34px);
   box-sizing: border-box;
 }
@@ -4774,7 +4832,7 @@ body {
   background: var(--logiweb-block-accent-blue-soft);
   color: var(--logiweb-block-subtitle-color);
   font-family: var(--logiweb-block-subtitle-font-family);
-  font-size: var(--logiweb-block-subtitle-size-sm);
+  font-size: var(--logiweb-block-text-size-xs);
   font-weight: var(--logiweb-block-subtitle-font-weight);
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -4815,10 +4873,7 @@ body {
 }
 
 .career-benefit-card {
-  background: var(--logiweb-block-card-background);
   border-radius: 16px;
-  border: 1px solid var(--logiweb-block-surface-border);
-  box-shadow: 0 8px 22px rgba(19, 30, 67, 0.08);
   padding: 16px 18px 18px;
   transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
@@ -5188,7 +5243,7 @@ body {
 }
 
 .openings-reviews-card {
-  background: #13265e;
+  background: rgb(15 23 42);
   color: #e9edff;
   border-radius: 14px;
   padding: 14px;
@@ -5200,7 +5255,7 @@ body {
   display: flex;
   gap: 0.45rem;
   align-items: center;
-  font-size: 1.05rem;
+  font-size: .875rem;
 }
 
 .openings-review-item {
@@ -5606,6 +5661,20 @@ body {
 }
 
 
+.financing-steps-block{
+  background-color: #a1a1a1;
+}
+
+.credit-options-block {
+  max-width: 1100px !important  ;
+  margin: 0 auto;
+}
+
+.credit-options-inner{
+  max-width: 1100px !important  ;
+}
+
+
 .financing-benefits-block,
 .financing-steps-block,
 .credit-options-block {
@@ -5617,7 +5686,7 @@ body {
 .financing-benefits-inner,
 .financing-steps-inner,
 .credit-options-inner {
-  max-width: 1100px;
+  max-width: 900px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -5682,27 +5751,26 @@ body {
 .financing-benefit-card {
   border: 1px solid var(--logiweb-block-surface-border);
   border-radius: 16px;
-  box-shadow: var(--logiweb-block-surface-shadow);
   padding: 1.35rem;
-  background: var(--logiweb-block-card-background);
+  background: none !important;
 }
 
 .financing-benefit-icon {
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
   border-radius: 13px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: var(--logiweb-block-title-color-inverse);
-  font-size: 1rem;
+  font-size: .875rem;
   box-shadow: var(--logiweb-block-surface-shadow);
 }
 
 .financing-benefit-title {
   margin: 0.85rem 0 0;
   color: var(--logiweb-block-title-color);
-  font-size: var(--logiweb-block-title-size-card);
+  font-size: var(--logiweb-block-text-size-lg);
   line-height: 1.16;
   font-weight: var(--logiweb-block-title-font-weight-strong);
 }
@@ -5736,15 +5804,15 @@ body {
 }
 
 .financing-step-number {
-  width: 58px;
-  height: 58px;
+  width: 55px;
+  height: 55px;
   border-radius: 14px;
   margin: 0 auto 0.9rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: var(--logiweb-block-title-color-inverse);
-  font-size: var(--logiweb-block-title-size-card);
+  font-size: var(--logiweb-block-text-size-lg);
   font-weight: var(--logiweb-block-title-font-weight-strong);
   box-shadow: var(--logiweb-block-surface-shadow);
 }
@@ -5752,7 +5820,7 @@ body {
 .financing-step-title {
   margin: 0;
   color: var(--logiweb-block-title-color);
-  font-size: var(--logiweb-block-title-size-card);
+  font-size: var(--logiweb-block-text-size-sm);
   line-height: 1.16;
   font-weight: var(--logiweb-block-title-font-weight-strong);
 }
@@ -5797,14 +5865,20 @@ body {
 
 .credit-option-card {
   border: 1px solid var(--logiweb-block-surface-border);
-  border-top-left-radius: 14px;
-  border-top-right-radius: 14px;
+  border-radius: 14px;
   background: var(--logiweb-block-card-background);
   overflow: hidden;
 }
 
 .credit-option-top {
   padding: 1.05rem;
+  padding-top: 1.55rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem;
+  background: none !important;
 }
 
 .credit-option-dot {
@@ -5812,17 +5886,18 @@ body {
   height: 11px;
   border-radius: var(--rounded-full);
   display: inline-block;
+  align-self: flex-start;
 }
 
 .credit-option-top-title {
-  margin: 0.65rem 0 0;
   color: var(--logiweb-block-title-color);
-  font-size: var(--logiweb-block-title-size-small);
+  font-size: var(--logiweb-block-text-size-sm);
   line-height: 1.15;
   font-weight: var(--logiweb-block-title-font-weight-strong);
 }
 
 .credit-option-top-subtitle {
+  flex-basis: 100%;
   margin: 0.35rem 0 0;
   color: var(--logiweb-block-text-color);
   font-size: var(--logiweb-block-text-size-sm);
@@ -5835,7 +5910,7 @@ body {
 .credit-option-main-title {
   margin: 0;
   color: var(--logiweb-block-title-color);
-  font-size: var(--logiweb-block-title-size-card);
+  font-size: var(--logiweb-block-text-size-lg);
   line-height: 1.08;
   font-weight: var(--logiweb-block-title-font-weight-strong);
 }
@@ -5855,13 +5930,13 @@ body {
 }
 
 .credit-option-tags span {
-  font-size: var(--logiweb-block-text-size-sm);
+  font-size: var(--logiweb-block-text-size-xs );
   font-weight: var(--logiweb-block-subtitle-font-weight);
   color: var(--logiweb-block-text-color);
   background: var(--logiweb-block-muted-background);
   border: 1px solid var(--logiweb-block-surface-border);
   padding: 0.24rem 0.5rem;
-  border-radius: 4px;
+  border-radius: 999px;
 }
 
 .financing-hero-editor .financing-hero-block,
@@ -5912,7 +5987,7 @@ body {
 
 .financing-partners-inner {
 
-  max-width: 1150px;
+  width: 60%;
   margin: 0 auto;
 }
 
@@ -5969,7 +6044,7 @@ body {
 }
 
 .financing-partner-card.is-dark {
-  background: var(--logiweb-block-dark-background);
+  background: #0E2442;
   border-color: transparent;
   color: var(--logiweb-block-title-color-inverse);
 }
@@ -5977,15 +6052,18 @@ body {
 .financing-partner-name {
   border-radius: 10px;
   padding: 0.8rem 0.9rem;
+  padding-left: 0;
+  background: none !important;
 }
 
 .financing-partner-name h3 {
   margin: 0;
   text-align: center;
-  font-size: var(--logiweb-block-title-size-card);
+  font-size: var(--logiweb-block-text-size-lg);
   line-height: 1.15;
   letter-spacing: -0.02em;
   color: inherit !important;
+  text-align: left;
 }
 
 .financing-partner-stats {
@@ -6139,7 +6217,6 @@ body {
 
 .payment-estimator-block {
   padding: clamp(2.8rem, 4.8vw, 4.6rem) 1.2rem;
-  background: linear-gradient(180deg, var(--logiweb-block-muted-background) 0%, var(--logiweb-block-card-background) 40%);
   width: 100%;
 }
 
@@ -6244,7 +6321,7 @@ body {
 
 .payment-slider-head strong {
   color: var(--logiweb-block-title-highlight-color);
-  font-size: var(--logiweb-block-title-size-card);
+  font-size: var(--logiweb-block-text-size-lg);
   line-height: 1.08;
   letter-spacing: -0.02em;
 }
@@ -6300,11 +6377,12 @@ body {
 
 .payment-estimator-summary {
   padding: 1.7rem 1.7rem 1.55rem;
-  background: var(--logiweb-block-dark-background);
+  background: #0E2442;
   color: var(--logiweb-block-title-color-inverse);
 }
 
 .summary-eyebrow {
+  text-align: center;
   margin: 0;
   color: var(--logiweb-block-subtitle-color-inverse);
   text-transform: uppercase;
@@ -6314,6 +6392,7 @@ body {
 }
 
 .summary-amount {
+  text-align: center;
   margin: 0.68rem 0 0;
   color: var(--logiweb-block-title-color-inverse);
   font-size: var(--logiweb-block-title-size-hero);
@@ -6323,6 +6402,7 @@ body {
 }
 
 .summary-period {
+  text-align: center;
   margin: 0.2rem 0 0;
   color: var(--logiweb-block-text-color-inverse);
   font-size: var(--logiweb-block-text-size-sm);
@@ -6384,7 +6464,7 @@ body {
 .ready-start-block {
   position: relative;
   overflow: hidden;
-  padding: clamp(56px, 8vw, 104px) clamp(16px, 3vw, 22px);
+  padding: clamp(27px, 8vw, 54px) clamp(16px, 3vw, 22px);
   width: 100%;
   background:
     radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.08), transparent 32%),
@@ -6417,7 +6497,7 @@ body {
 .ready-start-title {
   margin: 0;
   color: #ffffff;
-  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-size: var(--logiweb-block-title-size-section);
   line-height: 1.08;
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -6545,14 +6625,14 @@ body {
 .apply-financing-banner-title {
   margin: 0.78rem 0 0;
   color: #ffffff;
-  font-size: clamp(2.2rem, 4.4vw, 4rem);
+  font-size: var(--logiweb-block-title-size-hero);
   line-height: 1.06;
   letter-spacing: -0.03em;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .apply-financing-banner-highlight {
-  color: #e4d154;
+  color: #ffffff;;
 }
 
 .apply-financing-banner-description {
@@ -6569,6 +6649,7 @@ body {
   border-bottom: 1px solid #dce1ea;
   padding: 1.1rem 1rem;
   width: 100%;
+  display: none;
 }
 
 .apply-financing-banner-strip-inner {
@@ -7873,14 +7954,14 @@ body.portfolio-modal-open {
 .services-overlay-card-title {
   margin: 0;
   color: #ffffff;
-  font-size: clamp(1.4rem, 2.15vw, 2.05rem);
+  font-size: 1.5rem;
   line-height: 1.16;
 }
 
 .services-overlay-card-description {
   margin: 8px 0 0;
   color: rgba(255, 255, 255, 0.9);
-  font-size: clamp(0.92rem, 1.04vw, 1.08rem);
+  font-size: var(--logiweb-block-text-size-sm);
   line-height: 1.44;
   max-width: 62ch;
 }
@@ -7895,7 +7976,7 @@ body.portfolio-modal-open {
 
 .services-overlay-card-list li {
   color: rgba(255, 255, 255, 0.9);
-  font-size: clamp(0.9rem, 1vw, 1.02rem);
+  font-size: var(--logiweb-block-text-size-sm);
   line-height: 1.35;
 }
 
@@ -7910,7 +7991,7 @@ body.portfolio-modal-open {
   text-decoration: none;
   color: #ffffff;
   font-weight: 650;
-  font-size: clamp(0.95rem, 1.04vw, 1.1rem);
+  font-size: var(--logiweb-block-text-size-sm);
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -7932,7 +8013,7 @@ body.portfolio-modal-open {
   background: #eef0f5;
   border-top: 1px solid #dfe5ee;
   border-bottom: 1px solid #dfe5ee;
-  padding: clamp(48px, 8vw, 96px) 14px;
+      padding: clamp(24px, 8vw, 46px) 10px;
 }
 
 .centered-cta-strip-inner {
@@ -7944,7 +8025,7 @@ body.portfolio-modal-open {
 .centered-cta-strip-title {
   margin: 0;
   color: #0f223f;
-  font-size: var(--logiweb-block-title-size-section);
+  font-size: var(--logiweb-block-text-size-xlg);
   line-height: 1.12;
 }
 
@@ -7968,8 +8049,10 @@ body.portfolio-modal-open {
   border: 1px solid #3e5fdf;
   border-radius: 9999px;
   min-height: 52px;
-  padding: 0.72rem 1.45rem;
-  font-size: 1rem;
+  padding: 1% !important;
+  padding-left: 2% !important;
+  padding-right: 2% !important;
+  font-size: .875rem !important;
   font-weight: 600;
   text-decoration: none;
   box-shadow: 0 10px 24px rgba(62, 95, 223, 0.24);
@@ -11934,6 +12017,928 @@ body.portfolio-modal-open {
   .kentucky-coverage-grid-block {
     .kentucky-coverage-grid-cards {
       grid-template-columns: minmax(0, 1fr);
+    }
+  }
+}
+
+/* ============================================================
+   BLOCK-75 - SERVICES EDITORIAL GRID
+   ============================================================ */
+.services-editorial-grid-block {
+  --services-editorial-max-width: 1180px;
+  --services-editorial-card-radius: 18px;
+  --services-editorial-card-padding: 18px;
+  --services-editorial-card-gap: 18px;
+  --services-editorial-image-height: clamp(152px, 16vw, 188px);
+  --services-editorial-number-size: 2.2rem;
+  --services-editorial-link-color: var(--logiweb-block-title-highlight-color);
+  width: 100%;
+  padding: clamp(54px, 6vw, 92px) clamp(16px, 3vw, 28px);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--logiweb-block-card-background) 68%, var(--logiweb-block-muted-background) 32%) 0%,
+    var(--logiweb-block-card-background) 100%
+  );
+
+  .services-editorial-grid-inner {
+    max-width: var(--services-editorial-max-width);
+    margin: 0 auto;
+  }
+
+  .services-editorial-grid-header {
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .services-editorial-grid-eyebrow {
+    margin: 0;
+    color: var(--logiweb-block-subtitle-color);
+    font-family: var(--logiweb-block-subtitle-font-family);
+    font-size: var(--logiweb-block-subtitle-size-sm);
+    font-weight: var(--logiweb-block-subtitle-font-weight);
+    letter-spacing: 0.18em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .services-editorial-grid-title {
+    margin: 0.72rem 0 0;
+    color: var(--logiweb-block-title-color);
+    font-family: var(--logiweb-block-title-font-family);
+    font-size: var(--logiweb-block-title-size-section);
+    font-weight: var(--logiweb-block-title-font-weight-strong);
+    line-height: 1.08;
+  }
+
+  .services-editorial-grid-description {
+    margin: 0.9rem auto 0;
+    max-width: 620px;
+    color: var(--logiweb-block-text-color);
+    font-family: var(--logiweb-block-text-font-family);
+    font-size: var(--logiweb-block-text-size-md);
+    line-height: 1.58;
+  }
+
+  .services-editorial-grid-cards {
+    margin-top: clamp(30px, 4vw, 44px);
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(16px, 1.7vw, 22px);
+    align-items: stretch;
+  }
+
+  .services-editorial-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    border: 1px solid var(--logiweb-block-surface-border);
+    border-radius: var(--services-editorial-card-radius);
+    background: var(--logiweb-block-card-background);
+    box-shadow: 0 8px 18px rgba(18, 35, 64, 0.08);
+    overflow: hidden;
+    transition:
+      transform 0.28s ease,
+      box-shadow 0.28s ease,
+      border-color 0.28s ease;
+  }
+
+  .services-editorial-card:hover {
+    transform: translateY(-8px);
+    border-color: color-mix(in srgb, var(--logiweb-block-title-highlight-color) 28%, var(--logiweb-block-surface-border) 72%);
+    box-shadow: var(--logiweb-block-surface-shadow);
+  }
+
+  .services-editorial-card-media-wrap {
+    position: relative;
+    padding: 14px 14px 0;
+  }
+
+  .services-editorial-card-badge {
+    position: absolute;
+    top: 26px;
+    left: 26px;
+    z-index: 2;
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--rounded-full);
+    background: var(--logiweb-btn-primary-bg);
+    color: var(--logiweb-btn-primary-text);
+    font-family: var(--logiweb-block-title-font-family);
+    font-size: 0.94rem;
+    font-weight: 700;
+    line-height: 1;
+    box-shadow: 0 10px 20px rgba(58, 131, 246, 0.26);
+    transition: transform 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
+  }
+
+  .services-editorial-card:hover .services-editorial-card-badge {
+    transform: scale(1.06);
+    background: var(--logiweb-btn-primary-bg-hover);
+    box-shadow: 0 14px 24px rgba(46, 115, 223, 0.28);
+  }
+
+  .services-editorial-card-media {
+    height: var(--services-editorial-image-height);
+    border-radius: calc(var(--services-editorial-card-radius) - 4px);
+    overflow: hidden;
+    background: var(--logiweb-block-placeholder-background);
+  }
+
+  .services-editorial-card-media img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: 0;
+    transition: transform 0.45s ease, filter 0.45s ease;
+  }
+
+  .services-editorial-card:hover .services-editorial-card-media img {
+    transform: scale(1.05);
+    filter: saturate(1.04);
+  }
+
+  .services-editorial-card-body {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 0.74rem;
+    padding: 1.2rem var(--services-editorial-card-padding) 1.35rem;
+  }
+
+  .services-editorial-card-title {
+    margin: 0;
+    color: var(--logiweb-block-title-color);
+    font-family: var(--logiweb-block-title-font-family);
+    font-size: var(--logiweb-block-text-size-md);
+    font-weight: var(--logiweb-block-title-font-weight-strong);
+    line-height: 1.24;
+  }
+
+  .services-editorial-card-kicker {
+    margin: -0.1rem 0 0;
+    color: var(--services-editorial-link-color);
+    font-family: var(--logiweb-block-text-font-family);
+    font-size: var(--logiweb-block-text-size-sm);
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .services-editorial-card-description {
+    margin: 0;
+    color: var(--logiweb-block-text-color);
+    font-family: var(--logiweb-block-text-font-family);
+    font-size: var(--logiweb-block-text-size-sm);
+    line-height: 1.62;
+  }
+
+  .services-editorial-card-features {
+    margin: 0.1rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.48rem;
+  }
+
+  .services-editorial-card-features li {
+    position: relative;
+    padding-left: 1.35rem;
+    color: color-mix(in srgb, var(--logiweb-block-text-color) 88%, var(--logiweb-block-title-color) 12%);
+    font-family: var(--logiweb-block-text-font-family);
+    font-size: var(--logiweb-block-text-size-sm);
+    line-height: 1.45;
+  }
+
+  .services-editorial-card-features li::before {
+    content: "\2713";
+    position: absolute;
+    top: 0.02rem;
+    left: 0;
+    color: var(--services-editorial-link-color);
+    font-size: 0.86rem;
+    font-weight: 700;
+  }
+
+  .services-editorial-card-link {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--services-editorial-link-color);
+    text-decoration: none;
+    font-family: var(--logiweb-block-text-font-family);
+    font-size: var(--logiweb-block-text-size-sm);
+    font-weight: 600;
+    line-height: 1.2;
+    transition: gap 0.22s ease, color 0.22s ease, transform 0.22s ease;
+  }
+
+  .services-editorial-card-link:hover {
+    gap: 0.72rem;
+    color: var(--logiweb-btn-primary-bg-hover);
+    transform: translateX(2px);
+  }
+
+  .services-editorial-grid-footer {
+    margin-top: clamp(28px, 3.4vw, 40px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.95rem;
+    text-align: center;
+  }
+
+  .services-editorial-grid-support {
+    margin: 0;
+    color: var(--logiweb-block-text-color);
+    font-family: var(--logiweb-block-text-font-family);
+    font-size: 0.98rem;
+    line-height: 1.5;
+  }
+
+  .services-editorial-grid-button {
+    min-height: 50px;
+    gap: 0.6rem;
+    padding: 0 1.3rem;
+    border-radius: var(--rounded-full);
+    font-family: var(--logiweb-block-text-font-family);
+    font-size: 0.98rem;
+    font-weight: 600;
+    box-shadow: 0 14px 28px rgba(58, 131, 246, 0.18);
+    transition: transform 0.24s ease, box-shadow 0.24s ease, background-color 0.24s ease;
+  }
+
+  .services-editorial-grid-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 30px rgba(46, 115, 223, 0.22);
+  }
+}
+
+@media (max-width: 1180px) {
+  .services-editorial-grid-block {
+    .services-editorial-grid-cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .services-editorial-grid-block {
+    padding-inline: 14px;
+
+    .services-editorial-grid-title {
+      font-size: var(--logiweb-block-title-size-section);
+    }
+
+    .services-editorial-grid-description {
+      font-size: var(--logiweb-block-text-size-sm);
+    }
+
+    .services-editorial-grid-cards {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .services-editorial-card-title {
+      font-size: var(--logiweb-block-title-size-section);
+    }
+
+    .services-editorial-grid-button {
+      width: 100%;
+      max-width: 320px;
+    }
+  }
+}
+
+
+// =============================================================================
+// BLOCK-76 – DNH Difference (Trust Signals)
+// =============================================================================
+
+.dnh-difference-block {
+  width: 100%;
+  padding: 5rem 1rem;
+  background: #fff;
+
+  .dnh-difference-inner {
+    width: min(1100px, 92vw);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+
+  // ── Header ────────────────────────────────────────────────────────────────
+  .dnh-difference-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .dnh-difference-eyebrow {
+    font-size: var(--logiweb-block-subtitle-size);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--logiweb-block-subtitle-color);
+    font-family: var(--logiweb-block-subtitle-font-family);
+  }
+
+  .dnh-difference-title {
+    margin: 0;
+    font-size: var(--logiweb-block-title-size-section);
+    font-weight: var(--logiweb-block-title-font-weight);
+    color: var(--logiweb-block-title-color);
+    font-family: var(--logiweb-block-title-font-family);
+    line-height: 1.15;
+  }
+
+  .dnh-difference-highlight {
+    color: var(--logiweb-block-title-highlight-color);
+  }
+
+  .dnh-difference-desc {
+    margin: 0;
+    font-size: var(--logiweb-block-text-size-md);
+    color: var(--logiweb-block-text-color);
+    font-family: var(--logiweb-block-text-font-family);
+    font-weight: var(--logiweb-block-text-font-weight);
+    max-width: 58ch;
+    line-height: 1.6;
+  }
+
+  // ── Stats Row ─────────────────────────────────────────────────────────────
+  .dnh-difference-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  .dnh-difference-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+    border: 1px solid var(--logiweb-block-surface-border);
+    border-radius: 1.1rem;
+    padding: 1.25rem;
+     }
+
+  .dnh-difference-stat-icon {
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 0.65rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+  }
+
+  .dnh-difference-stat-value {
+    font-size: var(--logiweb-block-text-size-xlg);
+    font-weight: 700;
+    color: var(--logiweb-block-title-color);
+    font-family: var(--logiweb-block-title-font-family);
+    line-height: 1;
+  }
+
+  .dnh-difference-stat-label {
+    font-size: var(--logiweb-block-text-size-sm);
+    color: var(--logiweb-block-text-color);
+    font-family: var(--logiweb-block-text-font-family);
+    font-weight: var(--logiweb-block-text-font-weight);
+    line-height: 1.3;
+  }
+
+  // ── Feature Cards Grid ────────────────────────────────────────────────────
+  .dnh-difference-features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .dnh-difference-feature-card {
+    border: 1px solid var(--logiweb-block-surface-border);
+    border-radius: 1.1rem;
+    padding: 1.5rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--logiweb-block-surface-shadow);
+      border-color: color-mix(in srgb, var(--logiweb-block-title-highlight-color) 22%, var(--logiweb-block-surface-border) 78%);
+    }
+  }
+
+  .dnh-difference-feature-top {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+  }
+
+  .dnh-difference-feature-icon-wrap {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    background: var(--logiweb-block-accent-blue-soft);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--logiweb-block-subtitle-color);
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    transition: background 0.2s ease;
+  }
+
+  .dnh-difference-feature-card:hover .dnh-difference-feature-icon-wrap {
+    background: color-mix(in srgb, var(--logiweb-block-title-highlight-color) 16%, transparent 84%);
+  }
+
+  .dnh-difference-feature-title {
+    font-size: var(--logiweb-block-text-size-md);
+    font-weight: 700;
+    color: var(--logiweb-block-title-color);
+    font-family: var(--logiweb-block-title-font-family);
+    flex: 1;
+  }
+
+  .dnh-difference-feature-badge {
+    font-size: var(--logiweb-block-text-size-sm);
+    font-weight: 600;
+    border-radius: var(--rounded-full);
+    padding: 0.22rem 0.72rem;
+    white-space: nowrap;
+    font-family: var(--logiweb-block-text-font-family);
+    transition: filter 0.2s ease;
+
+    &.dnh-badge--green {
+      background: var(--logiweb-block-accent-green-soft);
+      color: var(--logiweb-block-accent-green);
+    }
+    &.dnh-badge--blue {
+      //background: var(--logiweb-block-accent-blue-soft);
+      background: var(--logiweb-block-accent-green-soft);
+      color: var(--logiweb-block-accent-green);
+      //color: var(--logiweb-block-subtitle-color);
+    }
+  }
+
+  .dnh-difference-feature-card:hover .dnh-difference-feature-badge {
+    filter: brightness(0.94);
+  }
+
+  .dnh-difference-feature-desc {
+    margin: 0;
+    font-size: var(--logiweb-block-text-size-sm);
+    color: var(--logiweb-block-text-color);
+    font-family: var(--logiweb-block-text-font-family);
+    font-weight: var(--logiweb-block-text-font-weight);
+    line-height: 1.55;
+
+    a {
+      color: var(--logiweb-block-subtitle-color);
+    }
+  }
+
+  // ── Stat hover ────────────────────────────────────────────────────────────
+  .dnh-difference-stat:hover .dnh-difference-stat-icon {
+    transform: scale(1.08);
+  }
+
+  // ── Responsive ────────────────────────────────────────────────────────────
+  @media (max-width: 900px) {
+    .dnh-difference-stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .dnh-difference-features {
+      grid-template-columns: 1fr;
+    }
+
+    .dnh-difference-stats {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+
+    .dnh-difference-title {
+      font-size: clamp(1.55rem, 6vw, 2.2rem);
+    }
+
+    .dnh-difference-desc {
+      font-size: var(--logiweb-block-text-size-sm);
+    }
+
+    .dnh-difference-inner {
+      gap: 2.5rem;
+    }
+  }
+}
+
+
+// =============================================================================
+// BLOCK-77 – Customer Reviews Spotlight
+// =============================================================================
+
+.reviews-spotlight-block {
+  width: 100%;
+  padding: 5.25rem 1rem 4.3rem;
+
+  .reviews-spotlight-inner {
+    width: min(1020px, 94vw);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.55rem;
+  }
+
+  .reviews-spotlight-header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    background: none !important;
+  }
+
+  .reviews-spotlight-eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.21em;
+    color: var(--logiweb-block-subtitle-color);
+    font-family: var(--logiweb-block-subtitle-font-family);
+    font-size: var(--logiweb-block-subtitle-size);
+    font-weight: 700;
+  }
+
+  .reviews-spotlight-title {
+    margin: 0;
+    color: var(--logiweb-block-title-color);
+    font-family: var(--logiweb-block-title-font-family);
+    font-size: var(--logiweb-block-title-size-section);
+    font-weight: var(--logiweb-block-title-font-weight-strong);
+    line-height: 1.1;
+
+    span {
+      color: var(--logiweb-block-title-highlight-color);
+    }
+  }
+
+  .reviews-spotlight-stats {
+    width: min(760px, 100%);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.65rem;
+    margin-top: 0.2rem;
+  }
+
+  .reviews-spotlight-stat {
+    text-align: left;
+  }
+
+  .reviews-spotlight-stat-value {
+    margin: 0;
+    color: var(--logiweb-block-title-color);
+    font-family: var(--logiweb-block-title-font-family);
+    font-size: var(--logiweb-block-text-size-xlg);
+    font-weight: var(--logiweb-block-title-font-weight-strong);
+    line-height: 1.05;
+  }
+
+  .reviews-spotlight-stat-label {
+    margin: 0.22rem 0 0;
+    color: color-mix(in srgb, var(--logiweb-block-text-color) 76%, #fff 24%);
+    font-family: var(--logiweb-block-text-font-family);
+    font-size: var(--logiweb-block-text-size-sm);
+    font-weight: var(--logiweb-block-text-font-weight);
+    line-height: 1.35;
+  }
+
+  .reviews-spotlight-google-pill {
+    width: fit-content;
+    min-height: 2.6rem;
+    border-radius: var(--rounded-full);
+    border: 1px solid var(--logiweb-block-surface-border);
+    background: var(--logiweb-block-card-background);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.72rem;
+    padding: 0.85rem 1.4rem;
+    color: var(--logiweb-block-title-color);
+  }
+
+  .reviews-spotlight-google-icon {
+    width: 1.35rem;
+    height: 1.35rem;
+    border-radius: var(--rounded-full);
+    background: var(--logiweb-block-title-highlight-color);
+    color: var(--logiweb-btn-primary-text);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--logiweb-block-text-size-sm);
+    font-weight: 700;
+    font-family: var(--logiweb-block-text-font-family);
+    line-height: 1;
+  }
+
+  .reviews-spotlight-google-label,
+  .reviews-spotlight-google-score,
+  .reviews-spotlight-google-meta {
+    margin: 0;
+    font-family: var(--logiweb-block-text-font-family);
+    font-size: var(--logiweb-block-text-size-sm);
+    line-height: 1;
+  }
+
+  .reviews-spotlight-google-label,
+  .reviews-spotlight-google-score {
+    color: var(--logiweb-block-title-color);
+    font-weight: 600;
+  }
+
+  .reviews-spotlight-google-score {
+    font-weight: 700;
+  }
+
+  .reviews-spotlight-google-stars {
+    color: #f2c519;
+    font-size: var(--logiweb-block-text-size-md);
+    line-height: 1;
+    letter-spacing: 0.14em;
+  }
+
+  .reviews-spotlight-google-meta {
+    color: color-mix(in srgb, var(--logiweb-block-text-color) 74%, #fff 26%);
+    font-weight: var(--logiweb-block-text-font-weight);
+  }
+
+  .reviews-spotlight-carousel {
+    width: min(920px, 100%);
+    display: grid;
+    grid-template-columns: 3.1rem minmax(0, 1fr) 3.1rem;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.45rem;
+  }
+
+  .reviews-spotlight-track {
+    min-height: 265px;
+    position: relative;
+  }
+
+  .reviews-spotlight-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(16px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .reviews-spotlight-slide.is-active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+  }
+
+  .reviews-spotlight-arrow {
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: var(--rounded-full);
+    border: 1px solid var(--logiweb-block-surface-border);
+    background: transparent;
+    color: color-mix(in srgb, var(--logiweb-block-text-color) 72%, #fff 28%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--logiweb-block-text-size-sm);
+    cursor: pointer;
+    transition: all 0.24s ease;
+
+    &:hover {
+      background: var(--logiweb-block-card-background);
+      color: var(--logiweb-block-title-color);
+      border-color: color-mix(in srgb, var(--logiweb-block-title-highlight-color) 22%, var(--logiweb-block-surface-border) 78%);
+      transform: translateY(-1px);
+    }
+  }
+
+  .reviews-spotlight-author-row {
+    display: grid;
+    grid-template-columns: auto auto auto 1fr;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .reviews-spotlight-avatar {
+    width: 2.45rem;
+    height: 2.45rem;
+    border-radius: var(--rounded-full);
+    background: color-mix(in srgb, var(--logiweb-block-title-highlight-color) 18%, #fff 82%);
+    color: var(--logiweb-block-title-highlight-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--logiweb-block-title-font-family);
+    font-size: var(--logiweb-block-text-size-md);
+    font-weight: 700;
+  }
+
+  .reviews-spotlight-author-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.08rem;
+  }
+
+  .reviews-spotlight-author-name {
+    margin: 0;
+    color: var(--logiweb-block-title-color);
+    font-family: var(--logiweb-block-title-font-family);
+    font-size: var(--logiweb-block-text-size-md);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .reviews-spotlight-author-location {
+    margin: 0;
+    color: color-mix(in srgb, var(--logiweb-block-text-color) 82%, #fff 18%);
+    font-family: var(--logiweb-block-text-font-family);
+    font-size: var(--logiweb-block-text-size-sm);
+    font-weight: var(--logiweb-block-text-font-weight);
+    line-height: 1.2;
+  }
+
+  .reviews-spotlight-verified {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.38rem;
+    border-radius: var(--rounded-full);
+    background: color-mix(in srgb, var(--logiweb-block-accent-green) 16%, #fff 84%);
+    color: var(--logiweb-block-accent-green);
+    padding: 0.18rem 0.62rem;
+    font-family: var(--logiweb-block-text-font-family);
+    font-size: var(--logiweb-block-text-size-sm);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .reviews-spotlight-age {
+    justify-self: end;
+    color: color-mix(in srgb, var(--logiweb-block-text-color) 62%, #fff 38%);
+    font-family: var(--logiweb-block-text-font-family);
+    font-size: var(--logiweb-block-text-size-sm);
+    font-weight: var(--logiweb-block-text-font-weight);
+    line-height: 1;
+  }
+
+  .reviews-spotlight-meta-row {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  .reviews-spotlight-rating {
+    color: #f2c519;
+    font-size: var(--logiweb-block-text-size-md);
+    line-height: 1;
+    letter-spacing: 0.12em;
+  }
+
+  .reviews-spotlight-tag {
+    border-radius: var(--rounded-full);
+    background: color-mix(in srgb, var(--logiweb-block-title-highlight-color) 15%, #fff 85%);
+    color: var(--logiweb-block-title-highlight-color);
+    padding: 0.18rem 0.65rem;
+    font-family: var(--logiweb-block-text-font-family);
+    font-size: var(--logiweb-block-text-size-sm);
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .reviews-spotlight-quote {
+    margin: 1rem 0 0;
+    color: var(--logiweb-block-title-color);
+    font-family: var(--logiweb-block-text-font-family);
+    font-size: var(--logiweb-block-text-size-md);
+    font-weight: var(--logiweb-block-text-font-weight);
+    line-height: 1.55;
+    max-width: 74ch;
+  }
+
+  .reviews-spotlight-helpful {
+    margin: 1.05rem 0 0;
+    color: color-mix(in srgb, var(--logiweb-block-text-color) 70%, #fff 30%);
+    font-family: var(--logiweb-block-text-font-family);
+    font-size: var(--logiweb-block-text-size-sm);
+    font-weight: var(--logiweb-block-text-font-weight);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.44rem;
+  }
+
+  .reviews-spotlight-dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.48rem;
+    margin-top: 0.45rem;
+  }
+
+  .reviews-spotlight-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border: 0;
+    border-radius: var(--rounded-full);
+    background: color-mix(in srgb, var(--logiweb-block-text-color) 35%, #fff 65%);
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+    &.is-active {
+      width: 1.45rem;
+      background: var(--logiweb-block-title-highlight-color);
+    }
+  }
+
+  @media (max-width: 980px) {
+    .reviews-spotlight-stats {
+      width: min(640px, 100%);
+      gap: 1rem;
+    }
+
+    .reviews-spotlight-carousel {
+      grid-template-columns: 2.5rem minmax(0, 1fr) 2.5rem;
+    }
+  }
+
+  @media (max-width: 767px) {
+    padding: 4.1rem 0.9rem 3.7rem;
+
+    .reviews-spotlight-inner {
+      gap: 1.35rem;
+    }
+
+    .reviews-spotlight-stats {
+      grid-template-columns: repeat(2, 1fr);
+      width: min(380px, 100%);
+      gap: 0.8rem 1.2rem;
+    }
+
+    .reviews-spotlight-google-pill {
+      flex-wrap: wrap;
+      row-gap: 0.45rem;
+      justify-content: center;
+      padding: 0.5rem 0.92rem;
+    }
+
+    .reviews-spotlight-carousel {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+      margin-top: 0.9rem;
+    }
+
+    .reviews-spotlight-track {
+      min-height: 338px;
+    }
+
+    .reviews-spotlight-arrow {
+      display: none;
+    }
+
+    .reviews-spotlight-author-row {
+      grid-template-columns: auto 1fr;
+    }
+
+    .reviews-spotlight-verified {
+      justify-self: start;
+      grid-column: 1 / -1;
+    }
+
+    .reviews-spotlight-age {
+      justify-self: start;
+      grid-column: 1 / -1;
+      margin-top: 0.12rem;
+    }
+
+    .reviews-spotlight-quote {
+      font-size: var(--logiweb-block-text-size-sm);
+      line-height: 1.5;
     }
   }
 }

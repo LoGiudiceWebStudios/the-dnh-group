@@ -74,7 +74,7 @@ registerBlockType("logiweb/custom-block-24", {
     },
     testimonialAuthor: {
       type: "string",
-      default: "- The Richardson Family",
+      default: "Verified Customer",
     },
     trustBadges: {
       type: "array",

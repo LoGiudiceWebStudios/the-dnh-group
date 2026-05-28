@@ -434,7 +434,7 @@ document.addEventListener("DOMContentLoaded", function () {
             certs.forEach(function (item) {
               const li = document.createElement("li");
               const icon = document.createElement("i");
-              icon.className = "fa-solid fa-certificate";
+              icon.className = "fa-solid fa-check";
               li.appendChild(icon);
               li.appendChild(document.createTextNode(item));
               certList.appendChild(li);

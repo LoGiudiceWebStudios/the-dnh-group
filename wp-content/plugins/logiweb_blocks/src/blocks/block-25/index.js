@@ -1,10 +1,5 @@
 import { registerBlockType } from "@wordpress/blocks";
-import {
-  InspectorControls,
-  RichText,
-  MediaUpload,
-  MediaUploadCheck,
-} from "@wordpress/block-editor";
+import { InspectorControls, RichText } from "@wordpress/block-editor";
 import { PanelBody, TextControl, Button } from "@wordpress/components";
 import "../../global-styles.scss";
 import metadata from "./block.json";
@@ -16,8 +11,6 @@ const DEFAULT_ITEMS = [
     title: "The Dream Begins",
     description:
       "Our founder started with one goal: help every family create a home they truly love.",
-    imageUrl: "",
-    imageAlt: "Foundation period",
   },
   {
     year: "1990",
@@ -25,8 +18,6 @@ const DEFAULT_ITEMS = [
     title: "A Decade of Learning",
     description:
       "Ten years of hands-on projects shaped our process and raised our quality standards.",
-    imageUrl: "",
-    imageAlt: "Expertise period",
   },
   {
     year: "2000",
@@ -34,8 +25,6 @@ const DEFAULT_ITEMS = [
     title: "Serving More Families",
     description:
       "We expanded across neighborhoods while keeping the same family-first mindset.",
-    imageUrl: "",
-    imageAlt: "Growth period",
   },
   {
     year: "2020",
@@ -43,12 +32,8 @@ const DEFAULT_ITEMS = [
     title: "Four Decades Strong",
     description:
       "Today, we continue building lasting relationships through honest work and care.",
-    imageUrl: "",
-    imageAlt: "Legacy period",
   },
 ];
-
-const getItemImageUrl = (item) => item?.imageUrl || "";
 
 registerBlockType("logiweb/custom-block-25", {
   title: "Journey Timeline",
@@ -88,10 +73,6 @@ registerBlockType("logiweb/custom-block-25", {
       setAttributes({ items: next });
     };
 
-    const updateItemPhoto = (index, media) => {
-      updateItem(index, "imageUrl", media.url);
-    };
-
     const addItem = () => {
       setAttributes({
         items: [
@@ -101,8 +82,6 @@ registerBlockType("logiweb/custom-block-25", {
             tag: "New Milestone",
             title: "New Chapter",
             description: "Describe this milestone.",
-            imageUrl: "",
-            imageAlt: "Milestone image",
           },
         ],
       });
@@ -172,22 +151,6 @@ registerBlockType("logiweb/custom-block-25", {
                   value={item.description}
                   onChange={(value) => updateItem(index, "description", value)}
                 />
-                <MediaUploadCheck>
-                  <MediaUpload
-                    onSelect={(media) => updateItemPhoto(index, media)}
-                    allowedTypes={["image"]}
-                    render={({ open }) => (
-                      <Button isSecondary isSmall onClick={open}>
-                        {getItemImageUrl(item) ? "Change Image" : "Set Image"}
-                      </Button>
-                    )}
-                  />
-                </MediaUploadCheck>
-                <TextControl
-                  label={`Item ${index + 1} Image Alt`}
-                  value={item.imageAlt}
-                  onChange={(value) => updateItem(index, "imageAlt", value)}
-                />
                 <Button
                   isDestructive
                   isSmall
@@ -242,17 +205,6 @@ registerBlockType("logiweb/custom-block-25", {
                 className={`journey-item ${index % 2 ? "is-right" : "is-left"} is-visible`}
               >
                 <article className="journey-item-card">
-                  {item.imageUrl ? (
-                    <img
-                      src={item.imageUrl}
-                      alt={item.imageAlt}
-                      className="journey-item-image"
-                    />
-                  ) : (
-                    <div className="journey-item-image journey-item-image-placeholder">
-                      Set image
-                    </div>
-                  )}
                   <div className="journey-item-content">
                     <span className="journey-item-tag">{item.tag}</span>
                     <h3 className="journey-item-title">{item.title}</h3>
@@ -299,13 +251,6 @@ registerBlockType("logiweb/custom-block-25", {
               data-journey-item
             >
               <article className="journey-item-card">
-                {item.imageUrl ? (
-                  <img
-                    src={item.imageUrl}
-                    alt={item.imageAlt}
-                    className="journey-item-image"
-                  />
-                ) : null}
                 <div className="journey-item-content">
                   <span className="journey-item-tag">{item.tag}</span>
                   <h3 className="journey-item-title">{item.title}</h3>

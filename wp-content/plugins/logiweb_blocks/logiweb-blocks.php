@@ -143,6 +143,13 @@ add_action('wp_enqueue_scripts', function() {
         filemtime( plugin_dir_path( __FILE__ ) . 'video-testimonials-init.js' ),
         true
     );
+    wp_enqueue_script(
+        'logiweb-reviews-spotlight-init',
+        plugins_url('reviews-spotlight-init.js', __FILE__),
+        array(),
+        filemtime( plugin_dir_path( __FILE__ ) . 'reviews-spotlight-init.js' ),
+        true
+    );
     wp_localize_script('logiweb-financing-form', 'logiweb_rest', array(
         'nonce' => wp_create_nonce('wp_rest'),
         'base_url' => rest_url(),
@@ -644,6 +651,26 @@ function logiweb_register_blocks() {
         'style'         => 'logiweb-blocks-frontend-styles',
     ));
     register_block_type( 'logiweb/custom-block-73', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-74', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-75', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-76', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+    register_block_type( 'logiweb/custom-block-77', array(
         'editor_script' => 'logiweb-blocks-editor',
         'editor_style'  => 'logiweb-blocks-editor-styles',
         'style'         => 'logiweb-blocks-frontend-styles',
