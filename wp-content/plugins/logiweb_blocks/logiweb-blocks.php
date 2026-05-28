@@ -1336,6 +1336,19 @@ add_action( 'wp_enqueue_scripts', function () {
     );
 } );
 
+/* Enqueue block-71 frontend JS */
+add_action( 'wp_enqueue_scripts', function () {
+    if ( ! has_block( 'logiweb/custom-block-71' ) ) return;
+    $plugin_url = plugin_dir_url( __FILE__ );
+    wp_enqueue_script(
+        'logiweb-block-71-frontend',
+        $plugin_url . 'build/blocks/block-71/frontend.js',
+        array(),
+        filemtime( plugin_dir_path( __FILE__ ) . 'build/blocks/block-71/frontend.js' ),
+        true
+    );
+} );
+
 /* ============================================================
    Block-67 – DNH Video Log
    ============================================================ */
@@ -1574,12 +1587,21 @@ function logiweb_render_block_71( $attributes ) {
     ?>
     <section class="recent-work-slider-block">
         <div class="recent-work-slider-header">
-            <div>
+            <div class="recent-work-slider-heading">
                 <p class="recent-work-slider-badge">
                     <i class="fa-regular fa-star" aria-hidden="true"></i>
                     <span><?php echo esc_html( $badge ); ?></span>
                 </p>
                 <h2 class="recent-work-slider-title"><?php echo esc_html( $title ); ?></h2>
+            </div>
+
+            <div class="recent-work-slider-controls" aria-label="Project slider controls">
+                <button type="button" class="recent-work-slider-arrow" data-direction="left" aria-label="Previous projects">
+                    <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="recent-work-slider-arrow" data-direction="right" aria-label="Next projects">
+                    <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                </button>
             </div>
         </div>
 

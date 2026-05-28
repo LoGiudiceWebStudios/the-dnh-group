@@ -1199,6 +1199,7 @@ h3 {
 .nav-btn {
     width: 100%;
     padding: 1% !important;
+    font-size: 13px !important;
 }
 
 
@@ -2651,4 +2652,239 @@ section {
 
 .wpcf7-spinner{
     display: none;
+}
+
+
+/*
+.custom-cf7-form .padding{
+    padding: 0.5vw !important;
+}
+
+.custom-cf7-form .span{
+    display: inline;
+    padding: 0.5vw;
+}*/
+
+
+.custom-cf7-form .form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.custom-cf7-form .form-group {
+  flex: 1;
+}
+
+/* Dimensioni colonne */
+.custom-cf7-form .form-group.half {
+  flex: 1 1 calc(50% - 10px);
+  min-width: 250px; /* Passa a colonna singola su mobile */
+}
+
+.custom-cf7-form .form-group.third {
+  flex: 0 1 200px; /* Mantiene la tendina più corta come in foto */
+}
+
+.custom-cf7-form .form-group.full {
+  flex: 1 1 100%;
+}
+
+/* Fix per i contenitori predefiniti di CF7 */
+.custom-cf7-form .wpcf7-form-control-wrap {
+  display: block;
+  width: 100%;
+}
+
+/* Stile dei campi di input e textarea */
+.custom-cf7-form input[type="text"],
+.custom-cf7-form input[type="email"],
+.custom-cf7-form input[type="tel"],
+.custom-cf7-form select,
+.custom-cf7-form textarea {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid #e0e4e9;
+  border-radius: 8px; /* Bordi arrotondati */
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 15px;
+  color: #666;
+  background-color: #fff;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.custom-cf7-form input:focus,
+.custom-cf7-form select:focus,
+.custom-cf7-form textarea:focus {
+  border-color: #3f63e3;
+}
+
+.custom-cf7-form textarea {
+  height: 160px;
+  resize: vertical;
+}
+
+/* Freccia custom per il menu a tendina */
+.custom-cf7-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  padding-right: 40px;
+}
+
+/* Stile del bottone di invio */
+.custom-cf7-form .btn-custom-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background-color: #3f63e3; /* Blu della foto */
+  color: #fff;
+  border: none;
+  padding: 14px 30px;
+  border-radius: 30px; /* Forma a pillola */
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.custom-cf7-form .btn-custom-submit:hover {
+  background-color: #2e4bc4;
+}
+
+/* Rimuove l'ingombro del loader ajax di base per non rovinare il flexbox */
+.custom-cf7-form .wpcf7-spinner {
+  margin-left: 15px;
+  align-self: center;
+}
+
+.custom-cf7-form .form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.custom-cf7-form .form-group {
+  flex: 1;
+}
+
+/* Dimensioni delle colonne */
+.custom-cf7-form .form-group.half {
+  flex: 1 1 calc(50% - 10px);
+  min-width: 250px; /* Impagina in verticale su smartphone */
+}
+
+.custom-cf7-form .form-group.third {
+  flex: 0 1 250px; /* Larghezza controllata per le tendine */
+}
+
+.custom-cf7-form .form-group.full {
+  flex: 1 1 100%;
+}
+
+/* Risolve conflitti con i contenitori automatici di CF7 */
+.custom-cf7-form .wpcf7-form-control-wrap {
+  display: block;
+  width: 100%;
+}
+
+/* Stile Input, Select e Textarea */
+.custom-cf7-form input[type="text"],
+.custom-cf7-form input[type="email"],
+.custom-cf7-form input[type="tel"],
+.custom-cf7-form select,
+.custom-cf7-form textarea {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid #e0e4e9;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 15px;
+  color: #666;
+  background-color: #fff;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.custom-cf7-form input::placeholder,
+.custom-cf7-form textarea::placeholder {
+  color: #9ba3af;
+}
+
+.custom-cf7-form input:focus,
+.custom-cf7-form select:focus,
+.custom-cf7-form textarea:focus {
+  border-color: #3f63e3;
+}
+
+.custom-cf7-form textarea {
+  height: 140px;
+  resize: vertical;
+}
+
+/* Custom freccia per i menu a tendina */
+.custom-cf7-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  padding-right: 40px;
+  color: #9ba3af; /* Colore più chiaro per sembrare un placeholder */
+}
+
+/* --- STILE DEL BOTTONE AGGIORNATO --- */
+.custom-cf7-form .btn-custom-submit.full-width {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%; /* Occupa tutta la larghezza */
+  background-color: #3f63e3;
+  color: #fff;
+  border: none;
+  padding: 16px;
+  border-radius: 8px; /* Bordi arrotondati come gli input */
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 5px;
+}
+
+.custom-cf7-form .btn-custom-submit.full-width:hover {
+  background-color: #2e4bc4;
+}
+
+/* --- STILE DEL DISCLAIMER --- */
+.custom-cf7-form .disclaimer-row {
+  margin-top: -5px;
+  justify-content: center;
+}
+
+.custom-cf7-form .form-disclaimer {
+  font-size: 13px;
+  color: #9ba3af;
+  text-align: center;
+  margin: 0;
+  width: 100%;
+}
+
+/* Rimuove lo spinner ajax di base che sballa il layout */
+.custom-cf7-form .wpcf7-spinner {
+  position: absolute;
+  visibility: hidden;
+}
+
+.btn-quoteform{
+    display: inline !important;
+    grid-column: span 2 !important;
 }

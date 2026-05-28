@@ -6,6 +6,7 @@ import {
   RichText,
   useBlockProps,
 } from "@wordpress/block-editor";
+import { useRef } from "@wordpress/element";
 import {
   PanelBody,
   TextControl,
@@ -60,6 +61,22 @@ registerBlockType("logiweb/custom-block-71", {
     const safeProjects =
       Array.isArray(projects) && projects.length ? projects : DEFAULT_PROJECTS;
     const blockProps = useBlockProps({ className: "recent-work-slider-block" });
+    const trackRef = useRef(null);
+
+    const scrollTrackByDirection = (direction) => {
+      const track = trackRef.current;
+      if (!track) return;
+
+      const amount = Math.max(300, Math.round(track.clientWidth * 0.78));
+      const left = direction * amount;
+
+      if (typeof track.scrollBy === "function") {
+        track.scrollBy({ left, behavior: "smooth" });
+        return;
+      }
+
+      track.scrollLeft += left;
+    };
 
     const addProject = () => {
       setAttributes({
@@ -164,16 +181,37 @@ registerBlockType("logiweb/custom-block-71", {
 
         <section {...blockProps}>
           <div className="recent-work-slider-header">
-            <div>
+            <div className="recent-work-slider-heading">
               <p className="recent-work-slider-badge">
                 <i className="fa-regular fa-star" aria-hidden="true"></i>
                 <span>{badgeText}</span>
               </p>
               <h2 className="recent-work-slider-title">{title}</h2>
             </div>
+
+            <div className="recent-work-slider-controls" aria-label="Project slider controls">
+              <button
+                type="button"
+                className="recent-work-slider-arrow"
+                data-direction="left"
+                aria-label="Previous projects"
+                onClick={() => scrollTrackByDirection(-1)}
+              >
+                <i className="fa-solid fa-chevron-left" aria-hidden="true"></i>
+              </button>
+              <button
+                type="button"
+                className="recent-work-slider-arrow"
+                data-direction="right"
+                aria-label="Next projects"
+                onClick={() => scrollTrackByDirection(1)}
+              >
+                <i className="fa-solid fa-chevron-right" aria-hidden="true"></i>
+              </button>
+            </div>
           </div>
 
-          <div className="recent-work-slider-track">
+          <div className="recent-work-slider-track" ref={trackRef}>
             {safeProjects.map((project, i) => (
               <article key={i} className="recent-work-slider-card">
                 <div

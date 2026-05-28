@@ -36,17 +36,17 @@
   --logiweb-block-accent-green: #67b354;
   --logiweb-block-accent-green-soft: rgba(103, 179, 84, 0.14);
   --logiweb-block-accent-blue-soft: rgba(76, 112, 234, 0.12);
-  --logiweb-block-title-size-hero: 3rem;
+  --logiweb-block-title-size-hero: 2.8rem;
   --logiweb-block-title-size-section: 2rem;
   --logiweb-block-title-size-card: clamp(1.55rem, 2.3vw, 2.35rem);
-  --logiweb-block-description: clamp(1rem, 1.35vw, 1.15rem);
+  --logiweb-block-description: 0.9rem;
   --logiweb-block-title-size-small: 1.22rem;
   --logiweb-block-subtitle-size: 0.9rem;
   --logiweb-block-subtitle-size-sm: 0.82rem;
   --logiweb-block-text-size-xlg: 1.875rem;
-  --logiweb-block-text-size-lg: 1.1rem;
+  --logiweb-block-text-size-lg: 1.2rem;
   --logiweb-block-text-size-md: 1.05rem;
-  --logiweb-block-text-size-sm: 0.85rem;
+  --logiweb-block-text-size-sm: 0.80rem;
   --logiweb-block-text-size-xs: 0.70rem;
   --logiweb-block-card-background: #ffffff;
   --logiweb-block-muted-background: #f3f5f8;
@@ -85,7 +85,8 @@ body {
   max-width: 100%;
 }
 /* UTILITY CLASSES */
-.btn-primary, .btn-secondary, .btn-secondary-white, .btn-tertiary, .btn-tertiary-white {
++ .btn-primary,
+.btn-secondary, .btn-secondary-white, .btn-tertiary, .btn-tertiary-white {
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -2834,7 +2835,8 @@ img {
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
-  padding: clamp(56px, 8vw, 96px) clamp(16px, 5vw, 40px);
+  padding-top: 6rem;
+  padding-bottom: 6rem;
   background: radial-gradient(circle at 70% 50%, rgba(66, 95, 255, 0.38) 0%, rgba(66, 95, 255, 0) 45%), var(--logiweb-block-dark-background);
 }
 .story-hero-inner {
@@ -6961,8 +6963,12 @@ body.portfolio-modal-open {
 .portfolio-grid-block {
   width: min(1200px, 96vw);
   margin: clamp(36px, 5vw, 72px) auto;
+  display: flex;
+  align-items: flex-start;
 }
 .portfolio-grid-toolbar {
+  width: 100%;
+  justify-content: space-between;
   display: grid;
   grid-template-columns: 1fr;
   gap: 14px;
@@ -7048,7 +7054,7 @@ body.portfolio-modal-open {
 }
 .portfolio-card-media {
   position: relative;
-  height: 30vh;
+  height: 14rem;
   overflow: hidden;
 }
 .portfolio-card-image-button {
@@ -7092,10 +7098,10 @@ body.portfolio-modal-open {
 .portfolio-card-title {
   margin: 0;
   color: #1f2c45;
-  font-size: clamp(1.18rem, 1.7vw, 1.6rem);
+  font-size: var(--logiweb-block-text-size-md);
   line-height: 1.15;
   letter-spacing: -0.015em;
-  font-weight: 750;
+  font-weight: 700;
 }
 .portfolio-card-footer {
   margin-top: 10px;
@@ -7103,15 +7109,17 @@ body.portfolio-modal-open {
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  font-size: 0.92rem;
+  font-size: var(--logiweb-block-text-size-sm);
 }
 .portfolio-card-location {
   color: #66748f;
   font-weight: 500;
+  font-size: var(--logiweb-block-text-size-sm);
 }
 .portfolio-card-year {
   color: #6c7586;
   font-weight: 700;
+  font-size: var(--logiweb-block-text-size-sm);
 }
 .portfolio-card-link-indicator {
   margin: 10px 0 0;
@@ -7144,6 +7152,7 @@ body.portfolio-modal-open {
   box-shadow: 0 10px 18px rgba(46, 77, 229, 0.24);
 }
 .portfolio-cards-block {
+  display: none;
   width: min(1120px, 94vw);
   margin: clamp(24px, 3.6vw, 56px) auto;
 }
@@ -7167,7 +7176,7 @@ body.portfolio-modal-open {
 .trust-metrics-value {
   margin: 0;
   color: #0f223f;
-  font-size: clamp(2rem, 3vw, 3rem);
+  font-size: var(--logiweb-block-text-size-xlg);
   line-height: 1;
   font-weight: 800;
   letter-spacing: -0.03em;
@@ -7267,7 +7276,7 @@ body.portfolio-modal-open {
 .reviews-grid-name {
   margin: 0;
   color: #142744;
-  font-size: 1.02rem;
+  font-size: var(--logiweb-block-text-size-sm);
   line-height: 1.2;
   font-weight: 700;
 }
@@ -7330,7 +7339,7 @@ body.portfolio-modal-open {
 .reviews-grid-quote {
   margin: 18px 0 0;
   color: #425574;
-  font-size: 1rem;
+  font-size: var(--logiweb-block-text-size-sm);
   line-height: 1.55;
 }
 .reviews-grid-meta {
@@ -7595,6 +7604,7 @@ body.portfolio-modal-open {
   background: #ffffff;
 }
 .contact-cards-strip-top {
+  display: none;
   width: 100%;
   height: 28px;
   background: #355a94;
@@ -7607,7 +7617,7 @@ body.portfolio-modal-open {
   background: #ffffff;
 }
 .contact-cards-strip-grid {
-  margin-top: clamp(16px, 2.8vw, 30px);
+  margin-top: -20px;
   display: grid;
   grid-template-columns: 1fr;
   gap: 22px;
@@ -7634,7 +7644,7 @@ body.portfolio-modal-open {
 .contact-cards-strip-title {
   margin: 14px 0 0;
   color: #102647;
-  font-size: 1.3rem;
+  font-size: var(--logiweb-block-text-size-md);
   line-height: 1.2;
   font-weight: 500;
 }
@@ -7642,7 +7652,7 @@ body.portfolio-modal-open {
   margin: 0.5rem 0 0;
   color: #4566ec;
   text-decoration: none;
-  font-size: 1.08rem;
+  font-size: var(--logiweb-block-text-size-sm);
   line-height: 1.35;
   font-weight: 500;
 }
@@ -7652,7 +7662,7 @@ body.portfolio-modal-open {
 .contact-cards-strip-secondary {
   margin: 0.4rem 0 0;
   color: #97a7bf;
-  font-size: 0.92rem;
+  font-size: var(--logiweb-block-text-size-sm);
   line-height: 1.35;
   font-weight: 500;
 }
@@ -7687,14 +7697,14 @@ body.portfolio-modal-open {
 .contact-split-title {
   margin: 0;
   color: #0f213f;
-  font-size: clamp(1.5rem, 2.6vw, 2rem);
-  font-weight: 800;
+  font-size: var(--logiweb-block-text-size-lg);
+  font-weight: 700;
   line-height: 1.2;
 }
 .contact-split-subtitle {
   margin: 0.35rem 0 1rem;
   color: #566480;
-  font-size: clamp(0.98rem, 1.2vw, 1.12rem);
+  font-size: var(--logiweb-block-text-size-sm);
   line-height: 1.45;
 }
 .contact-split-cf7-wrap {
@@ -7783,8 +7793,8 @@ body.portfolio-modal-open {
 .contact-split-side-title {
   margin: 0 0 0.8rem;
   color: #102443;
-  font-size: clamp(1.16rem, 1.55vw, 1.5rem);
-  font-weight: 800;
+  font-size: var(--logiweb-block-text-size-md);
+  font-weight: 700;
   line-height: 1.2;
 }
 .contact-split-outline-btn {
@@ -7816,7 +7826,7 @@ body.portfolio-modal-open {
   justify-content: space-between;
   gap: 1rem;
   color: #445371;
-  font-size: clamp(0.96rem, 1.12vw, 1.06rem);
+  font-size: var(--logiweb-block-text-size-sm);
 }
 .contact-split-hours-row strong {
   color: #122848;
@@ -8059,7 +8069,7 @@ body.portfolio-modal-open {
 }
 /* PEACE OF MIND - THREE PILLARS BLOCK */
 .peace-of-mind-section {
-  width: 100%;
+  max-width: 72rem;
   padding: clamp(40px, 8vw, 80px) clamp(20px, 5vw, 60px);
   background: #ffffff;
 }
@@ -8078,7 +8088,7 @@ body.portfolio-modal-open {
 }
 .peace-of-mind-title {
   margin: 0 0 clamp(12px, 2vw, 16px) 0;
-  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-size: var(--logiweb-block-title-size-section);
   font-weight: 700;
   color: #1a1a1a;
   line-height: 1.2;
@@ -8089,7 +8099,7 @@ body.portfolio-modal-open {
 }
 .peace-of-mind-description {
   margin: 0;
-  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-size: var(--logiweb-block-text-size-sm);
   color: #6b7f99;
   line-height: 1.6;
   max-width: 600px;
@@ -8109,10 +8119,10 @@ body.portfolio-modal-open {
   }
 }
 .peace-of-mind-card {
-  padding: clamp(24px, 4vw, 36px);
+  padding: 2rem;
   text-align: center;
+  border: 1px solid rgb(243, 244, 246);
   border-radius: 12px;
-  background: #f8f9fb;
   transition: all 0.3s ease;
   cursor: pointer;
 }
@@ -8124,11 +8134,11 @@ body.portfolio-modal-open {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: clamp(60px, 10vw, 80px);
-  height: clamp(60px, 10vw, 80px);
-  margin: 0 auto clamp(16px, 3vw, 24px) auto;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px auto;
   border-radius: 12px;
-  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-size: 1.6rem;
   color: #ffffff;
   background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
 }
@@ -8140,7 +8150,7 @@ body.portfolio-modal-open {
 }
 .peace-of-mind-card-title {
   margin: 0 0 clamp(12px, 2vw, 16px) 0;
-  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-size: var(--logiweb-block-text-size-lg);
   font-weight: 700;
   color: #1a1a1a;
   line-height: 1.3;
@@ -8148,7 +8158,7 @@ body.portfolio-modal-open {
 }
 .peace-of-mind-card-description {
   margin: 0;
-  font-size: clamp(0.9rem, 1.8vw, 1rem);
+  font-size: var(--logiweb-block-text-size-sm);
   color: #6b7f99;
   line-height: 1.6;
 }
@@ -8167,12 +8177,14 @@ body.portfolio-modal-open {
 .industry-certs {
   background: #ffffff;
   width: 100%;
+  max-width: 72rem;
   padding: clamp(42px, 6vw, 78px) clamp(16px, 4vw, 38px);
 }
 .industry-certs-header {
   max-width: 720px;
   margin: 0 auto;
   text-align: center;
+  margin-bottom: 3.5rem;
 }
 .industry-certs-badge {
   margin: 0;
@@ -8187,7 +8199,7 @@ body.portfolio-modal-open {
   margin: 14px 0 8px;
   font-family: var(--main-font);
   color: #0f213d;
-  font-size: clamp(2rem, 4.2vw, 3.02rem);
+  font-size: var(--logiweb-block-title-size-section);
   line-height: 1.12;
   letter-spacing: -0.01em;
   font-weight: 700;
@@ -8199,12 +8211,11 @@ body.portfolio-modal-open {
   margin: 0 auto;
   max-width: 560px;
   color: #6f809b;
-  font-size: clamp(0.98rem, 1.7vw, 1.1rem);
+  font-size: var(--logiweb-block-description);
   line-height: 1.45;
 }
 .industry-certs-grid {
-  max-width: 1060px;
-  margin: clamp(28px, 4vw, 36px) auto 0;
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 22px;
@@ -8244,7 +8255,7 @@ body.portfolio-modal-open {
   margin: 0;
   color: #122949;
   font-family: var(--main-font);
-  font-size: clamp(1.36rem, 2.2vw, 1.6rem);
+  font-size: var(--logiweb-block-text-size-lg);
   line-height: 1.2;
   font-weight: 650;
 }
@@ -8267,13 +8278,13 @@ body.portfolio-modal-open {
   margin: 0;
   color: #152c4b;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: var(--logiweb-block-text-size-sm);
   line-height: 1.24;
 }
 .industry-certs-item-issuer {
   margin: 2px 0 0;
   color: #9ba9be;
-  font-size: 0.86rem;
+  font-size: var(--logiweb-block-text-size-xs);
   line-height: 1.25;
 }
 @media (max-width: 980px) {
@@ -8321,7 +8332,7 @@ body.portfolio-modal-open {
   color: #132441;
   font-family: var(--main-font);
   font-weight: 700;
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: var(--logiweb-block-title-size-section);
   line-height: 1.12;
 }
 .craft-process-title span {
@@ -8331,7 +8342,7 @@ body.portfolio-modal-open {
   margin: 0;
   color: #5f7393;
   line-height: 1.54;
-  font-size: clamp(1rem, 1.65vw, 1.14rem);
+  font-size: var(--logiweb-block-description);
   max-width: 640px;
 }
 .craft-process-steps {
@@ -8368,14 +8379,14 @@ body.portfolio-modal-open {
   margin: 0;
   color: #152b4a;
   font-family: var(--main-font);
-  font-size: 1.34rem;
+  font-size: var(--logiweb-block-text-size-lg);
   line-height: 1.24;
   font-weight: 650;
 }
 .craft-process-step-description {
   margin: 6px 0 0;
   color: #6f809b;
-  font-size: 1rem;
+  font-size: var(--logiweb-block-text-size-sm);
   line-height: 1.44;
 }
 .craft-process-partners {
@@ -8388,13 +8399,13 @@ body.portfolio-modal-open {
   color: #ffffff;
   font-family: var(--main-font);
   font-weight: 650;
-  font-size: clamp(1.54rem, 2.15vw, 1.9rem);
+  font-size: var(--logiweb-block-text-size-lg);
   line-height: 1.22;
 }
 .craft-process-partners-description {
   margin: 13px 0 0;
   color: #8ea1c6;
-  font-size: 1.03rem;
+  font-size: var(--logiweb-block-description);
   line-height: 1.48;
 }
 .craft-process-partners-list {
@@ -8415,13 +8426,13 @@ body.portfolio-modal-open {
 }
 .craft-process-partner-name {
   color: #ffffff;
-  font-size: 1.02rem;
+  font-size: var(--logiweb-block-text-size-sm);
   font-weight: 600;
   line-height: 1.3;
 }
 .craft-process-partner-detail {
   color: #6d84ad;
-  font-size: 0.94rem;
+  font-size: var(--logiweb-block-text-size-sm);
   line-height: 1.3;
   text-align: right;
 }
@@ -8431,7 +8442,7 @@ body.portfolio-modal-open {
   align-items: center;
   gap: 9px;
   color: #6ba0ff;
-  font-size: 0.98rem;
+  font-size: var(--logiweb-block-text-size-sm);
   line-height: 1.3;
 }
 @media (max-width: 1100px) {
@@ -8487,7 +8498,7 @@ body.portfolio-modal-open {
   margin: 14px 0 10px;
   color: #112440;
   font-family: var(--main-font);
-  font-size: clamp(2.05rem, 4.2vw, 3.08rem);
+  font-size: var(--logiweb-block-title-size-section);
   line-height: 1.12;
   font-weight: 700;
 }
@@ -8498,7 +8509,7 @@ body.portfolio-modal-open {
   margin: 0 auto;
   max-width: 620px;
   color: #637795;
-  font-size: clamp(0.98rem, 1.7vw, 1.12rem);
+  font-size: var(--logiweb-block-description);
   line-height: 1.46;
 }
 .warranty-guarantees-cards {
@@ -8542,7 +8553,7 @@ body.portfolio-modal-open {
   margin: 0;
   color: #132a4a;
   font-family: var(--main-font);
-  font-size: clamp(1.4rem, 2.3vw, 1.75rem);
+  font-size: var(--logiweb-block-text-size-lg);
   line-height: 1.2;
   font-weight: 650;
 }
@@ -8560,7 +8571,7 @@ body.portfolio-modal-open {
 .warranty-guarantees-card-description {
   margin: 16px 0 0;
   color: #637795;
-  font-size: 1rem;
+  font-size: var(--logiweb-block-description);
   line-height: 1.56;
 }
 .warranty-guarantees-coverage-title {
@@ -8568,7 +8579,7 @@ body.portfolio-modal-open {
   text-transform: uppercase;
   color: #9aa8bc;
   letter-spacing: 0.04em;
-  font-size: 0.9rem;
+  font-size: var(--logiweb-block-text-size-xs);
   font-weight: 700;
 }
 .warranty-guarantees-list {
@@ -8582,7 +8593,7 @@ body.portfolio-modal-open {
   align-items: start;
   gap: 8px;
   color: #2b425f;
-  font-size: 1rem;
+  font-size: var(--logiweb-block-text-size-xs);
   line-height: 1.38;
 }
 .warranty-guarantees-item > i {
@@ -8592,7 +8603,8 @@ body.portfolio-modal-open {
 }
 .warranty-guarantees-bottom {
   max-width: 1120px;
-  margin: 18px auto 0;
+  margin: clamp(26px, 4vw, 36px) auto 0px !important;
+  width: 100%;
   border: 1px solid #e8edf5;
   border-radius: 14px;
   background: #ffffff;
@@ -8617,14 +8629,14 @@ body.portfolio-modal-open {
   margin: 0;
   color: #1a3051;
   font-family: var(--main-font);
-  font-size: 1.3rem;
+  font-size: var(--logiweb-block-text-size-sm);
   line-height: 1.25;
   font-weight: 650;
 }
 .warranty-guarantees-bottom-description {
   margin: 4px 0 0;
   color: #6b7f9c;
-  font-size: 0.95rem;
+  font-size: var(--logiweb-block-text-size-xs);
   line-height: 1.35;
 }
 .warranty-guarantees-bottom-pill {
@@ -8654,11 +8666,14 @@ body.portfolio-modal-open {
   }
   .warranty-guarantees-bottom-pill {
     align-self: flex-start;
+    font-size: var(--logiweb-block-text-size-xs);
   }
 }
 /* BLOG + CASE STUDIES SUBSCRIBE BLOCK */
 .blog-case-subscribe {
   width: 100%;
+  padding-top: 6rem !important;
+  padding-bottom: 6rem !important;
   padding: clamp(48px, 7vw, 92px) clamp(16px, 4vw, 44px);
   background: linear-gradient(104deg, #061635 0%, #192f64 56%, #2a3d84 100%);
 }
@@ -8685,7 +8700,7 @@ body.portfolio-modal-open {
   margin: 16px 0 12px;
   color: #ffffff;
   font-family: var(--main-font);
-  font-size: clamp(2.35rem, 5vw, 4.35rem);
+  font-size: var(--logiweb-block-title-size-hero);
   line-height: 0.98;
   font-weight: 700;
 }
@@ -8696,7 +8711,7 @@ body.portfolio-modal-open {
   margin: 0;
   max-width: 640px;
   color: #9bb0d5;
-  font-size: clamp(1.02rem, 1.6vw, 1.18rem);
+  font-size: var(--logiweb-block-description);
   line-height: 1.52;
 }
 .blog-case-subscribe-cta {
@@ -8705,7 +8720,7 @@ body.portfolio-modal-open {
   align-items: center;
   gap: 10px;
   color: #8db6ff;
-  font-size: 1.02rem;
+  font-size: var(--logiweb-block-text-size-sm);
   line-height: 1.35;
 }
 .blog-case-subscribe-card {
@@ -8718,14 +8733,14 @@ body.portfolio-modal-open {
   margin: 0;
   color: #132849;
   font-family: var(--main-font);
-  font-size: clamp(1.5rem, 2.2vw, 1.95rem);
+  font-size: var(--logiweb-block-text-size-lg);
   line-height: 1.2;
   font-weight: 650;
 }
 .blog-case-card-description {
   margin: 14px 0 0;
   color: #677d9c;
-  font-size: 1.02rem;
+  font-size: var(--logiweb-block-text-size-sm);
   line-height: 1.5;
 }
 .blog-case-card-input {
@@ -9047,6 +9062,7 @@ body.portfolio-modal-open {
    BLOCK-67 – DNH VIDEO LOG
    ============================================================ */
 .vlog-block {
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 48px 24px;
@@ -9080,8 +9096,8 @@ body.portfolio-modal-open {
   font-size: 11px;
 }
 .vlog-block .vlog-title {
-  font-size: 28px;
-  font-weight: 800;
+  font-size: var(--logiweb-block-text-size-xlg);
+  font-weight: 700;
   color: #111827;
   margin: 0;
   line-height: 1.2;
@@ -9161,7 +9177,6 @@ body.portfolio-modal-open {
 .vlog-block .vlog-card-title {
   font-size: 14px;
   font-weight: 600;
-  color: #ef4444;
   margin: 0;
   line-height: 1.4;
 }
@@ -9203,7 +9218,7 @@ body.portfolio-modal-open {
   margin: 0;
   color: var(--logiweb-block-title-color);
   font-family: var(--logiweb-block-title-font-family);
-  font-size: var(--logiweb-block-title-size-card);
+  font-size: var(--logiweb-block-text-size-lg);
   line-height: 1.2;
   font-weight: var(--logiweb-block-title-font-weight-strong);
 }
@@ -9220,7 +9235,7 @@ body.portfolio-modal-open {
   gap: 12px;
   color: var(--logiweb-block-text-color);
   font-family: var(--logiweb-block-text-font-family);
-  font-size: var(--logiweb-block-text-size-md);
+  font-size: var(--logiweb-block-text-size-sm);
   font-weight: var(--logiweb-block-text-font-weight);
 }
 .quote-cf7-block .quote-cf7-check {
@@ -9242,25 +9257,26 @@ body.portfolio-modal-open {
   background: var(--logiweb-block-muted-background);
   border: 1px solid #e4eaf8;
   padding: 18px 20px;
+  font-size: var(--logiweb-block-text-size-md) !important;
 }
 .quote-cf7-block .quote-cf7-callbox h3 {
   margin: 0;
   color: var(--logiweb-block-title-color);
   font-family: var(--logiweb-block-title-font-family);
-  font-size: var(--logiweb-block-title-size-card);
+  font-size: var(--logiweb-block-text-size-md);
   font-weight: var(--logiweb-block-title-font-weight);
 }
 .quote-cf7-block .quote-cf7-phone {
   margin: 8px 0 0;
   color: var(--logiweb-block-title-highlight-color);
-  font-size: 1.5rem;
+  font-size: var(--logiweb-block-text-size-md);
   font-weight: var(--logiweb-block-title-font-weight);
 }
 .quote-cf7-block .quote-cf7-hours {
   margin: 8px 0 0;
   color: var(--logiweb-block-text-color);
   font-family: var(--logiweb-block-text-font-family);
-  font-size: var(--logiweb-block-text-size-sm);
+  font-size: var(--logiweb-block-text-size-md);
   font-weight: var(--logiweb-block-text-font-weight);
 }
 .quote-cf7-block .quote-cf7-form-card {
@@ -9274,7 +9290,7 @@ body.portfolio-modal-open {
   margin: 0;
   color: var(--logiweb-block-title-color);
   font-family: var(--logiweb-block-title-font-family);
-  font-size: var(--logiweb-block-title-size-section);
+  font-size: var(--logiweb-block-text-size-lg);
   line-height: 1.2;
   font-weight: var(--logiweb-block-title-font-weight-strong);
 }
@@ -9324,6 +9340,7 @@ body.portfolio-modal-open {
   font-weight: var(--logiweb-block-subtitle-font-weight);
 }
 .quote-cf7-block .quote-cf7-privacy {
+  display: none;
   margin: 12px 0 0;
   text-align: center;
   color: var(--logiweb-block-text-color);
@@ -9617,9 +9634,10 @@ body.portfolio-modal-open {
    BLOCK-70 – OHIO COVERAGE MAP + SERVICES
    ============================================================ */
 .ohio-coverage-block {
-  max-width: 1240px;
+  max-width: 80rem;
+  width: 100%;
   margin: 0 auto;
-  padding: 72px 24px;
+  padding: 2rem;
   color: #162743;
 }
 .ohio-coverage-block .ohio-coverage-header {
@@ -9662,6 +9680,7 @@ body.portfolio-modal-open {
   line-height: 1.45;
 }
 .ohio-coverage-block .ohio-coverage-body {
+  width: 100%;
   margin-top: 38px;
   display: grid;
   grid-template-columns: minmax(420px, 1.5fr) minmax(340px, 1fr);
@@ -9762,13 +9781,13 @@ body.portfolio-modal-open {
   border-radius: 999px;
 }
 .ohio-coverage-block .ohio-coverage-services-card {
-  padding: 24px 28px;
+  padding: 2rem;
 }
 .ohio-coverage-block .ohio-coverage-services-card h3 {
   margin: 0;
   color: var(--logiweb-block-title-color);
   font-family: var(--logiweb-block-title-font-family);
-  font-size: var(--logiweb-block-title-size-card);
+  font-size: var(--logiweb-block-text-size-lg);
   line-height: 1.2;
   font-weight: var(--logiweb-block-title-font-weight-strong);
 }
@@ -9785,7 +9804,7 @@ body.portfolio-modal-open {
   gap: 10px;
   color: var(--logiweb-block-text-color);
   font-family: var(--logiweb-block-text-font-family);
-  font-size: var(--logiweb-block-text-size-md);
+  font-size: var(--logiweb-block-text-size-sm);
   font-weight: var(--logiweb-block-text-font-weight);
   line-height: 1.35;
 }
@@ -9799,7 +9818,7 @@ body.portfolio-modal-open {
   border-top: 1px solid #e5ebf6;
   color: var(--logiweb-block-title-highlight-color);
   font-family: var(--logiweb-block-subtitle-font-family);
-  font-size: var(--logiweb-block-text-size-md);
+  font-size: var(--logiweb-block-text-size-sm);
   font-weight: var(--logiweb-block-subtitle-font-weight);
   text-decoration: none;
   display: inline-flex;
@@ -9950,7 +9969,6 @@ body.portfolio-modal-open {
 .fleet-coverage-hero {
   position: relative;
   overflow: hidden;
-  height: 70vh;
   background: var(--logiweb-block-muted-background);
   color: var(--logiweb-block-title-color-inverse);
   width: 100%;
@@ -9971,9 +9989,10 @@ body.portfolio-modal-open {
 .fleet-coverage-hero .fleet-coverage-hero-inner {
   position: relative;
   z-index: 1;
-  max-width: 1240px;
+  max-width: 80rem;
+  width: 100%;
   margin: 0 auto;
-  padding: 74px 24px 72px;
+  padding: 74px 2rem 72px;
   text-align: center;
 }
 .fleet-coverage-hero .fleet-coverage-hero-badge {
@@ -10007,7 +10026,7 @@ body.portfolio-modal-open {
   max-width: 680px;
   color: var(--logiweb-block-text-color-inverse);
   font-family: var(--logiweb-block-text-font-family);
-  font-size: var(--logiweb-block-text-size-lg);
+  font-size: var(--logiweb-block-description);
   font-weight: var(--logiweb-block-text-font-weight);
   line-height: 1.5;
 }
@@ -10033,7 +10052,7 @@ body.portfolio-modal-open {
   margin-top: 12px;
   color: var(--logiweb-block-title-color-inverse);
   font-family: var(--logiweb-block-title-font-family);
-  font-size: clamp(1.3rem, 1.7vw, 2rem);
+  font-size: var(--logiweb-block-text-size-xlg);
   font-weight: var(--logiweb-block-title-font-weight);
   line-height: 1;
 }
@@ -10041,7 +10060,7 @@ body.portfolio-modal-open {
   margin-top: 6px;
   color: var(--logiweb-block-text-color-inverse);
   font-family: var(--logiweb-block-text-font-family);
-  font-size: var(--logiweb-block-text-size-md);
+  font-size: var(--logiweb-block-text-size-sm);
   font-weight: var(--logiweb-block-text-font-weight);
   line-height: 1.35;
 }
@@ -10077,9 +10096,10 @@ body.portfolio-modal-open {
   color: var(--logiweb-block-title-color);
 }
 .ohio-testimonials-proof .ohio-testimonials-proof-inner {
-  max-width: 1240px;
+  max-width: 80rem;
+  width: 100%;
   margin: 0 auto;
-  padding: 78px 24px;
+  padding: 78px 2rem;
   text-align: center;
 }
 .ohio-testimonials-proof .ohio-testimonials-proof-badge {
@@ -10129,7 +10149,7 @@ body.portfolio-modal-open {
   margin: 0;
   color: var(--logiweb-block-title-color);
   font-family: var(--logiweb-block-title-font-family);
-  font-size: var(--logiweb-block-title-size-small);
+  font-size: var(--logiweb-block-text-size-sm);
   font-weight: var(--logiweb-block-title-font-weight);
   line-height: 1.2;
 }
@@ -10175,14 +10195,14 @@ body.portfolio-modal-open {
   background: #edf7ea;
   color: var(--logiweb-block-accent-green);
   font-family: var(--logiweb-block-subtitle-font-family);
-  font-size: var(--logiweb-block-subtitle-size-sm);
+  font-size: var(--logiweb-block-subtitle-size-xs);
   font-weight: var(--logiweb-block-text-font-weight);
 }
 .ohio-testimonials-proof .ohio-testimonials-proof-quote {
   margin: 14px 0 0;
   color: var(--logiweb-block-text-color);
   font-family: var(--logiweb-block-text-font-family);
-  font-size: var(--logiweb-block-text-size-md);
+  font-size: var(--logiweb-block-text-size-sm);
   font-weight: var(--logiweb-block-text-font-weight);
   line-height: 1.65;
 }
@@ -11103,6 +11123,9 @@ body.portfolio-modal-open {
     font-size: var(--logiweb-block-text-size-sm);
     line-height: 1.5;
   }
+}
+.wpcf7-form-control {
+  font-size: var(--logiweb-block-text-size-sm) !important;
 }
 
 /*# sourceMappingURL=block-17.css.map*/
