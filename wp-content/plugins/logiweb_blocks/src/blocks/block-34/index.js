@@ -1,5 +1,9 @@
 import { registerBlockType } from "@wordpress/blocks";
-import { InspectorControls, RichText } from "@wordpress/block-editor";
+import {
+  InspectorControls,
+  RichText,
+  useBlockProps,
+} from "@wordpress/block-editor";
 import { PanelBody, TextControl } from "@wordpress/components";
 import metadata from "./block.json";
 import "../../global-styles.scss";
@@ -37,35 +41,21 @@ registerBlockType("logiweb/custom-block-34", {
 
     const hasPrimaryText = Boolean((primaryText || "").trim());
     const hasSecondaryText = Boolean((secondaryText || "").trim());
+    const blockProps = useBlockProps({ className: "financing-hero-editor" });
 
     return (
-      <div className="financing-hero-editor">
+      <div {...blockProps}>
         <InspectorControls>
           <PanelBody title="Banner Content" initialOpen={true}>
-            <TextControl
-              label="Badge"
-              value={badge}
-              onChange={(value) => setAttributes({ badge: value })}
-            />
             <TextControl
               label="Badge Icon Class"
               value={badgeIcon}
               onChange={(value) => setAttributes({ badgeIcon: value })}
             />
             <TextControl
-              label="Primary Button Text"
-              value={primaryText}
-              onChange={(value) => setAttributes({ primaryText: value })}
-            />
-            <TextControl
               label="Primary Button URL"
               value={primaryUrl}
               onChange={(value) => setAttributes({ primaryUrl: value })}
-            />
-            <TextControl
-              label="Secondary Button Text"
-              value={secondaryText}
-              onChange={(value) => setAttributes({ secondaryText: value })}
             />
             <TextControl
               label="Secondary Button URL"
@@ -79,7 +69,12 @@ registerBlockType("logiweb/custom-block-34", {
           <div className="financing-hero-inner">
             <p className="financing-hero-badge">
               <i className={badgeIcon}></i>
-              {badge}
+              <RichText
+                tagName="span"
+                value={badge}
+                onChange={(value) => setAttributes({ badge: value })}
+                placeholder="Badge"
+              />
             </p>
 
             <h2 className="financing-hero-title">
@@ -110,21 +105,29 @@ registerBlockType("logiweb/custom-block-34", {
             {(hasPrimaryText || hasSecondaryText) && (
               <div className="financing-hero-actions">
                 {hasPrimaryText && (
-                  <a
-                    className="financing-hero-btn primary"
-                    href={primaryUrl || "#"}
-                  >
-                    <span>{primaryText}</span>
+                  <span className="financing-hero-btn primary" role="button">
+                    <RichText
+                      tagName="span"
+                      value={primaryText}
+                      onChange={(value) =>
+                        setAttributes({ primaryText: value })
+                      }
+                      placeholder="Primary button text"
+                    />
                     <i className="fa-solid fa-arrow-right"></i>
-                  </a>
+                  </span>
                 )}
                 {hasSecondaryText && (
-                  <a
-                    className="financing-hero-btn secondary"
-                    href={secondaryUrl || "#"}
-                  >
-                    {secondaryText}
-                  </a>
+                  <span className="financing-hero-btn secondary" role="button">
+                    <RichText
+                      tagName="span"
+                      value={secondaryText}
+                      onChange={(value) =>
+                        setAttributes({ secondaryText: value })
+                      }
+                      placeholder="Secondary button text"
+                    />
+                  </span>
                 )}
               </div>
             )}

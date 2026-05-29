@@ -44,12 +44,12 @@
     --logiweb-block-title-size-section: 2rem;  //clamp(2rem, 2.25vw, 2.3rem);
     --logiweb-block-title-size-card: clamp(1.55rem, 2.3vw, 2.35rem);
     --logiweb-block-description: 0.9rem;
-    --logiweb-block-title-size-small: 1.22rem;
+    --logiweb-block-title-size-small: 1.3rem;
     --logiweb-block-subtitle-size: 0.9rem;
     --logiweb-block-subtitle-size-sm: 0.82rem;
     --logiweb-block-text-size-xlg: 1.875rem;
     --logiweb-block-text-size-lg: 1.2rem;
-    --logiweb-block-text-size-md: 1.05rem;
+    --logiweb-block-text-size-md: 1rem;
     --logiweb-block-text-size-sm: 0.80rem;
     --logiweb-block-text-size-xs: 0.70rem;
 
@@ -9126,8 +9126,12 @@ body.portfolio-modal-open {
 }
 
 .video-testimonials-inner {
-  width: min(1240px, 100%);
-  margin: 0 auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  width: 100%;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .video-testimonials-header {
@@ -9158,9 +9162,9 @@ body.portfolio-modal-open {
 .video-testimonials-title {
   margin: 14px 0 0;
   color: #111f3d;
-  font-size: clamp(2rem, 3.6vw, 3.25rem);
+  font-size: var(--logiweb-block-title-size-section);
   line-height: 1.1;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .video-testimonials-title-highlight {
@@ -9170,7 +9174,7 @@ body.portfolio-modal-open {
 .video-testimonials-description {
   margin: 0.9rem auto 0;
   color: #66748f;
-  font-size: clamp(1rem, 1.2vw, 1.14rem);
+  font-size: var(--logiweb-block-description);
   line-height: 1.45;
   max-width: 640px;
 }
@@ -9179,9 +9183,8 @@ body.portfolio-modal-open {
   position: relative;
   border-radius: 16px;
   overflow: hidden;
-  min-height: clamp(300px, 38vw, 470px);
   background: #dfe5ef;
-  height: 30vh;
+  height: 24rem;
 }
 
 .video-testimonials-featured > img,
@@ -9252,7 +9255,7 @@ body.portfolio-modal-open {
 .video-testimonials-featured-quote {
   margin: 0;
   color: #ffffff;
-  font-size: clamp(1.06rem, 1.5vw, 1.78rem);
+  font-size: var(--logiweb-block-text-size-md);
   line-height: 1.32;
   font-weight: 500;
   max-width: 85%;
@@ -9339,7 +9342,7 @@ body.portfolio-modal-open {
   position: relative;
   border-radius: 14px;
   overflow: hidden;
-  min-height: clamp(190px, 20vw, 245px);
+  height: 12rem;
   background: #d8dfeb;
 }
 
@@ -9349,17 +9352,18 @@ body.portfolio-modal-open {
 
 .video-testimonials-item .video-testimonials-author-name {
   color: #162847;
-  font-size: 1rem;
+  font-size: var(--logiweb-block-text-size-sm);
 }
 
 .video-testimonials-item .video-testimonials-author-meta {
   color: #8a98b1;
+  font-size: var(--logiweb-block-text-size-sm);
 }
 
 .video-testimonials-item-quote {
   margin: 8px 0 0;
   color: #4e607f;
-  font-size: 1.02rem;
+  font-size: var(--logiweb-block-text-size-sm);
   line-height: 1.44;
 }
 
@@ -13217,4 +13221,1506 @@ body.portfolio-modal-open {
 
 .wpcf7-form-control{
   font-size: var(--logiweb-block-text-size-sm) !important;
+}
+
+// =============================================================================
+// BLOCK 80 — Hero Split
+// =============================================================================
+
+.hero-split-block {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  min-height: 60vh;
+  width: 100%;
+  background-color: #0d1b3e;
+  background-size: cover;
+  background-position: center right;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  font-family: var(--logiweb-block-title-font-family);
+}
+
+.hero-split-overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--logiweb-block-hero-overlay-left);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-split-content {
+  position: relative;
+  z-index: 2;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  max-width: 80rem;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+
+.hero-split-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: var(--rounded-full);
+  background: var(--logiweb-block-hero-badge-background);
+  border: 1px solid var(--logiweb-block-hero-badge-border);
+  color: var(--logiweb-block-title-color-inverse);
+  font-size: var(--logiweb-block-subtitle-size-sm);
+  font-weight: var(--logiweb-block-subtitle-font-weight);
+  letter-spacing: 0.03em;
+  margin: 0;
+  backdrop-filter: blur(6px);
+
+  i {
+    font-size: 0.78rem;
+    opacity: 0.85;
+  }
+}
+
+.hero-split-title {
+  margin: 0;
+  color: var(--logiweb-block-title-color-inverse);
+  font-family: var(--logiweb-block-title-font-family);
+  font-size: var(--logiweb-block-title-size-hero);
+  font-weight: var(--logiweb-block-title-font-weight);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+.hero-split-title-highlight {
+  color: var(--logiweb-block-title-highlight-color-inverse);
+}
+
+.hero-split-description {
+  margin: 0;
+  color: var(--logiweb-block-text-color-inverse);
+  font-size: var(--logiweb-block-description);
+  font-weight: var(--logiweb-block-text-font-weight);
+  line-height: 1.65;
+  max-width: 38ch;
+}
+
+.hero-split-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 1% !important;
+  border-radius: var(--rounded-full);
+  background-color: var(--logiweb-btn-primary-bg);
+  color: var(--logiweb-btn-primary-text);
+  font-size: var(--logiweb-block-text-size-sm) !important;
+  font-weight: var(--logiweb-block-title-font-weight);
+  text-decoration: none;
+  box-shadow: var(--logiweb-block-hero-cta-shadow);
+  transition: background-color 0.2s ease, transform 0.15s ease;
+  white-space: nowrap;
+  margin-top: 0.25rem;
+
+  &:hover {
+    background-color: var(--logiweb-btn-primary-bg-hover);
+    transform: translateY(-1px);
+    color: var(--logiweb-btn-primary-text);
+  }
+}
+
+.hero-split-cta-arrow {
+  font-size: 1em;
+  line-height: 1;
+}
+
+// Tablet
+@media (max-width: 1024px) {
+  .hero-split-content {
+    max-width: 65%;
+    padding: 4rem 3rem 4rem 4rem;
+  }
+
+  .hero-split-title {
+    font-size: var(--logiweb-block-title-size-hero);
+  }
+}
+
+// Mobile
+@media (max-width: 768px) {
+  .hero-split-block {
+    min-height: unset;
+    background-position: center;
+  }
+
+  .hero-split-overlay {
+    background: linear-gradient(180deg, rgba(8, 20, 55, 0.88) 0%, rgba(8, 20, 55, 0.72) 100%);
+  }
+
+  .hero-split-content {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    max-width: 80rem;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 1rem;
+  }
+
+  .hero-split-title {
+    font-size: clamp(2.2rem, 9vw, 3rem);
+    line-height: 1.05;
+  }
+
+  .hero-split-description {
+    max-width: 100%;
+    font-size: 1rem;
+  }
+
+  .hero-split-cta {
+    white-space: normal;
+    text-align: center;
+  }
+}
+
+// =============================================================================
+// BLOCK 79 — Our Approach
+// =============================================================================
+
+.our-approach-block {
+  width: 100%;
+  background: var(--logiweb-block-card-background);
+  font-family: var(--logiweb-block-text-font-family);
+}
+
+.our-approach-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.our-approach-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.38rem 1rem;
+  border-radius: var(--rounded-full);
+  background: var(--logiweb-block-accent-blue-soft);
+  border: 1px solid var(--logiweb-block-surface-border);
+  color: var(--logiweb-block-subtitle-color);
+  font-size: var(--logiweb-block-subtitle-size);
+  font-weight: var(--logiweb-block-subtitle-font-weight);
+  letter-spacing: 0.02em;
+  margin: 0;
+
+  i {
+    font-size: 0.75em;
+    opacity: 0.9;
+  }
+}
+
+.our-approach-title {
+  margin: 0;
+  text-align: center;
+  font-family: var(--logiweb-block-title-font-family);
+  font-size: var(--logiweb-block-title-size-section);
+  font-weight: var(--logiweb-block-title-font-weight);
+  color: var(--logiweb-block-title-color);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+
+  span {
+    color: var(--logiweb-block-title-highlight-color);
+  }
+}
+
+.our-approach-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.75rem;
+  width: 100%;
+}
+
+.our-approach-card {
+  background: var(--logiweb-block-card-background);
+  border: 1px solid var(--logiweb-block-surface-border);
+  border-radius: 1.25rem;
+  padding: 2rem 2rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  box-shadow: var(--logiweb-block-surface-shadow);
+}
+
+.our-approach-card-icon {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.65rem;
+  background: var(--logiweb-block-accent-blue-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  i {
+    font-size: 1rem;
+    color: var(--logiweb-block-title-highlight-color);
+  }
+}
+
+.our-approach-card-title {
+  margin: 0;
+  font-family: var(--logiweb-block-title-font-family);
+  font-size: var(--logiweb-block-title-size-small);
+  font-weight: var(--logiweb-block-title-font-weight);
+  color: var(--logiweb-block-title-color);
+  line-height: 1.25;
+}
+
+.our-approach-card-description {
+  margin: 0;
+  font-size: var(--logiweb-block-text-size-md);
+  font-weight: var(--logiweb-block-text-font-weight);
+  color: var(--logiweb-block-text-color);
+  line-height: 1.6;
+}
+
+.our-approach-card-list {
+  list-style: none;
+  margin: 0.35rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.our-approach-card-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: var(--logiweb-block-text-size-sm);
+  font-weight: var(--logiweb-block-text-font-weight);
+  color: var(--logiweb-block-text-color);
+  line-height: 1.55;
+}
+
+.our-approach-card-list-icon {
+  flex-shrink: 0;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  background: var(--logiweb-block-accent-blue-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.1rem;
+
+  i {
+    font-size: 0.6rem;
+    color: var(--logiweb-block-title-highlight-color);
+  }
+}
+
+// Mobile
+@media (max-width: 768px) {
+  .our-approach-inner {
+    padding: 3.5rem 1.25rem;
+    gap: 2rem;
+  }
+
+  .our-approach-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .our-approach-title {
+    font-size: var(--logiweb-block-title-size-hero);
+  }
+}
+
+// =============================================================================
+// BLOCK 81 — Before/After Comparison Slider
+// =============================================================================
+
+.ba-compare-block {
+  width: 100%;
+  background: #0B1629;
+  color: var(--logiweb-block-title-color-inverse);
+  padding: 4.5rem 1.5rem;
+}
+
+.ba-compare-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ba-compare-subtitle {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 1rem;
+  border-radius: var(--rounded-full);
+  border: 1px solid var(--logiweb-block-hero-badge-border);
+  background: var(--logiweb-block-hero-badge-background);
+  color: var(--logiweb-block-subtitle-color-inverse);
+  font-family: var(--logiweb-block-subtitle-font-family);
+  font-size: var(--logiweb-block-subtitle-size);
+  font-weight: var(--logiweb-block-subtitle-font-weight);
+}
+
+.ba-compare-title {
+  margin: 0;
+  color: var(--logiweb-block-title-color-inverse);
+  font-family: var(--logiweb-block-title-font-family);
+  font-size: var(--logiweb-block-title-size-section);
+  font-weight: var(--logiweb-block-title-font-weight-strong);
+  line-height: 1.2;
+  text-align: center;
+}
+
+.ba-compare-title-highlight {
+  color: var(--logiweb-block-title-highlight-color-inverse);
+}
+
+.ba-compare-description {
+  margin: 0;
+  max-width: 58ch;
+  color: var(--logiweb-block-text-color-inverse);
+  font-family: var(--logiweb-block-text-font-family);
+  font-size: var(--logiweb-block-description);
+  font-weight: var(--logiweb-block-text-font-weight);
+  line-height: 1.6;
+  text-align: center;
+}
+
+.ba-compare-frame {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.ba-compare-track {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 8;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  user-select: none;
+}
+
+.ba-compare-image {
+  display: block;
+  border-radius: 0;
+}
+
+.ba-compare-image-after {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ba-compare-before-clip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 50%;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.ba-compare-image-before {
+  width: 100%;
+  height: 100%;
+  min-width: 100%;
+  object-fit: cover;
+  object-position: left center;
+}
+
+.ba-compare-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--logiweb-block-text-color-inverse);
+  font-family: var(--logiweb-block-text-font-family);
+  font-size: var(--logiweb-block-text-size-sm);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+}
+
+.ba-compare-range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  z-index: 6;
+  cursor: ew-resize;
+}
+
+.ba-compare-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  transform: translateX(-1px);
+  border-left: 2px solid rgba(255, 255, 255, 0.9);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.ba-compare-tag {
+  position: absolute;
+  top: 0.8rem;
+  z-index: 7;
+  border-radius: var(--rounded-full);
+  padding: 0.32rem 0.72rem;
+  font-family: var(--logiweb-block-subtitle-font-family);
+  font-size: var(--logiweb-block-text-size-sm);
+  font-weight: var(--logiweb-block-subtitle-font-weight);
+  line-height: 1;
+  text-transform: uppercase;
+  background: rgba(10, 14, 28, 0.6);
+  color: #ffffff;
+}
+
+.ba-compare-tag-before {
+  left: 0.8rem;
+}
+
+.ba-compare-tag-after {
+  right: 0.8rem;
+  background: rgba(76, 112, 234, 0.9);
+}
+
+.ba-compare-handle {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  background: rgba(255, 255, 255, 0.96);
+  color: #2746a8;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--logiweb-block-text-font-family);
+  font-size: var(--logiweb-block-text-size-sm);
+  font-weight: var(--logiweb-block-title-font-weight-strong);
+  line-height: 1;
+  padding: 0;
+  pointer-events: none;
+
+  span {
+    letter-spacing: -1px;
+    transform: translateX(-0.5px);
+  }
+}
+
+.ba-compare-legend {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 0.8rem;
+  flex-wrap: wrap;
+
+  p {
+    margin: 0;
+    color: var(--logiweb-block-text-color-inverse);
+    font-family: var(--logiweb-block-text-font-family);
+    font-size: var(--logiweb-block-text-size-sm);
+    font-weight: var(--logiweb-block-text-font-weight);
+    opacity: 0.95;
+  }
+}
+
+@media (max-width: 768px) {
+  .ba-compare-block {
+    padding: 3.25rem 1rem;
+  }
+
+  .ba-compare-track {
+    aspect-ratio: 4 / 3;
+  }
+
+  .ba-compare-description {
+    max-width: 100%;
+  }
+}
+
+// =============================================================================
+// BLOCK 82 — Specialty Finishes Split
+// =============================================================================
+
+.specialty-split-block {
+  width: 100%;
+  padding: 4.2rem 1.4rem;
+}
+
+.specialty-split-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) minmax(320px, 1fr);
+  align-items: start;
+  gap: clamp(1.5rem, 3vw, 2.6rem);
+}
+
+.specialty-split-media {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  min-height: 420px;
+  box-shadow: var(--logiweb-block-surface-shadow);
+}
+
+.specialty-split-image {
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+}
+
+.specialty-split-image-placeholder {
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--logiweb-block-text-font-family);
+  font-size: var(--logiweb-block-text-size-sm);
+  color: var(--logiweb-block-placeholder-text);
+  background: var(--logiweb-block-placeholder-background);
+}
+
+.specialty-split-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1.05rem 1.25rem;
+  background: linear-gradient(180deg, rgba(8, 18, 45, 0) 0%, rgba(8, 18, 45, 0.86) 100%);
+}
+
+.specialty-split-caption-title {
+  margin: 0;
+  color: var(--logiweb-block-title-color-inverse);
+  font-family: var(--logiweb-block-title-font-family);
+  font-size: var(--logiweb-block-text-size-md);
+  font-weight: var(--logiweb-block-title-font-weight);
+  line-height: 1.3;
+}
+
+.specialty-split-caption-subtitle {
+  margin: 0.2rem 0 0;
+  color: var(--logiweb-block-text-color-inverse);
+  font-family: var(--logiweb-block-text-font-family);
+  font-size: var(--logiweb-block-text-size-sm);
+  font-weight: var(--logiweb-block-text-font-weight);
+  line-height: 1.35;
+}
+
+.specialty-split-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.95rem;
+}
+
+.specialty-split-badge {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.42rem 1rem;
+  border-radius: var(--rounded-full);
+  color: var(--logiweb-block-accent-orange);
+  border: 1px solid rgba(204, 122, 19, 0.28);
+  background: rgba(204, 122, 19, 0.08);
+  font-family: var(--logiweb-block-subtitle-font-family);
+  font-size: var(--logiweb-block-text-size-sm);
+  font-weight: var(--logiweb-block-subtitle-font-weight);
+}
+
+.specialty-split-title {
+  margin: 0;
+  color: var(--logiweb-block-title-color);
+  font-family: var(--logiweb-block-title-font-family);
+  font-size: var(--logiweb-block-title-size-section);
+  font-weight: var(--logiweb-block-title-font-weight-strong);
+  line-height: 1.15;
+}
+
+.specialty-split-title-highlight {
+  color: var(--logiweb-block-title-highlight-color);
+}
+
+.specialty-split-description {
+  margin: 0;
+  color: var(--logiweb-block-text-color);
+  font-family: var(--logiweb-block-text-font-family);
+  font-size: var(--logiweb-block-description);
+  font-weight: var(--logiweb-block-text-font-weight);
+  line-height: 1.58;
+  max-width: 54ch;
+}
+
+.specialty-split-features {
+  width: 100%;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.specialty-split-feature-item {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  gap: 0.85rem;
+  align-items: start;
+}
+
+.specialty-split-feature-icon {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--logiweb-block-muted-background);
+
+  i {
+    color: var(--logiweb-block-title-highlight-color);
+    font-size: 0.9rem;
+  }
+}
+
+.specialty-split-feature-title {
+  margin: 0;
+  color: var(--logiweb-block-title-color);
+  font-family: var(--logiweb-block-title-font-family);
+  font-size: var(--logiweb-block-text-size-md);
+  font-weight: var(--logiweb-block-title-font-weight);
+  line-height: 1.32;
+}
+
+.specialty-split-feature-description {
+  margin: 0.25rem 0 0;
+  color: var(--logiweb-block-text-color);
+  font-family: var(--logiweb-block-text-font-family);
+  font-size: var(--logiweb-block-text-size-sm);
+  font-weight: var(--logiweb-block-text-font-weight);
+  line-height: 1.56;
+}
+
+@media (max-width: 900px) {
+  .specialty-split-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .specialty-split-content {
+    padding: 0 0.2rem;
+  }
+}
+
+// =============================================================================
+// BLOCK 83 — Processo in 4 Step
+// =============================================================================
+
+.process-4step-block {
+  width: 100%;
+  background: #f3f5f9;
+  padding: clamp(3.2rem, 6vw, 5rem) 1.25rem;
+}
+
+.process-4step-header {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.95rem;
+}
+
+.process-4step-badge {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 1rem;
+  border-radius: var(--rounded-full);
+  background: var(--logiweb-block-accent-blue-soft);
+  color: #2a4ec9;
+  font-family: var(--logiweb-block-subtitle-font-family);
+  font-weight: var(--logiweb-block-subtitle-font-weight);
+  font-size: var(--logiweb-block-subtitle-size);
+  border: 1px solid rgba(90, 125, 232, 0.22);
+}
+
+.process-4step-badge-icon {
+  width: 1rem;
+  height: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+  }
+}
+
+.process-4step-title {
+  margin: 0;
+  color: var(--logiweb-block-title-color);
+  font-family: var(--logiweb-block-title-font-family);
+  font-weight: var(--logiweb-block-title-font-weight-strong);
+  font-size: var(--logiweb-block-title-size-section);
+  line-height: 1.2;
+
+  span {
+    color: #3b5bdb;
+  }
+}
+
+.process-4step-description {
+  margin: 0;
+  max-width: 600px;
+  color: var(--logiweb-block-text-color);
+  font-family: var(--logiweb-block-text-font-family);
+  font-weight: var(--logiweb-block-text-font-weight);
+  font-size: var(--logiweb-block-description);
+  line-height: 1.55;
+}
+
+.process-4step-grid {
+  max-width: 1180px;
+  margin: clamp(2.1rem, 4vw, 3.2rem) auto 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.process-4step-grid::before {
+  content: "";
+  position: absolute;
+  left: calc(12.5% - 38px);
+  right: calc(12.5% - 38px);
+  top: 58px;
+  height: 2px;
+  background: #cfe0ff;
+  z-index: -1;
+}
+
+.process-4step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.process-4step-number {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #3b5bdb;
+  color: #ffffff;
+  font-family: var(--logiweb-block-title-font-family);
+  font-weight: var(--logiweb-block-title-font-weight-strong);
+  font-size: var(--logiweb-block-text-size-lg);
+  box-shadow: 0 10px 22px rgba(59, 91, 219, 0.32);
+}
+
+.process-4step-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 0.75rem;
+  background: rgba(59, 91, 219, 0.09);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    fill: #3b5bdb;
+  }
+
+  i {
+    color: #3b5bdb;
+    font-size: 1rem;
+    line-height: 1;
+  }
+}
+
+.process-4step-item-title {
+  margin: 0;
+  color: var(--logiweb-block-title-color);
+  font-family: var(--logiweb-block-title-font-family);
+  font-weight: var(--logiweb-block-title-font-weight-strong);
+  font-size: var(--logiweb-block-text-size-lg);
+  line-height: 1.35;
+}
+
+.process-4step-item-description {
+  margin: 0;
+  color: var(--logiweb-block-text-color);
+  font-family: var(--logiweb-block-text-font-family);
+  font-weight: var(--logiweb-block-text-font-weight);
+  font-size: var(--logiweb-block-text-size-sm);
+  line-height: 1.6;
+  max-width: 29ch;
+}
+
+@media (max-width: 768px) {
+  .process-4step-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .process-4step-grid::before {
+    display: none;
+  }
+
+  .process-4step-item-description {
+    max-width: 100%;
+  }
+}
+
+// =============================================================================
+// BLOCK 84 — Painting FAQ Compact
+// =============================================================================
+
+.painting-faq-compact-block {
+  width: 100%;
+  padding: clamp(3.2rem, 6vw, 4.6rem) 1.2rem;
+}
+
+.painting-faq-compact-inner {
+  width:100%;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  max-width: 56rem;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.painting-faq-compact-badge {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.42rem 0.95rem;
+  border-radius: var(--rounded-full);
+  background: rgba(124, 58, 237, 0.08);
+  border: 1px solid rgba(124, 58, 237, 0.14);
+  color: #7c3aed;
+  font-family: var(--logiweb-block-subtitle-font-family);
+  font-size: var(--logiweb-block-subtitle-size);
+  font-weight: var(--logiweb-block-subtitle-font-weight);
+  line-height: 1;
+}
+
+.painting-faq-compact-badge-icon {
+  width: 0.95rem;
+  height: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  i {
+    font-size: 0.95rem;
+  }
+}
+
+.painting-faq-compact-title {
+  margin: 0;
+  color: var(--logiweb-block-title-color);
+  font-family: var(--logiweb-block-title-font-family);
+  font-size: var(--logiweb-block-title-size-section);
+  font-weight: var(--logiweb-block-title-font-weight-strong);
+  line-height: 1.2;
+
+  span {
+    color: #7c3aed;
+  }
+}
+
+.painting-faq-compact-list {
+  width: 100%;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.painting-faq-compact-item {
+  width: 100%;
+  background: #f8fbff;
+  border: 1px solid #e2e8f2;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.painting-faq-compact-question {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1.18rem 1.2rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.painting-faq-compact-number {
+  width: 30px;
+  height: 30px;
+  border-radius: 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.08);
+  font-family: var(--logiweb-block-title-font-family);
+  font-size: var(--logiweb-block-text-size-sm);
+  font-weight: var(--logiweb-block-title-font-weight-strong);
+}
+
+.painting-faq-compact-question-text {
+  color: var(--logiweb-block-title-color);
+  font-family: var(--logiweb-block-title-font-family);
+  font-size: var(--logiweb-block-text-size-md);
+  font-weight: var(--logiweb-block-title-font-weight-strong);
+  line-height: 1.35;
+}
+
+.painting-faq-compact-answer {
+  padding: 0 1.2rem 1.1rem 3.9rem;
+
+  p {
+    margin: 0;
+    color: var(--logiweb-block-text-color);
+    font-family: var(--logiweb-block-text-font-family);
+    font-size: var(--logiweb-block-text-size-sm);
+    font-weight: var(--logiweb-block-text-font-weight);
+    line-height: 1.65;
+    max-width: 66ch;
+  }
+}
+
+@media (max-width: 768px) {
+  .painting-faq-compact-question {
+    grid-template-columns: 32px 1fr;
+    padding: 1rem 0.95rem;
+  }
+
+  .painting-faq-compact-answer {
+    padding: 0 0.95rem 0.95rem 3.25rem;
+  }
+}
+
+// =============================================================================
+// BLOCK 85 — Technical Insights Cards
+// =============================================================================
+
+.technical-insights-block {
+  width: 100%;
+  background: #f3f5f8;
+  padding: clamp(3.2rem, 6vw, 5rem) 1.25rem;
+}
+
+.technical-insights-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.technical-insights-badge {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.42rem 0.95rem;
+  border-radius: var(--rounded-full);
+  border: 1px solid rgba(204, 122, 19, 0.2);
+  background: rgba(204, 122, 19, 0.1);
+  color: var(--logiweb-block-accent-orange);
+  font-family: var(--logiweb-block-subtitle-font-family);
+  font-size: var(--logiweb-block-subtitle-size);
+  font-weight: var(--logiweb-block-subtitle-font-weight);
+  line-height: 1;
+}
+
+.technical-insights-title {
+  margin: 0.95rem 0 0;
+  color: var(--logiweb-block-title-color);
+  font-family: var(--logiweb-block-title-font-family);
+  font-size: var(--logiweb-block-title-size-section);
+  font-weight: var(--logiweb-block-title-font-weight-strong);
+  line-height: 1.2;
+  text-align: center;
+
+  span {
+    color: var(--logiweb-block-accent-orange);
+  }
+}
+
+.technical-insights-description {
+  margin: 0.7rem 0 0;
+  color: var(--logiweb-block-text-color);
+  font-family: var(--logiweb-block-text-font-family);
+  font-size: var(--logiweb-block-description);
+  font-weight: var(--logiweb-block-text-font-weight);
+  line-height: 1.6;
+  text-align: center;
+}
+
+.technical-insights-grid {
+  width: 100%;
+  margin-top: clamp(1.8rem, 3.4vw, 2.4rem);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.15rem;
+}
+
+.technical-insights-card {
+  background: var(--logiweb-block-card-background);
+  border: 1px solid var(--logiweb-block-surface-border);
+  border-radius: 1rem;
+  padding: 1.35rem 1.3rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 330px;
+}
+
+.technical-insights-card-icon {
+  width: 2.45rem;
+  height: 2.45rem;
+  border-radius: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--logiweb-block-muted-background);
+
+  i {
+    color: var(--logiweb-block-title-highlight-color);
+    font-size: var(--logiweb-block-text-size-lg);
+  }
+}
+
+.technical-insights-card-title {
+  margin: 0.9rem 0 0;
+  color: var(--logiweb-block-title-color);
+  font-family: var(--logiweb-block-title-font-family);
+  font-size: var(--logiweb-block-text-size-md);
+  font-weight: var(--logiweb-block-title-font-weight-strong);
+  line-height: 1.34;
+}
+
+.technical-insights-card-description {
+  margin: 0.8rem 0 0;
+  color: var(--logiweb-block-text-color);
+  font-family: var(--logiweb-block-text-font-family);
+  font-size: var(--logiweb-block-text-size-sm);
+  font-weight: var(--logiweb-block-text-font-weight);
+  line-height: 1.62;
+}
+
+.technical-insights-card-link {
+  margin-top: auto;
+  padding-top: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--logiweb-block-title-highlight-color);
+  text-decoration: none;
+  font-family: var(--logiweb-block-title-font-family);
+  font-size: var(--logiweb-block-text-size-sm);
+  font-weight: var(--logiweb-block-title-font-weight);
+}
+
+@media (max-width: 980px) {
+  .technical-insights-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .technical-insights-card {
+    min-height: unset;
+  }
+}
+
+// =============================================================================
+// BLOCK 86 — Design & Material Split
+// =============================================================================
+
+.design-material-split-block {
+  width: 100%;
+  padding: clamp(3.2rem, 6vw, 5rem) 1.25rem;
+}
+
+.design-material-split-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) minmax(320px, 1fr);
+  align-items: start;
+  gap: clamp(1.6rem, 3vw, 2.7rem);
+}
+
+.design-material-split-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.95rem;
+}
+
+.design-material-split-badge {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.42rem 1rem;
+  border-radius: var(--rounded-full);
+  color: var(--logiweb-block-accent-orange);
+  border: 1px solid rgba(204, 122, 19, 0.24);
+  background: rgba(204, 122, 19, 0.08);
+  font-family: var(--logiweb-block-subtitle-font-family);
+  font-size: var(--logiweb-block-subtitle-size);
+  font-weight: var(--logiweb-block-subtitle-font-weight);
+}
+
+.design-material-split-title {
+  margin: 0;
+  color: var(--logiweb-block-title-color);
+  font-family: var(--logiweb-block-title-font-family);
+  font-size: var(--logiweb-block-title-size-section);
+  font-weight: var(--logiweb-block-title-font-weight-strong);
+  line-height: 1.16;
+}
+
+.design-material-split-title-highlight {
+  color: var(--logiweb-block-title-highlight-color);
+}
+
+.design-material-split-description {
+  margin: 0;
+  color: var(--logiweb-block-text-color);
+  font-family: var(--logiweb-block-text-font-family);
+  font-size: var(--logiweb-block-description);
+  font-weight: var(--logiweb-block-text-font-weight);
+  line-height: 1.58;
+  max-width: 56ch;
+}
+
+.design-material-split-features {
+  width: 100%;
+  margin-top: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.design-material-split-feature-item {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  gap: 0.8rem;
+  align-items: start;
+}
+
+.design-material-split-feature-icon {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--logiweb-block-muted-background);
+
+  i {
+    color: var(--logiweb-block-title-highlight-color);
+    font-size: var(--logiweb-block-text-size-lg);
+  }
+}
+
+.design-material-split-feature-title {
+  margin: 0;
+  color: var(--logiweb-block-title-color);
+  font-family: var(--logiweb-block-title-font-family);
+  font-size: var(--logiweb-block-text-size-md);
+  font-weight: var(--logiweb-block-title-font-weight-strong);
+  line-height: 1.34;
+}
+
+.design-material-split-feature-description {
+  margin: 0.24rem 0 0;
+  color: var(--logiweb-block-text-color);
+  font-family: var(--logiweb-block-text-font-family);
+  font-size: var(--logiweb-block-text-size-sm);
+  font-weight: var(--logiweb-block-text-font-weight);
+  line-height: 1.62;
+}
+
+.design-material-split-media {
+  position: relative;
+  min-height: 420px;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: var(--logiweb-block-surface-shadow);
+}
+
+.design-material-split-image {
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+}
+
+.design-material-split-image-placeholder {
+  width: 100%;
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--logiweb-block-placeholder-text);
+  background: var(--logiweb-block-placeholder-background);
+  font-family: var(--logiweb-block-text-font-family);
+  font-size: var(--logiweb-block-text-size-sm);
+}
+
+.design-material-split-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1.05rem 1.2rem;
+  background: linear-gradient(180deg, rgba(8, 18, 45, 0) 0%, rgba(8, 18, 45, 0.86) 100%);
+}
+
+.design-material-split-caption-title {
+  margin: 0;
+  color: var(--logiweb-block-title-color-inverse);
+  font-family: var(--logiweb-block-title-font-family);
+  font-size: var(--logiweb-block-text-size-lg);
+  font-weight: var(--logiweb-block-title-font-weight-strong);
+  line-height: 1.3;
+}
+
+.design-material-split-caption-subtitle {
+  margin: 0.2rem 0 0;
+  color: var(--logiweb-block-text-color-inverse);
+  font-family: var(--logiweb-block-text-font-family);
+  font-size: var(--logiweb-block-text-size-sm);
+  font-weight: var(--logiweb-block-text-font-weight);
+  line-height: 1.38;
+}
+
+@media (max-width: 980px) {
+  .design-material-split-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .design-material-split-content {
+    order: 1;
+  }
+
+  .design-material-split-media {
+    order: 2;
+    min-height: 360px;
+  }
+
+  .design-material-split-image,
+  .design-material-split-image-placeholder {
+    min-height: 360px;
+  }
+}
+
+// =============================================================================
+// BLOCK 87 — Financing Made Simple
+// =============================================================================
+
+.financing-simple-block {
+  width: 100%;
+  padding: clamp(2rem, 4vw, 3.25rem) 1rem;
+  background: linear-gradient(140deg, #74c793 0%, #61b782 100%);
+}
+
+.financing-simple-inner {
+  width: min(1120px, 100%);
+  margin-left: auto;
+  margin-right: auto;
+  padding: clamp(1.3rem, 2.6vw, 2.5rem);
+  border-radius: clamp(1rem, 2vw, 1.65rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  gap: clamp(1.15rem, 2vw, 2rem);
+  align-items: center;
+}
+
+.financing-simple-content {
+  max-width: 520px;
+}
+
+.financing-simple-badge {
+  margin: 0 0 1rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: var(--logiweb-block-subtitle-font-family);
+  font-weight: var(--logiweb-block-subtitle-font-weight-strong);
+  font-size: var(--logiweb-block-subtitle-size-sm);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.financing-simple-title {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--logiweb-block-title-font-family);
+  font-weight: var(--logiweb-block-title-font-weight-strong);
+  font-size: clamp(2.05rem, 4.4vw, 3.45rem);
+  line-height: 1.05;
+}
+
+.financing-simple-description {
+  margin: 1.35rem 0 0;
+  max-width: 46ch;
+  color: rgba(255, 255, 255, 0.88);
+  font-family: var(--logiweb-block-text-font-family);
+  font-weight: var(--logiweb-block-text-font-weight);
+  font-size: var(--logiweb-block-text-size-md);
+  line-height: 1.55;
+}
+
+.financing-simple-actions {
+  margin-top: 1.7rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.financing-simple-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: var(--rounded-full);
+  border: 1px solid transparent;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  font-family: var(--logiweb-block-button-font-family);
+  font-weight: var(--logiweb-block-button-font-weight);
+  font-size: var(--logiweb-block-text-size-md);
+  padding: 0.72rem 1.35rem;
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-1px);
+  }
+}
+
+.financing-simple-btn-primary {
+  background: #f8f9fa;
+  color: #2d7c57;
+  box-shadow: 0 10px 24px rgba(38, 86, 63, 0.18);
+}
+
+.financing-simple-btn-secondary {
+  background: rgba(255, 255, 255, 0.2);
+  color: #effff5;
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.financing-simple-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.financing-simple-stat-card {
+  border-radius: 1rem;
+  padding: 1rem 1.15rem;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(2px);
+}
+
+.financing-simple-stat-value {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--logiweb-block-title-font-family);
+  font-weight: var(--logiweb-block-title-font-weight-strong);
+  font-size: clamp(1.5rem, 2.3vw, 2.05rem);
+  line-height: 1.1;
+}
+
+.financing-simple-stat-label {
+  margin: 0.35rem 0 0;
+  color: rgba(255, 255, 255, 0.88);
+  font-family: var(--logiweb-block-text-font-family);
+  font-weight: var(--logiweb-block-text-font-weight);
+  font-size: var(--logiweb-block-text-size-sm);
+  line-height: 1.45;
+}
+
+@media (max-width: 980px) {
+  .financing-simple-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .financing-simple-content {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .financing-simple-block {
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+  }
+
+  .financing-simple-title {
+    font-size: clamp(1.85rem, 8vw, 2.35rem);
+  }
+
+  .financing-simple-stats-grid {
+    grid-template-columns: 1fr;
+  }
 }

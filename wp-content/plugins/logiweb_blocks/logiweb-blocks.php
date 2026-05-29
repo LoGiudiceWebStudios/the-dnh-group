@@ -150,6 +150,20 @@ add_action('wp_enqueue_scripts', function() {
         filemtime( plugin_dir_path( __FILE__ ) . 'reviews-spotlight-init.js' ),
         true
     );
+    wp_enqueue_script(
+        'logiweb-ba-compare-init',
+        plugins_url('ba-compare-init.js', __FILE__),
+        array(),
+        filemtime( plugin_dir_path( __FILE__ ) . 'ba-compare-init.js' ),
+        true
+    );
+    wp_enqueue_script(
+        'logiweb-painting-faq-compact-init',
+        plugins_url('painting-faq-compact-init.js', __FILE__),
+        array(),
+        filemtime( plugin_dir_path( __FILE__ ) . 'painting-faq-compact-init.js' ),
+        true
+    );
     wp_localize_script('logiweb-financing-form', 'logiweb_rest', array(
         'nonce' => wp_create_nonce('wp_rest'),
         'base_url' => rest_url(),
@@ -683,8 +697,264 @@ function logiweb_register_blocks() {
         'render_callback' => 'logiweb_render_block_78',
     ));
 
+    register_block_type( 'logiweb/custom-block-80', array(
+        'editor_script'   => 'logiweb-blocks-editor',
+        'editor_style'    => 'logiweb-blocks-editor-styles',
+        'style'           => 'logiweb-blocks-frontend-styles',
+        'render_callback' => 'logiweb_render_block_80',
+        'attributes'      => array(
+            'badge'               => array( 'type' => 'string', 'default' => 'Residential Painting Specialists' ),
+            'badgeIcon'           => array( 'type' => 'string', 'default' => 'fa-solid fa-paintbrush' ),
+            'titleLine1'          => array( 'type' => 'string', 'default' => 'Studio-Quality Painting.' ),
+            'titleHighlight'      => array( 'type' => 'string', 'default' => 'Immaculate' ),
+            'titleLine2'          => array( 'type' => 'string', 'default' => 'Execution.' ),
+            'description'         => array( 'type' => 'string', 'default' => 'From flawless, crisp interior walls to ultra-durable weather-resistant exterior coatings. The DNH Group delivers sharp, luxury finishes tailored for high-end properties across Ohio, Indiana, and Kentucky.' ),
+            'ctaText'             => array( 'type' => 'string', 'default' => 'Schedule Your In-Home Color Consultation' ),
+            'ctaUrl'              => array( 'type' => 'string', 'default' => '#' ),
+            'backgroundImageUrl'  => array( 'type' => 'string', 'default' => '' ),
+        ),
+    ));
+
+    register_block_type( 'logiweb/custom-block-81', array(
+        'editor_script'   => 'logiweb-blocks-editor',
+        'editor_style'    => 'logiweb-blocks-editor-styles',
+        'style'           => 'logiweb-blocks-frontend-styles',
+        'render_callback' => 'logiweb_render_block_81',
+        'attributes'      => array(
+            'subtitle'       => array( 'type' => 'string', 'default' => 'Visual Proof' ),
+            'titleStart'     => array( 'type' => 'string', 'default' => 'See the' ),
+            'titleHighlight' => array( 'type' => 'string', 'default' => 'DNH Difference' ),
+            'description'    => array( 'type' => 'string', 'default' => 'Drag the slider to reveal the dramatic transformation. Dated and faded becomes stunning and modern.' ),
+            'beforeLabel'    => array( 'type' => 'string', 'default' => 'Before' ),
+            'afterLabel'     => array( 'type' => 'string', 'default' => 'After' ),
+            'beforeLegend'   => array( 'type' => 'string', 'default' => 'Before - Faded, peeling, outdated' ),
+            'afterLegend'    => array( 'type' => 'string', 'default' => 'After - Premium charcoal finish' ),
+            'beforeImageUrl' => array( 'type' => 'string', 'default' => '' ),
+            'afterImageUrl'  => array( 'type' => 'string', 'default' => '' ),
+            'sliderPosition' => array( 'type' => 'number', 'default' => 50 ),
+        ),
+    ));
+
+    register_block_type( 'logiweb/custom-block-82', array(
+        'editor_script'   => 'logiweb-blocks-editor',
+        'editor_style'    => 'logiweb-blocks-editor-styles',
+        'style'           => 'logiweb-blocks-frontend-styles',
+        'render_callback' => 'logiweb_render_block_82',
+        'attributes'      => array(
+            'badge'               => array( 'type' => 'string', 'default' => 'Specialty Finishes' ),
+            'titleStart'          => array( 'type' => 'string', 'default' => 'Fine-Finish & Accent' ),
+            'titleHighlight'      => array( 'type' => 'string', 'default' => 'Details' ),
+            'description'         => array( 'type' => 'string', 'default' => 'High-end clients love custom details. Our specialty fine-finish work transforms ordinary surfaces into showroom-quality centerpieces that define a room.' ),
+            'imageUrl'            => array( 'type' => 'string', 'default' => '' ),
+            'imageAlt'            => array( 'type' => 'string', 'default' => '' ),
+            'imageCaptionTitle'   => array( 'type' => 'string', 'default' => 'Factory-Smooth Cabinet Finish' ),
+            'imageCaptionSubtitle'=> array( 'type' => 'string', 'default' => 'Navy & Gold Luxury Kitchen' ),
+            'features'            => array( 'type' => 'array', 'default' => array() ),
+        ),
+    ));
+
 }
 add_action( 'init', 'logiweb_register_blocks' );
+
+function logiweb_render_block_80( $attributes ) {
+    $defaults = array(
+        'badge'              => 'Residential Painting Specialists',
+        'badgeIcon'          => 'fa-solid fa-paintbrush',
+        'titleLine1'         => 'Studio-Quality Painting.',
+        'titleHighlight'     => 'Immaculate',
+        'titleLine2'         => 'Execution.',
+        'description'        => 'From flawless, crisp interior walls to ultra-durable weather-resistant exterior coatings. The DNH Group delivers sharp, luxury finishes tailored for high-end properties across Ohio, Indiana, and Kentucky.',
+        'ctaText'            => 'Schedule Your In-Home Color Consultation',
+        'ctaUrl'             => '#',
+        'backgroundImageUrl' => '',
+    );
+
+    $a = wp_parse_args( is_array( $attributes ) ? $attributes : array(), $defaults );
+
+    $bg_style = '';
+    if ( ! empty( $a['backgroundImageUrl'] ) ) {
+        $bg_style = ' style="background-image: url(' . esc_url( $a['backgroundImageUrl'] ) . ');"';
+    }
+
+    ob_start();
+    ?>
+    <section class="hero-split-block"<?php echo $bg_style; ?>>
+        <div class="hero-split-overlay" aria-hidden="true"></div>
+        <div class="hero-split-content">
+            <p class="hero-split-badge">
+                <i class="<?php echo esc_attr( $a['badgeIcon'] ); ?>" aria-hidden="true"></i>
+                <span><?php echo esc_html( $a['badge'] ); ?></span>
+            </p>
+            <h1 class="hero-split-title">
+                <?php echo esc_html( $a['titleLine1'] ); ?><br>
+                <span class="hero-split-title-highlight"><?php echo esc_html( $a['titleHighlight'] ); ?></span> <?php echo esc_html( $a['titleLine2'] ); ?>
+            </h1>
+            <p class="hero-split-description"><?php echo esc_html( $a['description'] ); ?></p>
+            <a href="<?php echo esc_url( $a['ctaUrl'] ); ?>" class="hero-split-cta btn-primary">
+                <?php echo esc_html( $a['ctaText'] ); ?> <span class="hero-split-cta-arrow" aria-hidden="true">→</span>
+            </a>
+        </div>
+    </section>
+    <?php
+    return ob_get_clean();
+}
+
+function logiweb_render_block_81( $attributes ) {
+    $defaults = array(
+        'subtitle'       => 'Visual Proof',
+        'titleStart'     => 'See the',
+        'titleHighlight' => 'DNH Difference',
+        'description'    => 'Drag the slider to reveal the dramatic transformation. Dated and faded becomes stunning and modern.',
+        'beforeLabel'    => 'Before',
+        'afterLabel'     => 'After',
+        'beforeLegend'   => 'Before - Faded, peeling, outdated',
+        'afterLegend'    => 'After - Premium charcoal finish',
+        'beforeImageUrl' => '',
+        'afterImageUrl'  => '',
+        'sliderPosition' => 50,
+    );
+
+    $a = wp_parse_args( is_array( $attributes ) ? $attributes : array(), $defaults );
+    $position = isset( $a['sliderPosition'] ) ? (int) $a['sliderPosition'] : 50;
+    $position = min( 100, max( 0, $position ) );
+
+    ob_start();
+    ?>
+    <section class="ba-compare-block" data-block="ba-compare">
+        <div class="ba-compare-inner">
+            <p class="ba-compare-subtitle"><?php echo esc_html( $a['subtitle'] ); ?></p>
+
+            <h2 class="ba-compare-title">
+                <?php echo esc_html( $a['titleStart'] ); ?>
+                <span class="ba-compare-title-highlight"><?php echo esc_html( $a['titleHighlight'] ); ?></span>
+            </h2>
+
+            <p class="ba-compare-description"><?php echo esc_html( $a['description'] ); ?></p>
+
+            <div class="ba-compare-frame">
+                <div class="ba-compare-track" data-position="<?php echo esc_attr( $position ); ?>">
+                    <?php if ( ! empty( $a['afterImageUrl'] ) ) : ?>
+                        <img class="ba-compare-image ba-compare-image-after" src="<?php echo esc_url( $a['afterImageUrl'] ); ?>" alt="<?php echo esc_attr( $a['afterLabel'] ); ?>">
+                    <?php else : ?>
+                        <div class="ba-compare-placeholder">Upload after image</div>
+                    <?php endif; ?>
+
+                    <div class="ba-compare-before-clip" style="width: <?php echo esc_attr( $position ); ?>%;">
+                        <?php if ( ! empty( $a['beforeImageUrl'] ) ) : ?>
+                            <img class="ba-compare-image ba-compare-image-before" src="<?php echo esc_url( $a['beforeImageUrl'] ); ?>" alt="<?php echo esc_attr( $a['beforeLabel'] ); ?>">
+                        <?php else : ?>
+                            <div class="ba-compare-placeholder">Upload before image</div>
+                        <?php endif; ?>
+                    </div>
+
+                    <input
+                        type="range"
+                        class="ba-compare-range"
+                        min="0"
+                        max="100"
+                        value="<?php echo esc_attr( $position ); ?>"
+                        aria-label="Drag comparison slider"
+                    >
+
+                    <div class="ba-compare-divider" style="left: <?php echo esc_attr( $position ); ?>%;">
+                        <div class="ba-compare-handle">
+                            <span>||</span>
+                        </div>
+                    </div>
+
+                    <div class="ba-compare-tag ba-compare-tag-before"><?php echo esc_html( $a['beforeLabel'] ); ?></div>
+                    <div class="ba-compare-tag ba-compare-tag-after"><?php echo esc_html( $a['afterLabel'] ); ?></div>
+                </div>
+            </div>
+
+            <div class="ba-compare-legend">
+                <p><?php echo esc_html( $a['beforeLegend'] ); ?></p>
+                <p><?php echo esc_html( $a['afterLegend'] ); ?></p>
+            </div>
+        </div>
+    </section>
+    <?php
+
+    return ob_get_clean();
+}
+
+function logiweb_render_block_82( $attributes ) {
+    $defaults = array(
+        'badge'                => 'Specialty Finishes',
+        'titleStart'           => 'Fine-Finish & Accent',
+        'titleHighlight'       => 'Details',
+        'description'          => 'High-end clients love custom details. Our specialty fine-finish work transforms ordinary surfaces into showroom-quality centerpieces that define a room.',
+        'imageUrl'             => '',
+        'imageAlt'             => '',
+        'imageCaptionTitle'    => 'Factory-Smooth Cabinet Finish',
+        'imageCaptionSubtitle' => 'Navy & Gold Luxury Kitchen',
+        'features'             => array(
+            array(
+                'icon'        => 'fa-solid fa-spray-can-sparkles',
+                'title'       => 'Fine-Finish Spraying',
+                'description' => 'Factory-smooth cabinet painting, built-ins, wainscoting, and intricate crown molding. Our spray booth technique delivers a finish indistinguishable from original manufacturing.',
+            ),
+            array(
+                'icon'        => 'fa-solid fa-palette',
+                'title'       => 'Expert Color Consultation',
+                'description' => 'Professional design guidance to select the perfect modern palettes - crisp whites, warm neutrals, and bold contemporary dark accents that complement your specific lighting and floor plans.',
+            ),
+            array(
+                'icon'        => 'fa-solid fa-check',
+                'title'       => 'Accent Walls & Feature Details',
+                'description' => 'Statement walls, coffered ceiling details, trim contrast work, and custom stencil applications that add depth, character, and architectural interest to any space.',
+            ),
+        ),
+    );
+
+    $a = wp_parse_args( is_array( $attributes ) ? $attributes : array(), $defaults );
+    $features = isset( $a['features'] ) && is_array( $a['features'] ) && ! empty( $a['features'] ) ? $a['features'] : $defaults['features'];
+
+    ob_start();
+    ?>
+    <section class="specialty-split-block">
+        <div class="specialty-split-inner">
+            <div class="specialty-split-media">
+                <?php if ( ! empty( $a['imageUrl'] ) ) : ?>
+                    <img class="specialty-split-image" src="<?php echo esc_url( $a['imageUrl'] ); ?>" alt="<?php echo esc_attr( $a['imageAlt'] ); ?>">
+                <?php else : ?>
+                    <div class="specialty-split-image-placeholder">Select image</div>
+                <?php endif; ?>
+                <div class="specialty-split-caption">
+                    <p class="specialty-split-caption-title"><?php echo esc_html( $a['imageCaptionTitle'] ); ?></p>
+                    <p class="specialty-split-caption-subtitle"><?php echo esc_html( $a['imageCaptionSubtitle'] ); ?></p>
+                </div>
+            </div>
+
+            <div class="specialty-split-content">
+                <p class="specialty-split-badge"><?php echo esc_html( $a['badge'] ); ?></p>
+                <h2 class="specialty-split-title">
+                    <?php echo esc_html( $a['titleStart'] ); ?>
+                    <span class="specialty-split-title-highlight"><?php echo esc_html( $a['titleHighlight'] ); ?></span>
+                </h2>
+                <p class="specialty-split-description"><?php echo esc_html( $a['description'] ); ?></p>
+
+                <div class="specialty-split-features">
+                    <?php foreach ( $features as $feature ) : ?>
+                        <article class="specialty-split-feature-item">
+                            <div class="specialty-split-feature-icon">
+                                <i class="<?php echo esc_attr( isset( $feature['icon'] ) ? $feature['icon'] : 'fa-solid fa-check' ); ?>" aria-hidden="true"></i>
+                            </div>
+                            <div class="specialty-split-feature-text">
+                                <h3 class="specialty-split-feature-title"><?php echo esc_html( isset( $feature['title'] ) ? $feature['title'] : '' ); ?></h3>
+                                <p class="specialty-split-feature-description"><?php echo esc_html( isset( $feature['description'] ) ? $feature['description'] : '' ); ?></p>
+                            </div>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </section>
+    <?php
+
+    return ob_get_clean();
+}
+
 
 function logiweb_render_block_29( $attributes ) {
     $defaults = array(

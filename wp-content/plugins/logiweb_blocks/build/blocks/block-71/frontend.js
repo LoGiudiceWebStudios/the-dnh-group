@@ -1,1 +1,35 @@
-document.addEventListener("click",function(t){var e=t.target.closest(".recent-work-slider-arrow");if(e){var r=e.closest(".recent-work-slider-block");if(r){var o=r.querySelector(".recent-work-slider-track");o&&function(t,e){var r=e*Math.max(300,Math.round(.78*t.clientWidth));"function"!=typeof t.scrollBy?t.scrollLeft+=r:t.scrollBy({left:r,behavior:"smooth"})}(o,function(t){return"left"===t.getAttribute("data-direction")?-1:1}(e))}}});
+/******/ (() => { // webpackBootstrap
+/*!*****************************************!*\
+  !*** ./src/blocks/block-71/frontend.js ***!
+  \*****************************************/
+(function () {
+  function getDirection(button) {
+    return button.getAttribute("data-direction") === "left" ? -1 : 1;
+  }
+  function scrollTrack(track, direction) {
+    var amount = Math.max(300, Math.round(track.clientWidth * 0.78));
+    var left = direction * amount;
+    if (typeof track.scrollBy === "function") {
+      track.scrollBy({
+        left: left,
+        behavior: "smooth"
+      });
+      return;
+    }
+    track.scrollLeft += left;
+  }
+
+  // Delegated click handler is resilient to dynamic content and timing issues.
+  document.addEventListener("click", function (event) {
+    var button = event.target.closest(".recent-work-slider-arrow");
+    if (!button) return;
+    var root = button.closest(".recent-work-slider-block");
+    if (!root) return;
+    var track = root.querySelector(".recent-work-slider-track");
+    if (!track) return;
+    scrollTrack(track, getDirection(button));
+  });
+})();
+/******/ })()
+;
+//# sourceMappingURL=frontend.js.map

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "logiweb/custom-block-85",
+  "version": "0.1.0",
+  "title": "Technical Insights Cards",
+  "category": "widgets",
+  "icon": "welcome-learn-more",
+  "description": "Three technical insight cards with icon, title, description, and link.",
+  "supports": {
+    "html": false
+  },
+  "textdomain": "logiweb-blocks",
+  "editorScript": "file:../../index.js",
+  "style": "file:../../global-styles.css"
+}
