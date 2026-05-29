@@ -39,6 +39,7 @@
     --logiweb-block-accent-green-soft: rgba(103, 179, 84, 0.14);
     --logiweb-block-accent-blue-soft: rgba(76, 112, 234, 0.12);
 
+    --logiweb-block-title-size-hero-xl: 3.75rem;
     --logiweb-block-title-size-hero: 2.8rem;
     --logiweb-block-title-size-section: 2rem;  //clamp(2rem, 2.25vw, 2.3rem);
     --logiweb-block-title-size-card: clamp(1.55rem, 2.3vw, 2.35rem);
@@ -11470,68 +11471,134 @@ body.portfolio-modal-open {
    BLOCK-71 – RECENT WORK SLIDER
    ============================================================ */
 .recent-work-slider-block {
-  max-width: 1280px;
-  margin: 0;
-  padding: 70px 24px;
+  max-width: 90rem;
+  width:100%;
+  margin: 0 ;
+  padding: 72px 0;
   text-align: left;
 
   .recent-work-slider-header {
     display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 16px;
-    margin-bottom: 22px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 34px;
     text-align: left;
+  }
+
+  .recent-work-slider-heading {
+    min-width: 0;
   }
 
   .recent-work-slider-badge {
     margin: 0;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
     border-radius: 999px;
-    background: var(--logiweb-block-muted-background);
+    background: #fbf2e0;
     color: var(--logiweb-block-accent-orange);
-    border: 1px solid #ffe1bc;
-    padding: 7px 14px;
+    border: 1px solid #f1e1c2;
+    padding: 8px 14px;
     font-family: var(--logiweb-block-subtitle-font-family);
-    font-size: var(--logiweb-block-subtitle-size-sm);
+    font-size: 0.86rem;
     font-weight: var(--logiweb-block-subtitle-font-weight);
+    line-height: 1;
+
+    i {
+      font-size: 0.7rem;
+    }
   }
 
   .recent-work-slider-title {
-    margin: 14px 0 0;
+    margin: 16px 0 0;
     color: var(--logiweb-block-title-color);
     font-family: var(--logiweb-block-title-font-family);
     font-size: var(--logiweb-block-title-size-section);
-    line-height: 1.18;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
     font-weight: var(--logiweb-block-title-font-weight);
   }
 
+  .recent-work-slider-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .recent-work-slider-arrow {
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    border: 1px solid #d9dce3;
+    background: #f2f4f8;
+    color: #8b95a8;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+
+    i {
+      font-size: 0.72rem;
+      line-height: 1;
+    }
+
+    &:hover {
+      border-color: #c6cfdf;
+      color: #5f6f8d;
+      background: #eef2f8;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #87a2e8;
+      outline-offset: 2px;
+    }
+  }
+
+  .recent-work-slider-viewport {
+    overflow: hidden;
+    width: 100%;
+  }
+
   .recent-work-slider-track {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    display: flex;
     gap: 18px;
+    overflow-x: auto;
+    overflow-y: visible;
+    width: 100%;
+    padding-bottom: 2px;
+    scroll-behavior: smooth;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   .recent-work-slider-card {
+    flex: 0 0 clamp(315px, 24.8vw, 350px);
     background: var(--logiweb-block-card-background);
-    border: 1px solid #dbe3f0;
-    border-radius: 16px;
+    border: 1px solid #d7dde7;
+    border-radius: 14px;
     overflow: hidden;
-    box-shadow: 0 6px 20px rgba(18, 36, 66, 0.06);
+    box-shadow: 0 2px 6px rgba(18, 36, 66, 0.04);
     min-width: 0;
+    scroll-snap-align: start;
   }
 
   .recent-work-slider-image {
-    height: 220px;
+    height: clamp(188px, 13.8vw, 206px);
     background-size: cover;
     background-position: center;
     background-color: var(--logiweb-block-muted-background);
   }
 
   .recent-work-slider-content {
-    padding: 16px 18px 18px;
+    padding: 14px 18px 17px;
     text-align: left;
   }
 
@@ -11539,59 +11606,101 @@ body.portfolio-modal-open {
     margin: 0;
     color: var(--logiweb-block-title-highlight-color);
     font-family: var(--logiweb-block-subtitle-font-family);
-    font-size: var(--logiweb-block-subtitle-size-sm);
-    font-weight: var(--logiweb-block-subtitle-font-weight);
-    line-height: 1.25;
+    font-size: var(--logiweb-block-text-size-sm);
+    font-weight: 600;
+    line-height: 1.22;
   }
 
   .recent-work-slider-card-title {
-    margin: 6px 0 0;
+    margin: 7px 0 0;
     color: var(--logiweb-block-title-color);
     font-family: var(--logiweb-block-title-font-family);
-    font-size: var(--logiweb-block-title-size-small);
-    line-height: 1.2;
-    font-weight: var(--logiweb-block-title-font-weight);
+    font-size: var(--logiweb-block-text-size-md);
+    line-height: 1.1;
+    letter-spacing: -0.016em;
+    font-weight: 600;
   }
 
   .recent-work-slider-description {
-    margin: 10px 0 0;
+    margin: 12px 0 0;
     color: var(--logiweb-block-text-color);
     font-family: var(--logiweb-block-text-font-family);
     font-size: var(--logiweb-block-text-size-sm);
     font-weight: var(--logiweb-block-text-font-weight);
-    line-height: 1.42;
+    line-height: 1.38;
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1140px) {
   .recent-work-slider-block {
+    padding: 64px 20px;
+  }
+}
+
+@media (max-width: 900px) {
+  .recent-work-slider-block {
+    padding: 56px 16px;
 
     .recent-work-slider-header {
-      margin-bottom: 14px;
-    }
-
-    .recent-work-slider-track {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-bottom: 24px;
     }
 
     .recent-work-slider-title {
-      font-size: var(--logiweb-block-title-size-card);
+      font-size: clamp(1.72rem, 7.2vw, 2.2rem);
+    }
+
+    .recent-work-slider-track {
+      gap: 14px;
+    }
+
+    .recent-work-slider-card {
+      flex-basis: min(84vw, 342px);
     }
 
     .recent-work-slider-card-title {
-      font-size: var(--logiweb-block-title-size-small);
+      font-size: clamp(1.5rem, 5.8vw, 2rem);
     }
 
     .recent-work-slider-description {
-      font-size: var(--logiweb-block-text-size-sm);
+      font-size: 0.95rem;
     }
   }
 }
 
 @media (max-width: 560px) {
   .recent-work-slider-block {
+    padding: 48px 12px;
+
+    .recent-work-slider-header {
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .recent-work-slider-controls {
+      margin-top: 2px;
+      gap: 6px;
+    }
+
+    .recent-work-slider-arrow {
+      width: 32px;
+      height: 32px;
+    }
+
     .recent-work-slider-track {
-      grid-template-columns: minmax(0, 1fr);
+      padding-right: 0;
+    }
+
+    .recent-work-slider-card {
+      flex-basis: calc(100vw - 52px);
+      max-width: 360px;
+    }
+
+    .recent-work-slider-image {
+      height: 178px;
+    }
+
+    .recent-work-slider-description {
+      font-size: 0.9rem;
     }
   }
 }
@@ -12963,6 +13072,148 @@ body.portfolio-modal-open {
   }
 }
 
+
+// =============================================================================
+// BLOCK-78 – Painting Hero – Ohio
+// =============================================================================
+
+.painting-hero-block {
+  position: relative;
+  width: min(100%, 1920px);
+  margin: 0 auto;
+  overflow: hidden;
+  background: #0a1f52;
+  display: flex;
+  align-items: center;
+
+  .painting-hero-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center right;
+    z-index: 0;
+  }
+
+  .painting-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      var(--logiweb-block-hero-overlay-left),
+      var(--logiweb-block-hero-overlay-bottom),
+      var(--logiweb-block-hero-overlay-accent);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .painting-hero-content {
+    position: relative;
+    z-index: 2;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: clamp(0.9rem, 1.4vw, 1.3rem);
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    max-width: 80rem;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .painting-hero-badge {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    font-family: var(--logiweb-block-subtitle-font-family);
+    font-size: clamp(0.72rem, 0.85vw, 0.87rem);
+    font-weight: var(--logiweb-block-subtitle-font-weight);
+    letter-spacing: 0.01em;
+    text-transform: none;
+    color: var(--logiweb-block-subtitle-color-inverse);
+    line-height: 1;
+    padding: 0.56rem 1rem;
+    border-radius: var(--rounded-full);
+    border: 1px solid var(--logiweb-block-hero-badge-border);
+    background: var(--logiweb-block-hero-badge-background);
+    backdrop-filter: blur(2px);
+  }
+
+  .painting-hero-title {
+    width: 60%;
+    font-family: var(--logiweb-block-title-font-family);
+    font-size: var(--logiweb-block-title-size-hero-xl);
+    font-weight: var(--logiweb-block-title-font-weight);
+    margin: 0;
+    color: var(--logiweb-block-title-color-inverse);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+
+    em {
+      font-style: normal;
+      color: var(--logiweb-block-title-highlight-color-inverse);
+    }
+  }
+
+  .painting-hero-description {
+    margin: 0;
+    width: 50%;
+    color: var(--logiweb-block-text-color-inverse);
+    font-size: var(--logiweb-block-text-size-lg);
+    line-height: 1.47;
+    text-wrap: pretty;
+  }
+
+  .painting-hero-buttons {
+    margin-top: clamp(0.55rem, 1.1vw, 1rem);
+  }
+
+  .painting-hero-cta {
+    font-family: var(--logiweb-block-text-font-family);
+    font-size: var(--logiweb-block-text-size-sm);
+    font-weight: 600;
+    line-height: 1;
+    color: var(--logiweb-btn-primary-text);
+    background: linear-gradient(135deg, #3d7cff 0%, #5d8cff 100%);
+    border: 1px solid rgba(129, 163, 255, 0.5);
+    border-radius: 999px;
+    padding: 1.08rem 1.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: var(--logiweb-block-hero-cta-shadow);
+    text-decoration: none;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(63, 125, 255, 0.5);
+      color: var(--logiweb-btn-primary-text);
+    }
+  }
+
+  // Responsive
+  @media (max-width: 640px) {
+    min-height: unset;
+    padding-bottom: 3.5rem;
+
+    .painting-hero-title {
+      font-size: clamp(2.2rem, 9vw, 3rem);
+      line-height: 1.02;
+    }
+
+    .painting-hero-description {
+      max-width: 100%;
+      font-size: 1rem;
+    }
+  }
+}
+
+// =============================================================================
 
 .wpcf7-form-control{
   font-size: var(--logiweb-block-text-size-sm) !important;

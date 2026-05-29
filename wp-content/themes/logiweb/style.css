@@ -1173,6 +1173,16 @@ h3 {
 }
 
 /* NAVBAR */
+
+header{
+    display: flex;
+    justify-content: center;
+}
+
+.navbar{
+    width: max-content;
+}
+
 .navbar-nav .current-menu-item .nav-link {
     color: #212529;
     /* text-dark */
@@ -2188,7 +2198,7 @@ section {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 10%;
+        width: 8vw;
         height: 1vh;
     }
 

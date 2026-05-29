@@ -189,7 +189,10 @@ registerBlockType("logiweb/custom-block-71", {
               <h2 className="recent-work-slider-title">{title}</h2>
             </div>
 
-            <div className="recent-work-slider-controls" aria-label="Project slider controls">
+            <div
+              className="recent-work-slider-controls"
+              aria-label="Project slider controls"
+            >
               <button
                 type="button"
                 className="recent-work-slider-arrow"
@@ -211,32 +214,36 @@ registerBlockType("logiweb/custom-block-71", {
             </div>
           </div>
 
-          <div className="recent-work-slider-track" ref={trackRef}>
-            {safeProjects.map((project, i) => (
-              <article key={i} className="recent-work-slider-card">
-                <div
-                  className="recent-work-slider-image"
-                  style={
-                    project.image
-                      ? { backgroundImage: `url(${project.image})` }
-                      : {}
-                  }
-                ></div>
-                <div className="recent-work-slider-content">
-                  <p className="recent-work-slider-tag">{project.tag}</p>
-                  <h3 className="recent-work-slider-card-title">
-                    {project.title}
-                  </h3>
-                  <RichText
-                    tagName="p"
-                    className="recent-work-slider-description"
-                    value={project.description}
-                    onChange={(value) => updateProject(i, "description", value)}
-                    placeholder="Project description"
-                  />
-                </div>
-              </article>
-            ))}
+          <div className="recent-work-slider-viewport">
+            <div className="recent-work-slider-track" ref={trackRef}>
+              {safeProjects.map((project, i) => (
+                <article key={i} className="recent-work-slider-card">
+                  <div
+                    className="recent-work-slider-image"
+                    style={
+                      project.image
+                        ? { backgroundImage: `url(${project.image})` }
+                        : {}
+                    }
+                  ></div>
+                  <div className="recent-work-slider-content">
+                    <p className="recent-work-slider-tag">{project.tag}</p>
+                    <h3 className="recent-work-slider-card-title">
+                      {project.title}
+                    </h3>
+                    <RichText
+                      tagName="p"
+                      className="recent-work-slider-description"
+                      value={project.description}
+                      onChange={(value) =>
+                        updateProject(i, "description", value)
+                      }
+                      placeholder="Project description"
+                    />
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
       </>

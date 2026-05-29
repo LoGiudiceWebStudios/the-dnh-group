@@ -73,3 +73,4 @@ import "./blocks/block-74";
 import "./blocks/block-75";
 import "./blocks/block-76";
 import "./blocks/block-77";
+import "./blocks/block-78";

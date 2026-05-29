@@ -676,6 +676,13 @@ function logiweb_register_blocks() {
         'style'         => 'logiweb-blocks-frontend-styles',
     ));
 
+    register_block_type( 'logiweb/custom-block-78', array(
+        'editor_script'   => 'logiweb-blocks-editor',
+        'editor_style'    => 'logiweb-blocks-editor-styles',
+        'style'           => 'logiweb-blocks-frontend-styles',
+        'render_callback' => 'logiweb_render_block_78',
+    ));
+
 }
 add_action( 'init', 'logiweb_register_blocks' );
 
@@ -1338,7 +1345,6 @@ add_action( 'wp_enqueue_scripts', function () {
 
 /* Enqueue block-71 frontend JS */
 add_action( 'wp_enqueue_scripts', function () {
-    if ( ! has_block( 'logiweb/custom-block-71' ) ) return;
     $plugin_url = plugin_dir_url( __FILE__ );
     wp_enqueue_script(
         'logiweb-block-71-frontend',
@@ -1596,15 +1602,16 @@ function logiweb_render_block_71( $attributes ) {
             </div>
 
             <div class="recent-work-slider-controls" aria-label="Project slider controls">
-                <button type="button" class="recent-work-slider-arrow" data-direction="left" aria-label="Previous projects">
+                <button type="button" class="recent-work-slider-arrow" data-direction="left" aria-label="Previous projects" onclick="(function(btn){var root=btn.closest('.recent-work-slider-block');if(!root)return;var track=root.querySelector('.recent-work-slider-track');if(!track)return;var amount=Math.max(300,Math.round(track.clientWidth*0.78));if(typeof track.scrollBy==='function'){track.scrollBy({left:-amount,behavior:'smooth'});}else{track.scrollLeft-=amount;}})(this)">
                     <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
                 </button>
-                <button type="button" class="recent-work-slider-arrow" data-direction="right" aria-label="Next projects">
+                <button type="button" class="recent-work-slider-arrow" data-direction="right" aria-label="Next projects" onclick="(function(btn){var root=btn.closest('.recent-work-slider-block');if(!root)return;var track=root.querySelector('.recent-work-slider-track');if(!track)return;var amount=Math.max(300,Math.round(track.clientWidth*0.78));if(typeof track.scrollBy==='function'){track.scrollBy({left:amount,behavior:'smooth'});}else{track.scrollLeft+=amount;}})(this)">
                     <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
                 </button>
             </div>
         </div>
 
+        <div class="recent-work-slider-viewport">
         <div class="recent-work-slider-track">
             <?php foreach ( $projects as $project ) :
                 $tag = isset( $project['tag'] ) ? sanitize_text_field( $project['tag'] ) : '';
@@ -1622,9 +1629,120 @@ function logiweb_render_block_71( $attributes ) {
                 </article>
             <?php endforeach; ?>
         </div>
+        </div>
     </section>
+
+    <script>
+    (function () {
+        if (window.__logiwebRecentWorkSliderBound) return;
+        window.__logiwebRecentWorkSliderBound = true;
+
+        function getDirection(button) {
+            return button.getAttribute('data-direction') === 'left' ? -1 : 1;
+        }
+
+        function scrollTrack(track, direction) {
+            var amount = Math.max(300, Math.round(track.clientWidth * 0.78));
+            var left = direction * amount;
+
+            if (typeof track.scrollBy === 'function') {
+                track.scrollBy({ left: left, behavior: 'smooth' });
+                return;
+            }
+
+            track.scrollLeft += left;
+        }
+
+        document.addEventListener('click', function (event) {
+            var button = event.target.closest('.recent-work-slider-arrow');
+            if (!button) return;
+
+            var root = button.closest('.recent-work-slider-block');
+            if (!root) return;
+
+            var track = root.querySelector('.recent-work-slider-track');
+            if (!track) return;
+
+            scrollTrack(track, getDirection(button));
+        });
+    })();
+    </script>
 
     <?php
 
     return ob_get_clean();
 }
+
+function logiweb_render_block_78( $attributes ) {
+    $defaults = array(
+        'eyebrow'       => 'Our Approach',
+        'titleStart'    => 'Interior Perfection.',
+        'titleHighlight'=> 'Exterior Armor.',
+        'cards'         => array(
+            array(
+                'icon'        => 'fa-solid fa-brush',
+                'title'       => 'Interior Perfection',
+                'description' => 'We treat your home like an art gallery. Every line is laser-straight, and every surface is flawless. Our interior process is built around precision, cleanliness, and premium materials that elevate your living spaces.',
+                'bullets'     => array(
+                    'Full-coverage surface protection — shielding floors, expensive furniture, and fixtures with heavy-duty drop cloths and plastic sheeting.',
+                    'Intensive drywall prep, hairline fracture repair, and micro-sanding for perfectly smooth walls before a single drop of paint is applied.',
+                    'Premium, low-VOC / eco-friendly luxury paints (Sherwin-Williams Emerald, Benjamin Moore Aura) for crisp, vibrant color depth and easy cleaning.',
+                ),
+            ),
+            array(
+                'icon'        => 'fa-solid fa-shield-halved',
+                'title'       => 'Exterior Armor',
+                'description' => 'Elite curb appeal engineered to withstand harsh midwestern seasonal extremes — from intense summer humidity to freezing winter snow. Our exterior systems are built to last, not just to look good on day one.',
+                'bullets'     => array(
+                    'Advanced pressure washing, scraping, and surface prep to remove all loose material and ensure maximum bonding of the new coating.',
+                    'High-performance elastomeric and weather-locking sealants that prevent cracking, fading, and moisture damage through harsh seasonal swings.',
+                    'Premium, mildew-resistant exterior coatings backed by extensive durability warranties — engineered to look pristine for years.',
+                ),
+            ),
+        ),
+    );
+
+    $a = wp_parse_args( is_array( $attributes ) ? $attributes : array(), $defaults );
+    $cards = is_array( $a['cards'] ) && ! empty( $a['cards'] ) ? $a['cards'] : $defaults['cards'];
+
+    ob_start();
+    ?>
+    <section class="our-approach-block">
+        <div class="our-approach-inner">
+            <p class="our-approach-badge">
+                <i class="fa-solid fa-check" aria-hidden="true"></i>
+                <span><?php echo esc_html( $a['eyebrow'] ); ?></span>
+            </p>
+
+            <h2 class="our-approach-title">
+                <?php echo esc_html( $a['titleStart'] ); ?> <span><?php echo esc_html( $a['titleHighlight'] ); ?></span>
+            </h2>
+
+            <div class="our-approach-grid">
+                <?php foreach ( $cards as $card ) :
+                    $bullets = isset( $card['bullets'] ) && is_array( $card['bullets'] ) ? $card['bullets'] : array();
+                ?>
+                    <article class="our-approach-card">
+                        <div class="our-approach-card-icon">
+                            <i class="<?php echo esc_attr( isset( $card['icon'] ) ? $card['icon'] : 'fa-solid fa-check' ); ?>" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="our-approach-card-title"><?php echo esc_html( isset( $card['title'] ) ? $card['title'] : '' ); ?></h3>
+                        <p class="our-approach-card-description"><?php echo esc_html( isset( $card['description'] ) ? $card['description'] : '' ); ?></p>
+                        <ul class="our-approach-card-list">
+                            <?php foreach ( $bullets as $bullet ) : ?>
+                                <li class="our-approach-card-list-item">
+                                    <span class="our-approach-card-list-icon"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
+                                    <span><?php echo esc_html( $bullet ); ?></span>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+    <?php
+
+    return ob_get_clean();
+}
+
