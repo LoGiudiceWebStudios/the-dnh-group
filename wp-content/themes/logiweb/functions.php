@@ -802,6 +802,54 @@ function logiweb_policies_pages_customizer($wp_customize) {
         'section' => 'footer_section',
         'type' => 'dropdown-pages', // Allows selecting a page
     ));
+
+    // Checkbox to show/hide Cookies
+    $wp_customize->add_setting('show_cookies', array(
+        'default' => false,
+        'sanitize_callback' => 'logiweb_sanitize_checkbox',
+    ));
+
+    $wp_customize->add_control('show_cookies', array(
+        'label' => __('Show Cookies Link', 'logiweb'),
+        'section' => 'footer_section',
+        'type' => 'checkbox',
+    ));
+
+    // Setting for Cookies page
+    $wp_customize->add_setting('cookies_page', array(
+        'default' => 'false',
+        'sanitize_callback' => 'absint',
+    ));
+
+    $wp_customize->add_control('cookies_page', array(
+        'label' => __('Select The Cookies Page', 'logiweb'),
+        'section' => 'footer_section',
+        'type' => 'dropdown-pages',
+    ));
+
+    // Checkbox to show/hide Sitemap
+    $wp_customize->add_setting('show_sitemap', array(
+        'default' => false,
+        'sanitize_callback' => 'logiweb_sanitize_checkbox',
+    ));
+
+    $wp_customize->add_control('show_sitemap', array(
+        'label' => __('Show Sitemap Link', 'logiweb'),
+        'section' => 'footer_section',
+        'type' => 'checkbox',
+    ));
+
+    // Setting for Sitemap page
+    $wp_customize->add_setting('sitemap_page', array(
+        'default' => 'false',
+        'sanitize_callback' => 'absint',
+    ));
+
+    $wp_customize->add_control('sitemap_page', array(
+        'label' => __('Select The Sitemap Page', 'logiweb'),
+        'section' => 'footer_section',
+        'type' => 'dropdown-pages',
+    ));
 }
 
 add_action('customize_register', 'logiweb_policies_pages_customizer');

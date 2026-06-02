@@ -75,7 +75,7 @@
                                 ?>
                                 <?php if ($nav_btn_enabled): ?>
                                     <button
-                                        class="nav-btn btn btn-outline-success btn-secondary"
+                                        class="nav-btn btn btn-outline-success btn-primary"
                                         type="button"
                                         <?php if ($nav_btn_url) : ?>onclick="window.location.href='<?php echo esc_url($nav_btn_url); ?>'"<?php endif; ?>
                                     >

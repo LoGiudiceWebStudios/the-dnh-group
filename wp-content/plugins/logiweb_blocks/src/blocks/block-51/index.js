@@ -3,6 +3,7 @@ import {
   InspectorControls,
   MediaUpload,
   RichText,
+  useBlockProps,
 } from "@wordpress/block-editor";
 import {
   PanelBody,
@@ -29,6 +30,9 @@ registerBlockType("logiweb/custom-block-51", {
 
   edit: ({ attributes, setAttributes }) => {
     const { cards = [] } = attributes;
+    const blockProps = useBlockProps({
+      className: "portfolio-cards-block fade-in-on-scroll",
+    });
 
     const updateCard = (index, key, value) => {
       const next = [...cards];
@@ -57,7 +61,7 @@ registerBlockType("logiweb/custom-block-51", {
     };
 
     return (
-      <section className="portfolio-cards-block fade-in-on-scroll">
+      <section {...blockProps}>
         <InspectorControls>
           <PanelBody
             title={`Portfolio Cards (${cards.length})`}
@@ -145,6 +149,18 @@ registerBlockType("logiweb/custom-block-51", {
             </Button>
           </PanelBody>
         </InspectorControls>
+
+        {!cards.length && (
+          <div className="portfolio-cards-empty">
+            <p className="portfolio-cards-empty-title">No cards added yet</p>
+            <p className="portfolio-cards-empty-text">
+              Add your first portfolio card to start editing content.
+            </p>
+            <Button isPrimary onClick={addCard}>
+              + Add first card
+            </Button>
+          </div>
+        )}
 
         <div className="portfolio-cards-inner">
           {cards.map((card, index) => (

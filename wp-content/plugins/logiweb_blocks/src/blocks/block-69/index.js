@@ -36,16 +36,6 @@ registerBlockType("logiweb/custom-block-69", {
       default:
         "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=80",
     },
-    imageTopRight: {
-      type: "string",
-      default:
-        "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80",
-    },
-    imageBottomLeft: {
-      type: "string",
-      default:
-        "https://images.unsplash.com/photo-1632759145351-1d5920be8f4a?w=1200&q=80",
-    },
   },
 
   edit({ attributes, setAttributes }) {
@@ -177,14 +167,8 @@ registerBlockType("logiweb/custom-block-69", {
             />
           </PanelBody>
 
-          <PanelBody title="Mosaic Images" initialOpen={false}>
-            {imagePicker("Top-left image", imageTopLeft, "imageTopLeft")}
-            {imagePicker("Top-right image", imageTopRight, "imageTopRight")}
-            {imagePicker(
-              "Bottom-left image",
-              imageBottomLeft,
-              "imageBottomLeft",
-            )}
+          <PanelBody title="Hero Image" initialOpen={false}>
+            {imagePicker("Hero image", imageTopLeft, "imageTopLeft")}
           </PanelBody>
         </InspectorControls>
 
@@ -192,20 +176,9 @@ registerBlockType("logiweb/custom-block-69", {
           <div className="ohio-trusted-hero-inner">
             <div className="ohio-trusted-hero-mosaic">
               <div
-                className="ohio-tile ohio-tile--a"
+                className="ohio-tile"
                 style={{ backgroundImage: `url(${imageTopLeft})` }}
               ></div>
-              <div
-                className="ohio-tile ohio-tile--b"
-                style={{ backgroundImage: `url(${imageTopRight})` }}
-              ></div>
-              <div
-                className="ohio-tile ohio-tile--c"
-                style={{ backgroundImage: `url(${imageBottomLeft})` }}
-              ></div>
-              <div className="ohio-tile ohio-tile--d">
-                <div className="ohio-shield"></div>
-              </div>
             </div>
 
             <div className="ohio-trusted-hero-content">
@@ -279,8 +252,6 @@ registerBlockType("logiweb/custom-block-69", {
       stat3Value,
       stat3Label,
       imageTopLeft,
-      imageTopRight,
-      imageBottomLeft,
     } = attributes;
 
     return (
@@ -288,20 +259,9 @@ registerBlockType("logiweb/custom-block-69", {
         <div className="ohio-trusted-hero-inner">
           <div className="ohio-trusted-hero-mosaic">
             <div
-              className="ohio-tile ohio-tile--a"
+              className="ohio-tile"
               style={{ backgroundImage: `url(${imageTopLeft})` }}
             ></div>
-            <div
-              className="ohio-tile ohio-tile--b"
-              style={{ backgroundImage: `url(${imageTopRight})` }}
-            ></div>
-            <div
-              className="ohio-tile ohio-tile--c"
-              style={{ backgroundImage: `url(${imageBottomLeft})` }}
-            ></div>
-            <div className="ohio-tile ohio-tile--d">
-              <div className="ohio-shield"></div>
-            </div>
           </div>
 
           <div className="ohio-trusted-hero-content">

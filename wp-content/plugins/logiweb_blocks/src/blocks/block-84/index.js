@@ -51,7 +51,7 @@ registerBlockType(metadata.name, {
     const { badge, titleStart, titleHighlight, items } = attributes;
     const safeItems =
       Array.isArray(items) && items.length ? items : DEFAULT_ITEMS;
-    const [openIndex, setOpenIndex] = useState(0);
+    const [openIndex, setOpenIndex] = useState(-1);
 
     const blockProps = useBlockProps({
       className: "painting-faq-compact-block",
@@ -233,7 +233,7 @@ registerBlockType(metadata.name, {
 
           <div className="painting-faq-compact-list">
             {safeItems.map((item, index) => {
-              const isInitiallyOpen = index === 0;
+              const isInitiallyOpen = false;
               return (
                 <article
                   key={index}

@@ -1,5 +1,5 @@
 import { registerBlockType } from "@wordpress/blocks";
-import { InspectorControls, RichText } from "@wordpress/block-editor";
+import { InspectorControls, RichText, useBlockProps } from "@wordpress/block-editor";
 import { PanelBody, TextControl } from "@wordpress/components";
 import { RawHTML } from "@wordpress/element";
 import metadata from "./block.json";
@@ -51,6 +51,8 @@ registerBlockType("logiweb/custom-block-65", {
       disclaimerText,
       cf7Shortcode,
     } = attributes;
+
+    const blockProps = useBlockProps({ className: "blog-case-subscribe" });
 
     return (
       <>
@@ -115,18 +117,33 @@ registerBlockType("logiweb/custom-block-65", {
           </PanelBody>
         </InspectorControls>
 
-        <section className="blog-case-subscribe">
+        <section {...blockProps}>
           <div className="blog-case-subscribe-inner">
             <div className="blog-case-subscribe-left">
               <p className="blog-case-subscribe-badge">
                 <i className="fa-regular fa-book-open" aria-hidden="true"></i>
-                <span>{badgeText}</span>
+                <RichText
+                  tagName="span"
+                  value={badgeText}
+                  onChange={(value) => setAttributes({ badgeText: value })}
+                  placeholder="Badge"
+                />
               </p>
 
               <h2 className="blog-case-subscribe-title">
-                {titleStart}
+                <RichText
+                  tagName="span"
+                  value={titleStart}
+                  onChange={(value) => setAttributes({ titleStart: value })}
+                  placeholder="Title start"
+                />
                 <br />
-                <span>{titleHighlight}</span>
+                <RichText
+                  tagName="span"
+                  value={titleHighlight}
+                  onChange={(value) => setAttributes({ titleHighlight: value })}
+                  placeholder="Title highlight"
+                />
               </h2>
 
               <RichText
@@ -139,7 +156,12 @@ registerBlockType("logiweb/custom-block-65", {
 
               <p className="blog-case-subscribe-cta">
                 <i className="fa-regular fa-envelope" aria-hidden="true"></i>
-                <span>{leftCtaText}</span>
+                <RichText
+                  tagName="span"
+                  value={leftCtaText}
+                  onChange={(value) => setAttributes({ leftCtaText: value })}
+                  placeholder="Left CTA text"
+                />
               </p>
             </div>
 
@@ -184,7 +206,13 @@ registerBlockType("logiweb/custom-block-65", {
                 </>
               )}
 
-              <p className="blog-case-card-disclaimer">{disclaimerText}</p>
+              <RichText
+                tagName="p"
+                className="blog-case-card-disclaimer"
+                value={disclaimerText}
+                onChange={(value) => setAttributes({ disclaimerText: value })}
+                placeholder="Disclaimer"
+              />
             </aside>
           </div>
         </section>
@@ -207,8 +235,10 @@ registerBlockType("logiweb/custom-block-65", {
       cf7Shortcode,
     } = attributes;
 
+    const blockProps = useBlockProps.save({ className: "blog-case-subscribe" });
+
     return (
-      <section className="blog-case-subscribe">
+      <section {...blockProps}>
         <div className="blog-case-subscribe-inner">
           <div className="blog-case-subscribe-left">
             <p className="blog-case-subscribe-badge">

@@ -17,12 +17,131 @@ add_action('init', function() {
         'labels'       => array('name' => 'Financing Applications'),
     ));
 
+    register_post_type('financing_partner', array(
+        'public'       => false,
+        'show_ui'      => true,
+        'show_in_menu' => true,
+        'supports'     => array('title'),
+        'labels'       => array(
+            'name'          => 'Financing Partners',
+            'singular_name' => 'Financing Partner',
+            'add_new_item'  => 'Add Financing Partner',
+            'edit_item'     => 'Edit Financing Partner',
+        ),
+        'menu_icon'    => 'dashicons-money-alt',
+    ));
+
     register_post_meta('financing_app', '_app_data', array(
         'type'         => 'object',
         'show_in_rest' => true,
         'single'       => true,
     ));
 });
+
+add_action( 'add_meta_boxes', function() {
+        add_meta_box(
+                'logiweb_financing_partner_meta',
+                'Partner Details & Filters',
+                'logiweb_render_financing_partner_metabox',
+                'financing_partner',
+                'normal',
+                'high'
+        );
+} );
+
+function logiweb_render_financing_partner_metabox( $post ) {
+        wp_nonce_field( 'logiweb_financing_partner_save', 'logiweb_financing_partner_nonce' );
+
+        $meta = array(
+                'initials'          => get_post_meta( $post->ID, '_partner_initials', true ),
+                'logo_color'        => get_post_meta( $post->ID, '_partner_logo_color', true ),
+                'rating'            => get_post_meta( $post->ID, '_partner_rating', true ),
+                'min_credit_score'  => get_post_meta( $post->ID, '_partner_min_credit_score', true ),
+                'min_amount'        => get_post_meta( $post->ID, '_partner_min_amount', true ),
+                'max_amount'        => get_post_meta( $post->ID, '_partner_max_amount', true ),
+                'apr_range'         => get_post_meta( $post->ID, '_partner_apr_range', true ),
+                'terms'             => get_post_meta( $post->ID, '_partner_terms', true ),
+                'project_types'     => get_post_meta( $post->ID, '_partner_project_types', true ),
+                'benefits'          => get_post_meta( $post->ID, '_partner_benefits', true ),
+                'apply_url'         => get_post_meta( $post->ID, '_partner_apply_url', true ),
+        );
+
+        ?>
+        <style>
+            .logiweb-partner-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+            .logiweb-partner-grid label{display:flex;flex-direction:column;gap:4px;font-weight:600}
+            .logiweb-partner-grid input,.logiweb-partner-grid textarea{width:100%}
+            .logiweb-partner-grid .full{grid-column:1/-1}
+        </style>
+        <div class="logiweb-partner-grid">
+            <label>Initials
+                <input type="text" name="partner_initials" value="<?php echo esc_attr( (string) $meta['initials'] ); ?>" placeholder="GS">
+            </label>
+            <label>Logo Color (hex)
+                <input type="text" name="partner_logo_color" value="<?php echo esc_attr( (string) $meta['logo_color'] ); ?>" placeholder="#67b354">
+            </label>
+            <label>Rating
+                <input type="text" name="partner_rating" value="<?php echo esc_attr( (string) $meta['rating'] ); ?>" placeholder="4.8">
+            </label>
+            <label>Min Credit Score
+                <input type="number" name="partner_min_credit_score" value="<?php echo esc_attr( (string) $meta['min_credit_score'] ); ?>" placeholder="650">
+            </label>
+            <label>Min Project Amount ($)
+                <input type="number" name="partner_min_amount" value="<?php echo esc_attr( (string) $meta['min_amount'] ); ?>" placeholder="0">
+            </label>
+            <label>Max Project Amount ($, optional)
+                <input type="number" name="partner_max_amount" value="<?php echo esc_attr( (string) $meta['max_amount'] ); ?>" placeholder="50000">
+            </label>
+            <label>APR Range
+                <input type="text" name="partner_apr_range" value="<?php echo esc_attr( (string) $meta['apr_range'] ); ?>" placeholder="0% - 12.99%">
+            </label>
+            <label>Terms
+                <input type="text" name="partner_terms" value="<?php echo esc_attr( (string) $meta['terms'] ); ?>" placeholder="12 - 120 months">
+            </label>
+            <label class="full">Project Types (comma separated slugs)
+                <input type="text" name="partner_project_types" value="<?php echo esc_attr( (string) $meta['project_types'] ); ?>" placeholder="interior-painting,roofing">
+            </label>
+            <label class="full">Benefits (one per line)
+                <textarea name="partner_benefits" rows="4"><?php echo esc_textarea( (string) $meta['benefits'] ); ?></textarea>
+            </label>
+            <label class="full">Apply URL
+                <input type="url" name="partner_apply_url" value="<?php echo esc_attr( (string) $meta['apply_url'] ); ?>" placeholder="https://...">
+            </label>
+        </div>
+        <?php
+}
+
+add_action( 'save_post_financing_partner', function( $post_id ) {
+        if ( ! isset( $_POST['logiweb_financing_partner_nonce'] ) ) {
+                return;
+        }
+
+        if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['logiweb_financing_partner_nonce'] ) ), 'logiweb_financing_partner_save' ) ) {
+                return;
+        }
+
+        if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+                return;
+        }
+
+        $fields = array(
+                '_partner_initials'         => isset( $_POST['partner_initials'] ) ? sanitize_text_field( wp_unslash( $_POST['partner_initials'] ) ) : '',
+                '_partner_logo_color'       => isset( $_POST['partner_logo_color'] ) ? sanitize_text_field( wp_unslash( $_POST['partner_logo_color'] ) ) : '',
+                '_partner_rating'           => isset( $_POST['partner_rating'] ) ? sanitize_text_field( wp_unslash( $_POST['partner_rating'] ) ) : '',
+                '_partner_min_credit_score' => isset( $_POST['partner_min_credit_score'] ) ? intval( $_POST['partner_min_credit_score'] ) : 0,
+                '_partner_min_amount'       => isset( $_POST['partner_min_amount'] ) ? intval( $_POST['partner_min_amount'] ) : 0,
+                '_partner_max_amount'       => isset( $_POST['partner_max_amount'] ) ? intval( $_POST['partner_max_amount'] ) : 0,
+                '_partner_apr_range'        => isset( $_POST['partner_apr_range'] ) ? sanitize_text_field( wp_unslash( $_POST['partner_apr_range'] ) ) : '',
+                '_partner_terms'            => isset( $_POST['partner_terms'] ) ? sanitize_text_field( wp_unslash( $_POST['partner_terms'] ) ) : '',
+                '_partner_project_types'    => isset( $_POST['partner_project_types'] ) ? sanitize_text_field( wp_unslash( $_POST['partner_project_types'] ) ) : '',
+                '_partner_benefits'         => isset( $_POST['partner_benefits'] ) ? sanitize_textarea_field( wp_unslash( $_POST['partner_benefits'] ) ) : '',
+                '_partner_apply_url'        => isset( $_POST['partner_apply_url'] ) ? esc_url_raw( wp_unslash( $_POST['partner_apply_url'] ) ) : '',
+        );
+
+        foreach ( $fields as $key => $value ) {
+                update_post_meta( $post_id, $key, $value );
+        }
+} );
 
 add_action( 'rest_api_init', function() {
     register_rest_route( 'logiweb/v1', '/financing-app', array(
@@ -36,8 +155,17 @@ function logiweb_submit_financing_application( WP_REST_Request $request ) {
     $raw = $request->get_json_params();
     $data = is_array( $raw ) ? $raw : array();
 
+    $full_name  = isset( $data['fullName'] ) ? sanitize_text_field( (string) $data['fullName'] ) : '';
     $first_name = isset( $data['firstName'] ) ? sanitize_text_field( (string) $data['firstName'] ) : '';
     $last_name  = isset( $data['lastName'] ) ? sanitize_text_field( (string) $data['lastName'] ) : '';
+
+    if ( ( '' === $first_name || '' === $last_name ) && '' !== $full_name ) {
+        $parts = preg_split( '/\s+/', trim( $full_name ) );
+        if ( is_array( $parts ) && ! empty( $parts ) ) {
+            $first_name = isset( $parts[0] ) ? sanitize_text_field( (string) $parts[0] ) : '';
+            $last_name  = count( $parts ) > 1 ? sanitize_text_field( implode( ' ', array_slice( $parts, 1 ) ) ) : '-';
+        }
+    }
 
     if ( '' === $first_name || '' === $last_name ) {
         return new WP_REST_Response( array(
@@ -46,11 +174,15 @@ function logiweb_submit_financing_application( WP_REST_Request $request ) {
     }
 
     $clean_data = array(
+        'fullName'       => $full_name,
         'firstName'      => $first_name,
         'lastName'       => $last_name,
         'email'          => isset( $data['email'] ) ? sanitize_email( (string) $data['email'] ) : '',
         'phone'          => isset( $data['phone'] ) ? sanitize_text_field( (string) $data['phone'] ) : '',
         'street'         => isset( $data['street'] ) ? sanitize_text_field( (string) $data['street'] ) : '',
+        'annualIncome'   => isset( $data['annualIncome'] ) ? sanitize_text_field( (string) $data['annualIncome'] ) : '',
+        'employmentStatus'=> isset( $data['employmentStatus'] ) ? sanitize_text_field( (string) $data['employmentStatus'] ) : '',
+        'creditScoreRange'=> isset( $data['creditScoreRange'] ) ? sanitize_text_field( (string) $data['creditScoreRange'] ) : '',
         'city'           => isset( $data['city'] ) ? sanitize_text_field( (string) $data['city'] ) : '',
         'state'          => isset( $data['state'] ) ? sanitize_text_field( (string) $data['state'] ) : '',
         'zip'            => isset( $data['zip'] ) ? sanitize_text_field( (string) $data['zip'] ) : '',
@@ -58,6 +190,7 @@ function logiweb_submit_financing_application( WP_REST_Request $request ) {
         'projectDetails' => isset( $data['projectDetails'] ) ? sanitize_textarea_field( (string) $data['projectDetails'] ) : '',
         'projectAmount'  => isset( $data['projectAmount'] ) ? sanitize_text_field( (string) $data['projectAmount'] ) : '',
         'startDate'      => isset( $data['startDate'] ) ? sanitize_text_field( (string) $data['startDate'] ) : '',
+        'additionalNotes'=> isset( $data['additionalNotes'] ) ? sanitize_textarea_field( (string) $data['additionalNotes'] ) : '',
     );
 
     $post_id = wp_insert_post( array(
@@ -753,6 +886,30 @@ function logiweb_register_blocks() {
         ),
     ));
 
+    register_block_type( 'logiweb/custom-block-88', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+
+    register_block_type( 'logiweb/custom-block-89', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+
+    register_block_type( 'logiweb/custom-block-90', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+
+    register_block_type( 'logiweb/custom-block-92', array(
+        'editor_script' => 'logiweb-blocks-editor',
+        'editor_style'  => 'logiweb-blocks-editor-styles',
+        'style'         => 'logiweb-blocks-frontend-styles',
+    ));
+
 }
 add_action( 'init', 'logiweb_register_blocks' );
 
@@ -1120,195 +1277,257 @@ function logiweb_render_block_59( $attributes ) {
     return ob_get_clean();
 }
 
+function logiweb_get_financing_partners_for_wizard() {
+        $partners = array();
+
+        $query = new WP_Query( array(
+                'post_type'      => 'financing_partner',
+                'post_status'    => 'publish',
+                'posts_per_page' => -1,
+                'orderby'        => 'menu_order title',
+                'order'          => 'ASC',
+        ) );
+
+        if ( $query->have_posts() ) {
+                foreach ( $query->posts as $post ) {
+                        $id = (int) $post->ID;
+                        $benefits_text = (string) get_post_meta( $id, '_partner_benefits', true );
+                        $benefits = array_values( array_filter( array_map( 'trim', preg_split( '/\r\n|\r|\n/', $benefits_text ) ) ) );
+
+                        if ( empty( $benefits ) ) {
+                                $benefits = array( 'Flexible options', 'Transparent terms', 'Fast application' );
+                        }
+
+                        $partners[] = array(
+                                'name'             => get_the_title( $id ),
+                                'initials'         => (string) get_post_meta( $id, '_partner_initials', true ),
+                                'logo_color'       => (string) get_post_meta( $id, '_partner_logo_color', true ),
+                                'rating'           => (string) get_post_meta( $id, '_partner_rating', true ),
+                                'min_credit_score' => (int) get_post_meta( $id, '_partner_min_credit_score', true ),
+                                'min_amount'       => (int) get_post_meta( $id, '_partner_min_amount', true ),
+                                'max_amount'       => (int) get_post_meta( $id, '_partner_max_amount', true ),
+                                'apr_range'        => (string) get_post_meta( $id, '_partner_apr_range', true ),
+                                'terms'            => (string) get_post_meta( $id, '_partner_terms', true ),
+                                'project_types'    => (string) get_post_meta( $id, '_partner_project_types', true ),
+                                'benefits'         => $benefits,
+                                'apply_url'        => (string) get_post_meta( $id, '_partner_apply_url', true ),
+                        );
+                }
+        }
+
+        wp_reset_postdata();
+
+        if ( ! empty( $partners ) ) {
+                return $partners;
+        }
+
+        return array(
+                array(
+                        'name'             => 'Greensky',
+                        'initials'         => 'Gr',
+                        'logo_color'       => '#6fc265',
+                        'rating'           => '4.8',
+                        'min_credit_score' => 650,
+                        'min_amount'       => 0,
+                        'max_amount'       => 0,
+                        'apr_range'        => '0% - 12.99%',
+                        'terms'            => '12 - 120 months',
+                        'project_types'    => '',
+                        'benefits'         => array( 'Same-day approval', '0% promotional rates', 'No prepayment penalties' ),
+                        'apply_url'        => '#',
+                ),
+                array(
+                        'name'             => 'Synchrony',
+                        'initials'         => 'Sy',
+                        'logo_color'       => '#5d81ea',
+                        'rating'           => '4.7',
+                        'min_credit_score' => 600,
+                        'min_amount'       => 0,
+                        'max_amount'       => 0,
+                        'apr_range'        => '0% - 14.99%',
+                        'terms'            => '6 - 84 months',
+                        'project_types'    => '',
+                        'benefits'         => array( 'Promotional financing', 'Flexible terms', 'Online account management' ),
+                        'apply_url'        => '#',
+                ),
+        );
+}
+
 // Application Form Renderer (Block 44)
 function logiweb_render_application_form( $attributes ) {
-    $defaults = array(
-        'formTitle' => 'Tell Us About Your Project',
-        'formDescription' => "Fill out your information below and we'll match you with the best financing options.",
-        'resultsPageUrl' => '/select-your-financing/',
-        'buttonText' => 'View Financing Options →',
-    );
+        $defaults = array(
+                'formTitle'       => 'Choose Your Financing Partner',
+                'formDescription' => 'We\'ve matched you with financing options based on your project details.',
+                'buttonText'      => 'Continue',
+        );
 
-    $a = wp_parse_args( is_array( $attributes ) ? $attributes : array(), $defaults );
-    $app_id = isset( $_GET['edit'] ) ? intval( $_GET['edit'] ) : null;
-    $prefill = array();
+        $a = wp_parse_args( is_array( $attributes ) ? $attributes : array(), $defaults );
+        $app_id = isset( $_GET['edit'] ) ? intval( $_GET['edit'] ) : null;
+        $prefill = array();
 
-    // Load existing data if editing
-    if ( $app_id ) {
-        $post = get_post( $app_id );
-        if ( $post && 'financing_app' === $post->post_type ) {
-            $prefill = get_post_meta( $post->ID, '_app_data', true ) ?: array();
+        if ( $app_id ) {
+                $post = get_post( $app_id );
+                if ( $post && 'financing_app' === $post->post_type ) {
+                        $prefill = get_post_meta( $post->ID, '_app_data', true ) ?: array();
+                }
         }
-    }
 
-    $results_page_url = isset( $a['resultsPageUrl'] ) ? trim( (string) $a['resultsPageUrl'] ) : '';
-    if ( '' === $results_page_url ) {
-        $results_page_url = '/select-your-financing/';
-    }
+        $full_name_prefill = trim( (string) ( $prefill['firstName'] ?? '' ) . ' ' . (string) ( $prefill['lastName'] ?? '' ) );
+        $partners = logiweb_get_financing_partners_for_wizard();
 
-    // If a relative path is provided, resolve it against WordPress home URL.
-    if ( false === strpos( $results_page_url, '://' ) ) {
-        $results_page_url = home_url( '/' . ltrim( $results_page_url, '/' ) );
-    }
-
-    ob_start();
-    ?>
-    <section class="financing-app-form-block">
-        <div class="financing-app-form-inner">
-            <h2 class="financing-app-form-title"><?php echo wp_kses_post( $a['formTitle'] ); ?></h2>
-            <p class="financing-app-form-description"><?php echo wp_kses_post( $a['formDescription'] ); ?></p>
-
-            <form class="financing-app-form" data-redirect="<?php echo esc_url( $results_page_url ); ?>">
-                <!-- Personal Information -->
-                <div class="form-row">
-                    <div>
-                        <label for="firstName">First Name *</label>
-                        <input type="text" id="firstName" name="firstName" placeholder="e.g. John" 
-                               value="<?php echo esc_attr( $prefill['firstName'] ?? '' ); ?>" required />
+        ob_start();
+        ?>
+        <section class="financing-app-form-block financing-wizard-block">
+            <div class="financing-wizard-shell">
+                <form class="financing-wizard-form financing-app-form" novalidate>
+                    <div class="financing-wizard-progress-wrap">
+                        <div class="financing-wizard-progress-track">
+                            <span class="financing-wizard-progress-bar" data-progress-bar></span>
+                        </div>
+                        <div class="financing-wizard-step-labels">
+                            <span class="is-active" data-step-label="1">Personal Info</span>
+                            <span data-step-label="2">Project Details</span>
+                            <span data-step-label="3">Select Financing</span>
+                        </div>
                     </div>
-                    <div>
-                        <label for="lastName">Last Name *</label>
-                        <input type="text" id="lastName" name="lastName" placeholder="e.g. Smith" 
-                               value="<?php echo esc_attr( $prefill['lastName'] ?? '' ); ?>" required />
-                    </div>
-                </div>
 
-                <div class="form-row">
-                    <div>
-                        <label for="email">Email Address *</label>
-                        <input type="email" id="email" name="email" placeholder="e.g. john@email.com" 
-                               value="<?php echo esc_attr( $prefill['email'] ?? '' ); ?>" required />
-                    </div>
-                    <div>
-                        <label for="phone">Phone Number *</label>
-                        <input type="tel" id="phone" name="phone" placeholder="e.g. (555) 000-0000" 
-                               value="<?php echo esc_attr( $prefill['phone'] ?? '' ); ?>" required />
-                    </div>
-                </div>
+                    <section class="financing-wizard-panel is-active" data-step-panel="1">
+                        <div class="financing-wizard-card">
+                            <h3 class="financing-wizard-title">Personal Information</h3>
 
-                <div>
-                    <label for="street">Street Address *</label>
-                    <input type="text" id="street" name="street" placeholder="e.g. 123 Main St" 
-                           value="<?php echo esc_attr( $prefill['street'] ?? '' ); ?>" required />
-                </div>
+                            <div class="financing-wizard-grid two-col">
+                                <input type="text" name="fullName" placeholder="Full Name" value="<?php echo esc_attr( $full_name_prefill ); ?>" required>
+                                <input type="email" name="email" placeholder="Email Address" value="<?php echo esc_attr( $prefill['email'] ?? '' ); ?>" required>
+                                <input type="tel" name="phone" placeholder="Phone Number" value="<?php echo esc_attr( $prefill['phone'] ?? '' ); ?>" required>
+                                <input type="text" name="street" placeholder="Address" value="<?php echo esc_attr( $prefill['street'] ?? '' ); ?>" required>
+                                <input type="number" name="annualIncome" placeholder="Annual Income" min="0" step="1000" value="<?php echo esc_attr( $prefill['annualIncome'] ?? '' ); ?>" required>
+                                <select name="employmentStatus" required>
+                                    <option value="">Employment Status</option>
+                                    <option value="employed" <?php selected( $prefill['employmentStatus'] ?? '', 'employed' ); ?>>Employed</option>
+                                    <option value="self-employed" <?php selected( $prefill['employmentStatus'] ?? '', 'self-employed' ); ?>>Self Employed</option>
+                                    <option value="retired" <?php selected( $prefill['employmentStatus'] ?? '', 'retired' ); ?>>Retired</option>
+                                    <option value="other" <?php selected( $prefill['employmentStatus'] ?? '', 'other' ); ?>>Other</option>
+                                </select>
+                            </div>
 
-                <!-- City, State, ZIP -->
-                <div class="form-row form-row-3col">
-                    <div>
-                        <label for="city">City *</label>
-                        <input type="text" id="city" name="city" placeholder="e.g. Austin" 
-                               value="<?php echo esc_attr( $prefill['city'] ?? '' ); ?>" required />
-                    </div>
-                    <div>
-                        <label for="state">State *</label>
-                        <select id="state" name="state" required>
-                            <option value="">Select State</option>
-                            <option value="AL" <?php selected( $prefill['state'] ?? '', 'AL' ); ?>>Alabama</option>
-                            <option value="AK" <?php selected( $prefill['state'] ?? '', 'AK' ); ?>>Alaska</option>
-                            <option value="AZ" <?php selected( $prefill['state'] ?? '', 'AZ' ); ?>>Arizona</option>
-                            <option value="AR" <?php selected( $prefill['state'] ?? '', 'AR' ); ?>>Arkansas</option>
-                            <option value="CA" <?php selected( $prefill['state'] ?? '', 'CA' ); ?>>California</option>
-                            <option value="CO" <?php selected( $prefill['state'] ?? '', 'CO' ); ?>>Colorado</option>
-                            <option value="CT" <?php selected( $prefill['state'] ?? '', 'CT' ); ?>>Connecticut</option>
-                            <option value="DE" <?php selected( $prefill['state'] ?? '', 'DE' ); ?>>Delaware</option>
-                            <option value="FL" <?php selected( $prefill['state'] ?? '', 'FL' ); ?>>Florida</option>
-                            <option value="GA" <?php selected( $prefill['state'] ?? '', 'GA' ); ?>>Georgia</option>
-                            <option value="HI" <?php selected( $prefill['state'] ?? '', 'HI' ); ?>>Hawaii</option>
-                            <option value="ID" <?php selected( $prefill['state'] ?? '', 'ID' ); ?>>Idaho</option>
-                            <option value="IL" <?php selected( $prefill['state'] ?? '', 'IL' ); ?>>Illinois</option>
-                            <option value="IN" <?php selected( $prefill['state'] ?? '', 'IN' ); ?>>Indiana</option>
-                            <option value="IA" <?php selected( $prefill['state'] ?? '', 'IA' ); ?>>Iowa</option>
-                            <option value="KS" <?php selected( $prefill['state'] ?? '', 'KS' ); ?>>Kansas</option>
-                            <option value="KY" <?php selected( $prefill['state'] ?? '', 'KY' ); ?>>Kentucky</option>
-                            <option value="LA" <?php selected( $prefill['state'] ?? '', 'LA' ); ?>>Louisiana</option>
-                            <option value="ME" <?php selected( $prefill['state'] ?? '', 'ME' ); ?>>Maine</option>
-                            <option value="MD" <?php selected( $prefill['state'] ?? '', 'MD' ); ?>>Maryland</option>
-                            <option value="MA" <?php selected( $prefill['state'] ?? '', 'MA' ); ?>>Massachusetts</option>
-                            <option value="MI" <?php selected( $prefill['state'] ?? '', 'MI' ); ?>>Michigan</option>
-                            <option value="MN" <?php selected( $prefill['state'] ?? '', 'MN' ); ?>>Minnesota</option>
-                            <option value="MS" <?php selected( $prefill['state'] ?? '', 'MS' ); ?>>Mississippi</option>
-                            <option value="MO" <?php selected( $prefill['state'] ?? '', 'MO' ); ?>>Missouri</option>
-                            <option value="MT" <?php selected( $prefill['state'] ?? '', 'MT' ); ?>>Montana</option>
-                            <option value="NE" <?php selected( $prefill['state'] ?? '', 'NE' ); ?>>Nebraska</option>
-                            <option value="NV" <?php selected( $prefill['state'] ?? '', 'NV' ); ?>>Nevada</option>
-                            <option value="NH" <?php selected( $prefill['state'] ?? '', 'NH' ); ?>>New Hampshire</option>
-                            <option value="NJ" <?php selected( $prefill['state'] ?? '', 'NJ' ); ?>>New Jersey</option>
-                            <option value="NM" <?php selected( $prefill['state'] ?? '', 'NM' ); ?>>New Mexico</option>
-                            <option value="NY" <?php selected( $prefill['state'] ?? '', 'NY' ); ?>>New York</option>
-                            <option value="NC" <?php selected( $prefill['state'] ?? '', 'NC' ); ?>>North Carolina</option>
-                            <option value="ND" <?php selected( $prefill['state'] ?? '', 'ND' ); ?>>North Dakota</option>
-                            <option value="OH" <?php selected( $prefill['state'] ?? '', 'OH' ); ?>>Ohio</option>
-                            <option value="OK" <?php selected( $prefill['state'] ?? '', 'OK' ); ?>>Oklahoma</option>
-                            <option value="OR" <?php selected( $prefill['state'] ?? '', 'OR' ); ?>>Oregon</option>
-                            <option value="PA" <?php selected( $prefill['state'] ?? '', 'PA' ); ?>>Pennsylvania</option>
-                            <option value="RI" <?php selected( $prefill['state'] ?? '', 'RI' ); ?>>Rhode Island</option>
-                            <option value="SC" <?php selected( $prefill['state'] ?? '', 'SC' ); ?>>South Carolina</option>
-                            <option value="SD" <?php selected( $prefill['state'] ?? '', 'SD' ); ?>>South Dakota</option>
-                            <option value="TN" <?php selected( $prefill['state'] ?? '', 'TN' ); ?>>Tennessee</option>
-                            <option value="TX" <?php selected( $prefill['state'] ?? '', 'TX' ); ?>>Texas</option>
-                            <option value="UT" <?php selected( $prefill['state'] ?? '', 'UT' ); ?>>Utah</option>
-                            <option value="VT" <?php selected( $prefill['state'] ?? '', 'VT' ); ?>>Vermont</option>
-                            <option value="VA" <?php selected( $prefill['state'] ?? '', 'VA' ); ?>>Virginia</option>
-                            <option value="WA" <?php selected( $prefill['state'] ?? '', 'WA' ); ?>>Washington</option>
-                            <option value="WV" <?php selected( $prefill['state'] ?? '', 'WV' ); ?>>West Virginia</option>
-                            <option value="WI" <?php selected( $prefill['state'] ?? '', 'WI' ); ?>>Wisconsin</option>
-                            <option value="WY" <?php selected( $prefill['state'] ?? '', 'WY' ); ?>>Wyoming</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="zip">ZIP Code *</label>
-                        <input type="text" id="zip" name="zip" placeholder="e.g. 78701" 
-                               value="<?php echo esc_attr( $prefill['zip'] ?? '' ); ?>" required />
-                    </div>
-                </div>
+                            <div class="financing-wizard-grid one-col">
+                                <select name="creditScoreRange" required>
+                                    <option value="">Credit Score Range</option>
+                                    <option value="580" <?php selected( $prefill['creditScoreRange'] ?? '', '580' ); ?>>Below 600</option>
+                                    <option value="620" <?php selected( $prefill['creditScoreRange'] ?? '', '620' ); ?>>600 - 649</option>
+                                    <option value="650" <?php selected( $prefill['creditScoreRange'] ?? '', '650' ); ?>>650 - 699</option>
+                                    <option value="700" <?php selected( $prefill['creditScoreRange'] ?? '', '700' ); ?>>700 - 749</option>
+                                    <option value="750" <?php selected( $prefill['creditScoreRange'] ?? '', '750' ); ?>>750+</option>
+                                </select>
+                            </div>
 
-                <!-- Project Details -->
-                <div>
-                    <label for="projectType">Project Type *</label>
-                    <select id="projectType" name="projectType" required>
-                        <option value="">Select Project Type</option>
-                        <option value="home-renovation" <?php selected( $prefill['projectType'] ?? '', 'home-renovation' ); ?>>Home Renovation</option>
-                        <option value="commercial-const" <?php selected( $prefill['projectType'] ?? '', 'commercial-const' ); ?>>Commercial Construction</option>
-                        <option value="equipment" <?php selected( $prefill['projectType'] ?? '', 'equipment' ); ?>>Equipment Purchase</option>
-                        <option value="business-expansion" <?php selected( $prefill['projectType'] ?? '', 'business-expansion' ); ?>>Business Expansion</option>
-                        <option value="real-estate" <?php selected( $prefill['projectType'] ?? '', 'real-estate' ); ?>>Real Estate</option>
-                        <option value="other" <?php selected( $prefill['projectType'] ?? '', 'other' ); ?>>Other</option>
-                    </select>
-                </div>
+                            <div class="financing-wizard-actions end">
+                                <button type="button" class="wizard-btn wizard-btn-primary" data-step-next="2"><?php echo esc_html( $a['buttonText'] ); ?> <span aria-hidden="true">→</span></button>
+                            </div>
+                        </div>
+                    </section>
 
-                <div>
-                    <label for="projectDetails">Project Details *</label>
-                    <textarea id="projectDetails" name="projectDetails" placeholder="Describe your project goals and requirements..." rows="5" required><?php echo esc_textarea( $prefill['projectDetails'] ?? '' ); ?></textarea>
-                </div>
+                    <section class="financing-wizard-panel" data-step-panel="2">
+                        <div class="financing-wizard-card">
+                            <h3 class="financing-wizard-title">Project Details</h3>
 
-                <!-- Amount & Date -->
-                <div class="form-row">
-                    <div>
-                        <label for="projectAmount">Total Project Amount ($) *</label>
-                        <input type="number" id="projectAmount" name="projectAmount" placeholder="e.g. 150000" min="0" step="1000"
-                               value="<?php echo esc_attr( $prefill['projectAmount'] ?? '' ); ?>" required />
-                    </div>
-                    <div>
-                        <label for="startDate">Preferred Start Date *</label>
-                        <input type="date" id="startDate" name="startDate" 
-                               value="<?php echo esc_attr( $prefill['startDate'] ?? '' ); ?>" required />
-                    </div>
-                </div>
+                            <div class="financing-wizard-grid one-col">
+                                <select name="projectType" required>
+                                    <option value="">Project Type</option>
+                                    <option value="interior-painting" <?php selected( $prefill['projectType'] ?? '', 'interior-painting' ); ?>>Interior Painting</option>
+                                    <option value="exterior-painting" <?php selected( $prefill['projectType'] ?? '', 'exterior-painting' ); ?>>Exterior Painting</option>
+                                    <option value="roofing" <?php selected( $prefill['projectType'] ?? '', 'roofing' ); ?>>Roofing</option>
+                                    <option value="siding" <?php selected( $prefill['projectType'] ?? '', 'siding' ); ?>>Siding</option>
+                                    <option value="kitchen-remodel" <?php selected( $prefill['projectType'] ?? '', 'kitchen-remodel' ); ?>>Kitchen Remodel</option>
+                                    <option value="bath-remodel" <?php selected( $prefill['projectType'] ?? '', 'bath-remodel' ); ?>>Bath Remodel</option>
+                                    <option value="other" <?php selected( $prefill['projectType'] ?? '', 'other' ); ?>>Other</option>
+                                </select>
 
-                <!-- Submit -->
-                <button type="submit" class="financing-app-submit">
-                    <?php echo esc_html( $a['buttonText'] ); ?>
-                </button>
+                                <textarea name="projectDetails" placeholder="Project Description" rows="4" required><?php echo esc_textarea( $prefill['projectDetails'] ?? '' ); ?></textarea>
 
-                <p class="financing-app-encrypted">
-                    🔒 Your information is secured with 256-bit encryption
-                </p>
-            </form>
-        </div>
-    </section>
-    <?php
+                                <input type="number" name="projectAmount" placeholder="Estimated Cost ($)" min="0" step="500" value="<?php echo esc_attr( $prefill['projectAmount'] ?? '' ); ?>" required>
 
-    return ob_get_clean();
+                                <input type="date" name="startDate" value="<?php echo esc_attr( $prefill['startDate'] ?? '' ); ?>" required>
+
+                                <textarea name="additionalNotes" placeholder="Additional Notes" rows="3"><?php echo esc_textarea( $prefill['additionalNotes'] ?? '' ); ?></textarea>
+                            </div>
+
+                            <div class="financing-wizard-actions between">
+                                <button type="button" class="wizard-btn wizard-btn-secondary" data-step-back="1"><span aria-hidden="true">←</span> Back</button>
+                                <button type="button" class="wizard-btn wizard-btn-primary" data-step-next="3">Continue <span aria-hidden="true">→</span></button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="financing-wizard-panel" data-step-panel="3">
+                        <div class="financing-wizard-summary-card">
+                            <div class="summary-meta">
+                                <div><span>Project Type</span><strong data-summary-project>—</strong></div>
+                                <div><span>Amount</span><strong data-summary-amount>$0</strong></div>
+                            </div>
+                            <button type="button" class="wizard-btn wizard-btn-secondary" data-step-edit="1">Edit Info</button>
+                        </div>
+
+                        <div class="financing-wizard-header-copy">
+                            <h3><?php echo esc_html( $a['formTitle'] ); ?></h3>
+                            <p><?php echo esc_html( $a['formDescription'] ); ?></p>
+                        </div>
+
+                        <div class="financing-wizard-partners" data-partners-list>
+                            <?php foreach ( $partners as $partner ) :
+                                $initials = trim( (string) ( $partner['initials'] ?? '' ) );
+                                if ( '' === $initials ) {
+                                        $initials = strtoupper( substr( (string) ( $partner['name'] ?? 'NA' ), 0, 2 ) );
+                                }
+                                $logo_color = sanitize_hex_color( (string) ( $partner['logo_color'] ?? '' ) );
+                                if ( ! $logo_color ) {
+                                        $logo_color = '#3654de';
+                                }
+                                $benefits = isset( $partner['benefits'] ) && is_array( $partner['benefits'] ) ? $partner['benefits'] : array();
+                            ?>
+                                <article
+                                    class="financing-wizard-partner-card"
+                                    data-min-credit="<?php echo esc_attr( (int) ( $partner['min_credit_score'] ?? 0 ) ); ?>"
+                                    data-min-amount="<?php echo esc_attr( (int) ( $partner['min_amount'] ?? 0 ) ); ?>"
+                                    data-max-amount="<?php echo esc_attr( (int) ( $partner['max_amount'] ?? 0 ) ); ?>"
+                                    data-project-types="<?php echo esc_attr( strtolower( trim( (string) ( $partner['project_types'] ?? '' ) ) ) ); ?>"
+                                >
+                                    <div class="partner-head">
+                                        <div class="partner-logo" style="background-color: <?php echo esc_attr( $logo_color ); ?>;"><?php echo esc_html( $initials ); ?></div>
+                                        <div class="partner-name-wrap">
+                                            <h4><?php echo esc_html( (string) ( $partner['name'] ?? 'Partner' ) ); ?></h4>
+                                            <p class="partner-rating">⭐ <?php echo esc_html( (string) ( $partner['rating'] ?? '4.5' ) ); ?></p>
+                                        </div>
+                                        <a class="partner-apply-btn" href="<?php echo esc_url( (string) ( $partner['apply_url'] ?? '#' ) ); ?>" target="_blank" rel="noopener">Apply</a>
+                                    </div>
+
+                                    <div class="partner-stats">
+                                        <div><span>Min. Credit Score</span><strong><?php echo esc_html( (int) ( $partner['min_credit_score'] ?? 0 ) > 0 ? (string) ( (int) $partner['min_credit_score'] ) . '+' : 'N/A' ); ?></strong></div>
+                                        <div><span>APR Range</span><strong><?php echo esc_html( (string) ( $partner['apr_range'] ?? 'N/A' ) ); ?></strong></div>
+                                        <div><span>Terms</span><strong><?php echo esc_html( (string) ( $partner['terms'] ?? 'N/A' ) ); ?></strong></div>
+                                    </div>
+
+                                    <?php if ( ! empty( $benefits ) ) : ?>
+                                        <ul class="partner-benefits">
+                                            <?php foreach ( $benefits as $benefit ) : ?>
+                                                <li>✓ <?php echo esc_html( (string) $benefit ); ?></li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    <?php endif; ?>
+                                </article>
+                            <?php endforeach; ?>
+                        </div>
+
+                        <p class="financing-wizard-empty" data-empty-state hidden>No financing partners match your details yet. Update your info and try again.</p>
+                    </section>
+
+                    <p class="financing-app-encrypted">🔒 Your information is secured with 256-bit encryption</p>
+                </form>
+            </div>
+        </section>
+        <?php
+
+        return ob_get_clean();
 }
 
 // Financing Results Renderer (Block 45)
@@ -1511,6 +1730,7 @@ function logiweb_render_financing_results( $attributes ) {
 function logiweb_render_block_66( $attributes ) {
     $per_page    = isset( $attributes['postsPerPage'] )  ? intval( $attributes['postsPerPage'] )   : 9;
     $all_label   = isset( $attributes['filterLabel'] )   ? sanitize_text_field( $attributes['filterLabel'] ) : 'All';
+    $featured_label = 'Featured Story';
 
     $args = array(
         'post_type'      => 'post',
@@ -1535,6 +1755,7 @@ function logiweb_render_block_66( $attributes ) {
         data-show-author="<?php echo ! empty( $attributes['showAuthor'] )    ? 'true' : 'false'; ?>"
         data-show-readtime="<?php echo ! empty( $attributes['showReadTime'] ) ? 'true' : 'false'; ?>"
         data-all-label="<?php echo esc_attr( $all_label ); ?>"
+        data-featured-label="<?php echo esc_attr( $featured_label ); ?>"
         data-total="<?php echo esc_attr( $total ); ?>"
     >
         <div class="blog-filter-tabs">
@@ -1545,22 +1766,59 @@ function logiweb_render_block_66( $attributes ) {
 
         <div class="blog-filter-body">
             <?php if ( $query->have_posts() ) : ?>
+                <?php
+                    $posts = $query->posts;
+                    $featured_post = ! empty( $posts ) ? $posts[0] : null;
+                    $grid_posts = ! empty( $posts ) ? array_slice( $posts, 1 ) : array();
+                ?>
                 <div class="blog-filter-body-inner">
+                    <?php if ( $featured_post ) : ?>
+                        <?php
+                            $featured_id = $featured_post->ID;
+                            $featured_thumb = get_the_post_thumbnail_url( $featured_id, 'large' );
+                            $featured_tags = get_the_tags( $featured_id );
+                            $featured_tag_name = $featured_tags ? $featured_tags[0]->name : $all_label;
+                            $featured_author = get_the_author_meta( 'display_name', $featured_post->post_author );
+                            $featured_word_count = str_word_count( wp_strip_all_tags( get_post_field( 'post_content', $featured_id ) ) );
+                            $featured_read_time = max( 1, round( $featured_word_count / 200 ) ) . ' min read';
+                            $featured_date = get_the_date( 'F j, Y', $featured_id );
+                        ?>
+                        <article class="blog-filter-featured" aria-label="Featured post">
+                            <p class="blog-filter-featured-badge"><?php echo esc_html( $featured_label ); ?></p>
+                            <a href="<?php echo esc_url( get_permalink( $featured_id ) ); ?>" class="blog-filter-featured-link" data-post-id="<?php echo esc_attr( $featured_id ); ?>">
+                                <div class="blog-filter-featured-image<?php echo $featured_thumb ? '' : ' blog-filter-featured-image--placeholder'; ?>"
+                                     <?php echo $featured_thumb ? 'style="background-image:url(' . esc_url( $featured_thumb ) . ')"' : ''; ?>>
+                                </div>
+                                <div class="blog-filter-featured-content">
+                                    <span class="blog-filter-featured-tag"><?php echo esc_html( $featured_tag_name ); ?></span>
+                                    <h3 class="blog-filter-featured-title"><?php echo esc_html( get_the_title( $featured_id ) ); ?></h3>
+                                    <p class="blog-filter-featured-excerpt"><?php echo esc_html( wp_trim_words( get_the_excerpt( $featured_id ), 32 ) ); ?></p>
+                                    <div class="blog-filter-featured-meta">
+                                        <span><i class="fa fa-user-o"></i> <?php echo esc_html( $featured_author ); ?></span>
+                                        <span><i class="fa fa-calendar-o"></i> <?php echo esc_html( $featured_date ); ?></span>
+                                        <span><i class="fa fa-clock-o"></i> <?php echo esc_html( $featured_read_time ); ?></span>
+                                    </div>
+                                    <span class="blog-filter-featured-cta">Read Full Story <span aria-hidden="true">→</span></span>
+                                </div>
+                            </a>
+                        </article>
+                    <?php endif; ?>
+
                     <div class="blog-filter-group-header">
                         <h2 class="blog-filter-group-title"><?php echo esc_html( $all_label ); ?></h2>
                         <span class="blog-filter-group-count"><?php echo esc_html( $total ); ?> article<?php echo $total !== 1 ? 's' : ''; ?></span>
                     </div>
                     <div class="blog-filter-grid">
-                        <?php while ( $query->have_posts() ) : $query->the_post();
-                            $thumb      = has_post_thumbnail() ? get_the_post_thumbnail_url( null, 'large' ) : '';
-                            $tags       = get_the_tags();
+                        <?php foreach ( $grid_posts as $post ) : setup_postdata( $post );
+                            $thumb      = has_post_thumbnail( $post ) ? get_the_post_thumbnail_url( $post, 'large' ) : '';
+                            $tags       = get_the_tags( $post->ID );
                             $tag_name   = $tags ? $tags[0]->name : '';
-                            $author     = get_the_author();
-                            $word_count = str_word_count( wp_strip_all_tags( get_the_content() ) );
+                            $author     = get_the_author_meta( 'display_name', $post->post_author );
+                            $word_count = str_word_count( wp_strip_all_tags( get_post_field( 'post_content', $post->ID ) ) );
                             $read_time  = max( 1, round( $word_count / 200 ) ) . ' min read';
                         ?>
                         <article class="blog-filter-card">
-                            <a href="<?php the_permalink(); ?>" class="blog-filter-card-link">
+                            <a href="<?php the_permalink(); ?>" class="blog-filter-card-link" data-post-id="<?php echo esc_attr( get_the_ID() ); ?>">
                                 <div class="blog-filter-card-image<?php echo $thumb ? '' : ' blog-filter-card-image--placeholder'; ?>"
                                      <?php echo $thumb ? 'style="background-image:url(' . esc_attr( $thumb ) . ')"' : ''; ?>>
                                     <?php if ( $tag_name ) : ?>
@@ -1583,7 +1841,7 @@ function logiweb_render_block_66( $attributes ) {
                                 </div>
                             </a>
                         </article>
-                        <?php endwhile; wp_reset_postdata(); ?>
+                        <?php endforeach; wp_reset_postdata(); ?>
                     </div>
                 </div>
             <?php else : ?>

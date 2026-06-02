@@ -82,3 +82,7 @@ import "./blocks/block-84";
 import "./blocks/block-85";
 import "./blocks/block-86";
 import "./blocks/block-87";
+import "./blocks/block-88";
+import "./blocks/block-89";
+import "./blocks/block-90";
+import "./blocks/block-92";
