@@ -106,7 +106,6 @@ body {
 }
 
 /* UTILITY CLASSES */
-+
     .btn-primary, .btn-secondary, .btn-secondary-white, .btn-tertiary, .btn-tertiary-white{
         text-decoration: none;
         display: flex;
@@ -2111,12 +2110,11 @@ body {
 }
 
 @keyframes certificationsTicker {
-  from {
+  0% {
     transform: translateX(0);
   }
-
-  to {
-    transform: translateX(calc(-50% - (var(--cert-gap) / 2)));
+  100% {
+    transform: translateX(-50%);
   }
 }
 
@@ -2774,7 +2772,7 @@ body {
 /* Responsive */
 @media (max-width: 768px) {
   .process-timeline {
-    width: 90%;
+    width: 100%;
     padding: clamp(32px, 6vw, 48px) clamp(16px, 5vw, 24px);
   }
 
@@ -3079,6 +3077,7 @@ body {
 
   .fp-description {
     max-width: 100%;
+    text-align:left;
   }
 
   .fp-grid {
@@ -3278,8 +3277,35 @@ body {
 }
 
 @media (max-width: 600px) {
+  .cta-hero {
+    padding: clamp(44px, 11vw, 56px) 14px;
+  }
+
+  .cta-hero-inner {
+    gap: 1.1rem;
+  }
+
+  .cta-hero-title {
+    font-size: clamp(1.7rem, 9.2vw, 2.15rem);
+    line-height: 1.2;
+  }
+
+  .cta-hero-description {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    max-width: 34ch;
+  }
+
   .cta-hero-stats {
-    gap: 1.5rem;
+    width: 100%;
+    gap: 1rem;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .cta-hero-stat {
+    flex: 1 1 30%;
+    min-width: 84px;
   }
 
   .cta-hero-actions {
@@ -3289,7 +3315,14 @@ body {
     a {
       width: 100%;
       justify-content: center;
+      min-height: 46px;
     }
+  }
+
+  .cta-hero-btn-primary,
+  .cta-hero-btn-secondary {
+    font-size: 0.92rem;
+    padding: 0.72rem 1rem;
   }
 }
 
@@ -13259,7 +13292,7 @@ body.blog-filter-modal-open {
     }
 
     .services-editorial-card-title {
-      font-size: var(--logiweb-block-title-size-section);
+      font-size: var(--logiweb-block-text-size-md);
     }
 
     .services-editorial-grid-button {
@@ -13832,9 +13865,19 @@ body.blog-filter-modal-open {
   }
 
   @media (max-width: 980px) {
+    .reviews-spotlight-google-label{
+      width: min-content;
+    }
+  
+  }
+
+
+
+  @media (max-width: 980px) {
     .reviews-spotlight-stats {
       width: min(640px, 100%);
       gap: 1rem;
+      text-align:center!important;
     }
 
     .reviews-spotlight-carousel {
@@ -13850,9 +13893,13 @@ body.blog-filter-modal-open {
     }
 
     .reviews-spotlight-stats {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       width: min(380px, 100%);
       gap: 0.8rem 1.2rem;
+      text-align:center!important;
+    }
+    .reviews-spotlight-stats > :nth-child(4) {
+      grid-column: 2;
     }
 
     .reviews-spotlight-google-pill {
@@ -13878,6 +13925,7 @@ body.blog-filter-modal-open {
 
     .reviews-spotlight-author-row {
       grid-template-columns: auto 1fr;
+      display: flex;
     }
 
     .reviews-spotlight-verified {
@@ -15859,4 +15907,25 @@ body.blog-filter-modal-open {
   .happy-families-cta-trust {
     gap: 0.65rem 1rem;
   }
+}
+
+
+
+
+@media (max-width: 767px){
+    :root{
+      --logiweb-block-title-size-hero-xl: 3.75rem;
+      --logiweb-block-title-size-hero: 2.8rem;
+      --logiweb-block-title-size-section: 1.8rem;  //clamp(2rem, 2.25vw, 2.3rem);
+      --logiweb-block-title-size-card: clamp(1.55rem, 2.3vw, 2.35rem);
+      --logiweb-block-description: 0.9rem;
+      --logiweb-block-title-size-small: 1.3rem;
+      --logiweb-block-subtitle-size: 0.8rem;
+      --logiweb-block-subtitle-size-sm: 0.82rem;
+      --logiweb-block-text-size-xlg: 1.5rem;
+      --logiweb-block-text-size-lg: 1.2rem;
+      --logiweb-block-text-size-md: 1rem;
+      --logiweb-block-text-size-sm: 0.80rem;
+      --logiweb-block-text-size-xs: 0.70rem;
+    }
 }

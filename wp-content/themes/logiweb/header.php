@@ -26,7 +26,7 @@
         <header>
                     <nav class="navbar navbar-expand-lg bg-body-tertiary">
                         <div class="container-fluid">
-                            <a class="navbar-brand" href="#">
+                            <a class="navbar-brand" href="<?php echo esc_url(home_url('/')); ?>">
                             <?php 
 
                             if(function_exists('the_custom_logo')){

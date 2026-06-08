@@ -894,6 +894,7 @@ h3 {
     }
 
     .hero-form-card {
+        display: none;
         justify-self: start;
     }
 
@@ -926,7 +927,7 @@ h3 {
     }
 
     .hero-copy h1 {
-        font-size: clamp(2rem, 11vw, 3.1rem);
+        font-size: 2.25rem;
         line-height: 1;
     }
 
@@ -935,6 +936,10 @@ h3 {
     }
 
     .hero-trust {
+        width: 80%;
+        flex-direction: row;
+        display: flex;
+        flex-wrap:nowrap;
         gap: 10px 12px;
         font-size: 0.88rem;
     }
@@ -1190,7 +1195,7 @@ header{
 }
 
 .navbar{
-    width: max-content;
+    width: 100%;
 }
 
 .navbar-nav .current-menu-item .nav-link {
@@ -1212,7 +1217,7 @@ header{
 
 .nav-link {
     font-family: var(--main-font);
-    font-size: 0.5rem;
+    font-size: 0.875rem;
     font-weight: 300;
 }
 
@@ -2260,6 +2265,7 @@ section {
     }
 
     .navbar {
+        width: max-content;
         padding: 0 !important;
     }
 
@@ -3042,4 +3048,12 @@ section {
 .btn-quoteform{
     display: inline !important;
     grid-column: span 2 !important;
+}
+
+
+
+@media (max-width: 767px){
+    .footer .quick-links .title-small{
+        font-size: .875rem;
+    }
 }
