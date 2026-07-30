@@ -1222,6 +1222,7 @@ header{
 }
 
 .nav-btn {
+    min-width: 10%;
     width: 100%;
     padding: 1% !important;
     font-size: 13px !important;
@@ -1365,7 +1366,13 @@ section {
 
 .footer a {
     text-decoration: none;
-    color: #1f2c45;
+    color: #687280;
+    font-size: 0.875rem;
+}
+
+.quick-links .item{
+    color: #687280;
+    font-size: 0.875rem;
 }
 
 
@@ -3056,4 +3063,83 @@ section {
     .footer .quick-links .title-small{
         font-size: .875rem;
     }
+
+    .navbar-toggler{
+        border:none;
+    }
 }
+
+@media (max-width: 991.98px) {
+    #offcanvasNavbar {
+        width: 100%;
+    }
+
+    #offcanvasNavbar .offcanvas-header {
+        padding: 1rem;
+        border-bottom: 1px solid #d8dde6;
+    }
+
+    #offcanvasNavbar .offcanvas-title {
+        color: #274f88;
+        font-size: 0.875rem;
+        font-weight: 700;
+    }
+
+    #offcanvasNavbar .offcanvas-body {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1rem;
+    }
+
+    #offcanvasNavbar .mobile-offcanvas-nav {
+        gap: 0;
+        margin-bottom: 0;
+        padding-right: 0;
+    }
+
+    #offcanvasNavbar .mobile-offcanvas-nav > .nav-item {
+        margin-bottom: 0.45rem;
+    }
+
+    #offcanvasNavbar .mobile-offcanvas-nav > .nav-item > .nav-link {
+        color: #6c7480;
+        font-size: 0.875rem;
+        font-weight: 400;
+        padding: 0.2rem 0;
+    }
+
+    #offcanvasNavbar .mobile-offcanvas-nav > .has-children > .nav-link {
+        color: #274f88;
+        font-weight: 700;
+        padding-top: 0.7rem;
+    }
+
+    #offcanvasNavbar .offcanvas-submenu {
+        list-style: none;
+        margin: 0.35rem 0 0;
+        padding: 0 0 0 0.75rem;
+    }
+
+    #offcanvasNavbar .offcanvas-submenu .nav-item {
+        margin-bottom: 0.35rem;
+    }
+
+    #offcanvasNavbar .offcanvas-submenu .nav-sublink {
+        color: #6c7480;
+        font-size: 0.875rem;
+        font-weight: 400;
+        padding: 0.1rem 0;
+    }
+
+    #offcanvasNavbar .nav-btn {
+        width: 100%;
+        margin: 0.75rem 0 0;
+        border-radius: 999px;
+        height: auto;
+        min-height: 50px;
+        padding: 0.75rem 1rem !important;
+    }
+}
+
+

@@ -1,1 +1,281 @@
-document.querySelectorAll(".blog-filter-block[data-nonce]").forEach(function(e){var t=e.getAttribute("data-nonce"),a=parseInt(e.getAttribute("data-per-page"),10)||9,l="false"!==e.getAttribute("data-show-excerpt"),r="false"!==e.getAttribute("data-show-author"),d="false"!==e.getAttribute("data-show-readtime"),i=e.getAttribute("data-all-label")||"All",o=e.getAttribute("data-featured-label")||"Featured Story",n=e.querySelector(".blog-filter-tabs"),s=e.querySelector(".blog-filter-body"),c={},b=function(){var e=document.querySelector(".blog-filter-modal");if(e)return e.__blogFilterModalApi||(e.__blogFilterModalApi=l(e)),e.__blogFilterModalApi;var t=document.createElement("div");function a(){t.classList.remove("is-open"),t.setAttribute("aria-hidden","true"),document.body.classList.remove("blog-filter-modal-open")}function l(e){var t=e.querySelector(".blog-filter-modal-media"),l=e.querySelector(".blog-filter-modal-body"),r=e.querySelector(".blog-filter-modal-share"),d="",o="";return r.addEventListener("click",function(){d&&(navigator.share?navigator.share({title:o,url:d}).catch(function(){}):navigator.clipboard&&navigator.clipboard.writeText&&(navigator.clipboard.writeText(d).catch(function(){}),r.textContent="Link Copied",setTimeout(function(){r.innerHTML='Share Article <span aria-hidden="true">→</span>'},1500)))}),{open:function(){e.classList.add("is-open"),e.setAttribute("aria-hidden","false"),document.body.classList.add("blog-filter-modal-open")},close:a,setLoading:function(){t.innerHTML='<div class="blog-filter-modal-media-placeholder"></div>',l.innerHTML='<p class="blog-filter-modal-loading">Loading article...</p>',d="",o=""},renderError:function(e){t.innerHTML='<div class="blog-filter-modal-media-placeholder"></div>',l.innerHTML='<h3 class="blog-filter-modal-title">Could not load this article.</h3><p class="blog-filter-modal-text">Please open the full page instead.</p><a class="blog-filter-modal-open-link" href="'+p(e||"#")+'">Open Post Page</a>',d=e||"",o="Blog post"},renderPost:function(e,a){var r=e._embedded&&e._embedded["wp:featuredmedia"]&&e._embedded["wp:featuredmedia"][0]&&e._embedded["wp:featuredmedia"][0].source_url?e._embedded["wp:featuredmedia"][0].source_url:"",n=e._embedded&&e._embedded["wp:term"]&&e._embedded["wp:term"][1]&&e._embedded["wp:term"][1][0]?e._embedded["wp:term"][1][0].name:i,s=e._embedded&&e._embedded.author&&e._embedded.author[0]?e._embedded.author[0].name:"",c=v(e.date),b=h(e.content?e.content.rendered:e.excerpt.rendered),g=u(b),f=b.substring(0,320);t.innerHTML=r?'<div class="blog-filter-modal-media-image" style="background-image:url('+p(r)+')"></div>':'<div class="blog-filter-modal-media-placeholder"></div>',l.innerHTML='<span class="blog-filter-modal-tag">'+m(n)+'</span><h3 class="blog-filter-modal-title">'+m(e.title.rendered)+'</h3><div class="blog-filter-modal-meta">'+(s?'<span><i class="fa fa-user-o"></i> '+m(s)+"</span>":"")+(c?'<span><i class="fa fa-calendar-o"></i> '+m(c)+"</span>":"")+'<span><i class="fa fa-clock-o"></i> '+m(g)+'</span></div><p class="blog-filter-modal-text">'+m(f)+(b.length>320?"...":"")+"</p>",d=e.link||a||"",o=h(e.title.rendered)}}}return t.className="blog-filter-modal",t.setAttribute("aria-hidden","true"),t.innerHTML='<div class="blog-filter-modal-backdrop" data-close="1"></div><div class="blog-filter-modal-dialog" role="dialog" aria-modal="true" aria-label="Blog post details"><button type="button" class="blog-filter-modal-close" aria-label="Close popup">&times;</button><div class="blog-filter-modal-media"></div><div class="blog-filter-modal-body"></div><div class="blog-filter-modal-footer"><span class="blog-filter-modal-footer-text">Enjoyed this article?</span><button type="button" class="blog-filter-modal-share">Share Article <span aria-hidden="true">→</span></button></div></div>',document.body.appendChild(t),t.addEventListener("click",function(e){(e.target.matches("[data-close='1']")||e.target.closest(".blog-filter-modal-close"))&&a()}),document.addEventListener("keydown",function(e){"Escape"===e.key&&t.classList.contains("is-open")&&a()}),t.__blogFilterModalApi=l(t),t.__blogFilterModalApi}();function u(e){var t=(e||"").trim().split(/\s+/).length;return Math.max(1,Math.round(t/200))+" min read"}function g(e,n){s.classList.add("blog-filter-loading");var b=!e,g=(window.logiwebBlogFilter&&window.logiwebBlogFilter.restUrl?window.logiwebBlogFilter.restUrl:"/wp-json/wp/v2")+"/posts?per_page="+a+"&_embed=1"+(e?"&tags="+e:"");fetch(g,{headers:{"X-WP-Nonce":t}}).then(function(e){return e.json()}).then(function(e){s.classList.remove("blog-filter-loading"),s.innerHTML="",e&&e.length?(e.forEach(function(e){c[e.id]=e}),s.appendChild(function(e,t,a){var n,s,c,b,g,f,w,_=t.length,L=a&&t.length?t[0]:null,y=L?t.slice(1):t,A=document.createElement("div");return A.className="blog-filter-body-inner",A.innerHTML=(L?(s=(n=L)._embedded&&n._embedded["wp:featuredmedia"]&&n._embedded["wp:featuredmedia"][0]&&n._embedded["wp:featuredmedia"][0].source_url?n._embedded["wp:featuredmedia"][0].source_url:"",c=n._embedded&&n._embedded["wp:term"]&&n._embedded["wp:term"][1]&&n._embedded["wp:term"][1][0]?n._embedded["wp:term"][1][0].name:i,b=n._embedded&&n._embedded.author&&n._embedded.author[0]?n._embedded.author[0].name:"",g=h(n.excerpt?n.excerpt.rendered:""),f=v(n.date),w=u(n.content?h(n.content.rendered):g),'<article class="blog-filter-featured" aria-label="Featured post"><p class="blog-filter-featured-badge">'+m(o)+'</p><a href="'+p(n.link)+'" class="blog-filter-featured-link" data-post-id="'+p(n.id)+'">'+(s?'<div class="blog-filter-featured-image" style="background-image:url('+p(s)+')"></div>':'<div class="blog-filter-featured-image blog-filter-featured-image--placeholder"></div>')+'<div class="blog-filter-featured-content"><span class="blog-filter-featured-tag">'+m(c)+'</span><h3 class="blog-filter-featured-title">'+m(n.title.rendered)+"</h3>"+(g?'<p class="blog-filter-featured-excerpt">'+m(g.substring(0,220))+(g.length>220?"...":"")+"</p>":"")+'<div class="blog-filter-featured-meta">'+(b?'<span><i class="fa fa-user-o"></i> '+m(b)+"</span>":"")+(f?'<span><i class="fa fa-calendar-o"></i> '+m(f)+"</span>":"")+'<span><i class="fa fa-clock-o"></i> '+m(w)+'</span></div><span class="blog-filter-featured-cta">Read Full Story <span aria-hidden="true">→</span></span></div></a></article>'):"")+'<div class="blog-filter-group-header"><h2 class="blog-filter-group-title">'+m(e)+'</h2><span class="blog-filter-group-count">'+_+" article"+(1!==_?"s":"")+'</span></div><div class="blog-filter-grid">'+y.map(function(e){var t=e._embedded&&e._embedded["wp:featuredmedia"]&&e._embedded["wp:featuredmedia"][0]&&e._embedded["wp:featuredmedia"][0].source_url?e._embedded["wp:featuredmedia"][0].source_url:"",a=e._embedded&&e._embedded["wp:term"]&&e._embedded["wp:term"][1]&&e._embedded["wp:term"][1][0]?e._embedded["wp:term"][1][0].name:"",i=e._embedded&&e._embedded.author&&e._embedded.author[0]?e._embedded.author[0].name:"",o=h(e.excerpt?e.excerpt.rendered:""),n=u(e.content?h(e.content.rendered):o);return'<article class="blog-filter-card"><a href="'+p(e.link)+'" class="blog-filter-card-link" data-post-id="'+p(e.id)+'">'+(t?'<div class="blog-filter-card-image" style="background-image:url('+p(t)+')">'+(a?'<span class="blog-filter-card-badge">'+m(a)+"</span>":"")+"</div>":'<div class="blog-filter-card-image blog-filter-card-image--placeholder">'+(a?'<span class="blog-filter-card-badge">'+m(a)+"</span>":"")+"</div>")+'<div class="blog-filter-card-body"><h3 class="blog-filter-card-title">'+m(e.title.rendered)+"</h3>"+(l&&o?'<p class="blog-filter-card-excerpt">'+m(o.substring(0,140))+(o.length>140?"…":"")+"</p>":"")+'<div class="blog-filter-card-meta">'+(r&&i?'<span class="blog-filter-card-author"><i class="fa fa-user"></i> '+m(i)+"</span>":"")+(d?'<span class="blog-filter-card-readtime"><i class="fa fa-clock-o"></i> '+m(n)+"</span>":"")+"</div></div></a></article>"}).join("")+"</div>",A}(n,e,b))):s.innerHTML='<p class="blog-filter-empty">No articles found.</p>'}).catch(function(){s.classList.remove("blog-filter-loading"),s.innerHTML='<p class="blog-filter-empty">Error loading articles.</p>'})}n.addEventListener("click",function(e){var t=e.target.closest(".blog-filter-tab");t&&(n.querySelectorAll(".blog-filter-tab").forEach(function(e){e.classList.remove("blog-filter-tab--active")}),t.classList.add("blog-filter-tab--active"),g(t.getAttribute("data-tag-id")||null,t.getAttribute("data-tag-label")))}),e.addEventListener("click",function(a){var l=a.target.closest(".blog-filter-card-link, .blog-filter-featured-link");if(l&&e.contains(l)&&!(a.metaKey||a.ctrlKey||a.shiftKey||a.altKey)){a.preventDefault();var r=parseInt(l.getAttribute("data-post-id"),10),d=l.getAttribute("href")||"#";r?function(e,a){b.setLoading(),b.open();var l=c[e];if(l)b.renderPost(l,a);else{var r=(window.logiwebBlogFilter&&window.logiwebBlogFilter.restUrl?window.logiwebBlogFilter.restUrl:"/wp-json/wp/v2")+"/posts/"+e+"?_embed=1";fetch(r,{headers:{"X-WP-Nonce":t}}).then(function(e){if(!e.ok)throw new Error("Failed loading post");return e.json()}).then(function(e){c[e.id]=e,b.renderPost(e,a)}).catch(function(){b.renderError(a)})}}(r,d):window.location.href=d}});var f=(window.logiwebBlogFilter&&window.logiwebBlogFilter.restUrl?window.logiwebBlogFilter.restUrl:"/wp-json/wp/v2")+"/tags?per_page=50&hide_empty=1";function m(e){return String(e).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}function p(e){return String(e).replace(/"/g,"&quot;")}function h(e){var t=document.createElement("div");return t.innerHTML=e,t.textContent||t.innerText||""}function v(e){if(!e)return"";var t=new Date(e);return Number.isNaN(t.getTime())?"":t.toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})}fetch(f).then(function(e){return e.json()}).then(function(t){t&&t.length&&function(t){n.innerHTML="";var a=document.createElement("button");a.className="blog-filter-tab blog-filter-tab--active",a.innerHTML=m(i)+' <span class="blog-filter-tab-count">'+(e.getAttribute("data-total")||"")+"</span>",a.setAttribute("data-tag-id",""),a.setAttribute("data-tag-label",i),n.appendChild(a),t.forEach(function(e){var t=document.createElement("button");t.className="blog-filter-tab",t.innerHTML=m(e.name)+' <span class="blog-filter-tab-count">'+e.count+"</span>",t.setAttribute("data-tag-id",e.id),t.setAttribute("data-tag-label",e.name),n.appendChild(t)})}(t),g(null,i)}).catch(function(){g(null,i)})});
+/******/ (() => { // webpackBootstrap
+/*!*****************************************!*\
+  !*** ./src/blocks/block-66/frontend.js ***!
+  \*****************************************/
+(function () {
+  var blocks = document.querySelectorAll(".blog-filter-block[data-nonce]");
+  blocks.forEach(function (block) {
+    var nonce = block.getAttribute("data-nonce");
+    var perPage = parseInt(block.getAttribute("data-per-page"), 10) || 9;
+    var showExcerpt = block.getAttribute("data-show-excerpt") !== "false";
+    var showAuthor = block.getAttribute("data-show-author") !== "false";
+    var showReadTime = block.getAttribute("data-show-readtime") !== "false";
+    var allLabel = block.getAttribute("data-all-label") || "All";
+    var featuredLabel = block.getAttribute("data-featured-label") || "Featured Story";
+    var tabsEl = block.querySelector(".blog-filter-tabs");
+    var bodyEl = block.querySelector(".blog-filter-body");
+    var postCache = {};
+    var modalApi = ensureModal();
+    var currentTag = null; // null = all
+
+    /* ── helper: words-per-minute read time ── */
+    function readTime(text) {
+      var words = (text || "").trim().split(/\s+/).length;
+      var mins = Math.max(1, Math.round(words / 200));
+      return mins + " min read";
+    }
+
+    /* ── render a set of posts inside a group ── */
+    function renderGroup(tagLabel, posts, isAllView) {
+      var totalPosts = posts.length;
+      var featuredPost = isAllView && posts.length ? posts[0] : null;
+      var listPosts = featuredPost ? posts.slice(1) : posts;
+      var grid = document.createElement("div");
+      grid.className = "blog-filter-body-inner";
+      grid.innerHTML = (featuredPost ? renderFeatured(featuredPost) : "") + '<div class="blog-filter-group-header">' + '<h2 class="blog-filter-group-title">' + escHtml(tagLabel) + "</h2>" + '<span class="blog-filter-group-count">' + totalPosts + " article" + (totalPosts !== 1 ? "s" : "") + "</span>" + "</div>" + '<div class="blog-filter-grid">' + listPosts.map(function (post) {
+        var imgUrl = post._embedded && post._embedded["wp:featuredmedia"] && post._embedded["wp:featuredmedia"][0] && post._embedded["wp:featuredmedia"][0].source_url ? post._embedded["wp:featuredmedia"][0].source_url : "";
+        var tagName = post._embedded && post._embedded["wp:term"] && post._embedded["wp:term"][1] && post._embedded["wp:term"][1][0] ? post._embedded["wp:term"][1][0].name : "";
+        var authorName = post._embedded && post._embedded.author && post._embedded.author[0] ? post._embedded.author[0].name : "";
+        var excerptText = stripHtml(post.excerpt ? post.excerpt.rendered : "");
+        var rt = readTime(post.content ? stripHtml(post.content.rendered) : excerptText);
+        return '<article class="blog-filter-card">' + '<a href="' + escAttr(post.link) + '" class="blog-filter-card-link" data-post-id="' + escAttr(post.id) + '">' + (imgUrl ? '<div class="blog-filter-card-image" style="background-image:url(' + escAttr(imgUrl) + ')">' + (tagName ? '<span class="blog-filter-card-badge">' + escHtml(tagName) + "</span>" : "") + "</div>" : '<div class="blog-filter-card-image blog-filter-card-image--placeholder">' + (tagName ? '<span class="blog-filter-card-badge">' + escHtml(tagName) + "</span>" : "") + "</div>") + '<div class="blog-filter-card-body">' + '<h3 class="blog-filter-card-title">' + escHtml(post.title.rendered) + "</h3>" + (showExcerpt && excerptText ? '<p class="blog-filter-card-excerpt">' + escHtml(excerptText.substring(0, 140)) + (excerptText.length > 140 ? "…" : "") + "</p>" : "") + '<div class="blog-filter-card-meta">' + (showAuthor && authorName ? '<span class="blog-filter-card-author"><i class="fa fa-user"></i> ' + escHtml(authorName) + "</span>" : "") + (showReadTime ? '<span class="blog-filter-card-readtime"><i class="fa fa-clock-o"></i> ' + escHtml(rt) + "</span>" : "") + "</div>" + "</div>" + "</a>" + "</article>";
+      }).join("") + "</div>";
+      return grid;
+    }
+    function renderFeatured(post) {
+      var imgUrl = post._embedded && post._embedded["wp:featuredmedia"] && post._embedded["wp:featuredmedia"][0] && post._embedded["wp:featuredmedia"][0].source_url ? post._embedded["wp:featuredmedia"][0].source_url : "";
+      var tagName = post._embedded && post._embedded["wp:term"] && post._embedded["wp:term"][1] && post._embedded["wp:term"][1][0] ? post._embedded["wp:term"][1][0].name : allLabel;
+      var authorName = post._embedded && post._embedded.author && post._embedded.author[0] ? post._embedded.author[0].name : "";
+      var excerptText = stripHtml(post.excerpt ? post.excerpt.rendered : "");
+      var dateText = formatDate(post.date);
+      var rt = readTime(post.content ? stripHtml(post.content.rendered) : excerptText);
+      return '<article class="blog-filter-featured" aria-label="Featured post">' + '<p class="blog-filter-featured-badge">' + escHtml(featuredLabel) + "</p>" + '<a href="' + escAttr(post.link) + '" class="blog-filter-featured-link" data-post-id="' + escAttr(post.id) + '">' + (imgUrl ? '<div class="blog-filter-featured-image" style="background-image:url(' + escAttr(imgUrl) + ')"></div>' : '<div class="blog-filter-featured-image blog-filter-featured-image--placeholder"></div>') + '<div class="blog-filter-featured-content">' + '<span class="blog-filter-featured-tag">' + escHtml(tagName) + "</span>" + '<h3 class="blog-filter-featured-title">' + escHtml(post.title.rendered) + "</h3>" + (excerptText ? '<p class="blog-filter-featured-excerpt">' + escHtml(excerptText.substring(0, 220)) + (excerptText.length > 220 ? "..." : "") + "</p>" : "") + '<div class="blog-filter-featured-meta">' + (authorName ? '<span><i class="fa fa-user-o"></i> ' + escHtml(authorName) + "</span>" : "") + (dateText ? '<span><i class="fa fa-calendar-o"></i> ' + escHtml(dateText) + "</span>" : "") + '<span><i class="fa fa-clock-o"></i> ' + escHtml(rt) + "</span>" + "</div>" + '<span class="blog-filter-featured-cta">Read Full Story <span aria-hidden="true">→</span></span>' + "</div>" + "</a>" + "</article>";
+    }
+
+    /* ── fetch posts and rebuild body ── */
+    function loadPosts(tagId, tagLabel) {
+      bodyEl.classList.add("blog-filter-loading");
+      var isAllView = !tagId;
+      var url = (window.logiwebBlogFilter && window.logiwebBlogFilter.restUrl ? window.logiwebBlogFilter.restUrl : "/wp-json/wp/v2") + "/posts?per_page=" + perPage + "&_embed=1" + (tagId ? "&tags=" + tagId : "");
+      fetch(url, {
+        headers: {
+          "X-WP-Nonce": nonce
+        }
+      }).then(function (r) {
+        return r.json();
+      }).then(function (posts) {
+        bodyEl.classList.remove("blog-filter-loading");
+        bodyEl.innerHTML = "";
+        if (!posts || !posts.length) {
+          bodyEl.innerHTML = '<p class="blog-filter-empty">No articles found.</p>';
+          return;
+        }
+        posts.forEach(function (post) {
+          postCache[post.id] = post;
+        });
+        bodyEl.appendChild(renderGroup(tagLabel, posts, isAllView));
+      }).catch(function () {
+        bodyEl.classList.remove("blog-filter-loading");
+        bodyEl.innerHTML = '<p class="blog-filter-empty">Error loading articles.</p>';
+      });
+    }
+
+    /* ── build tabs from /wp/v2/tags list ── */
+    function buildTabs(tags) {
+      tabsEl.innerHTML = "";
+
+      // "All" tab
+      var allBtn = document.createElement("button");
+      allBtn.className = "blog-filter-tab blog-filter-tab--active";
+      allBtn.innerHTML = escHtml(allLabel) + ' <span class="blog-filter-tab-count">' + (block.getAttribute("data-total") || "") + "</span>";
+      allBtn.setAttribute("data-tag-id", "");
+      allBtn.setAttribute("data-tag-label", allLabel);
+      tabsEl.appendChild(allBtn);
+      tags.forEach(function (tag) {
+        var btn = document.createElement("button");
+        btn.className = "blog-filter-tab";
+        btn.innerHTML = escHtml(tag.name) + ' <span class="blog-filter-tab-count">' + tag.count + "</span>";
+        btn.setAttribute("data-tag-id", tag.id);
+        btn.setAttribute("data-tag-label", tag.name);
+        tabsEl.appendChild(btn);
+      });
+    }
+
+    /* ── tab click handler ── */
+    tabsEl.addEventListener("click", function (e) {
+      var btn = e.target.closest(".blog-filter-tab");
+      if (!btn) return;
+      tabsEl.querySelectorAll(".blog-filter-tab").forEach(function (b) {
+        b.classList.remove("blog-filter-tab--active");
+      });
+      btn.classList.add("blog-filter-tab--active");
+      var tagId = btn.getAttribute("data-tag-id");
+      var tagLabel = btn.getAttribute("data-tag-label");
+      loadPosts(tagId || null, tagLabel);
+    });
+    block.addEventListener("click", function (e) {
+      var link = e.target.closest(".blog-filter-card-link, .blog-filter-featured-link");
+      if (!link || !block.contains(link)) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      var postId = parseInt(link.getAttribute("data-post-id"), 10);
+      var fallbackUrl = link.getAttribute("href") || "#";
+      if (!postId) {
+        window.location.href = fallbackUrl;
+        return;
+      }
+      openPostModal(postId, fallbackUrl);
+    });
+
+    /* ── init: fetch tags then posts ── */
+    var tagsUrl = (window.logiwebBlogFilter && window.logiwebBlogFilter.restUrl ? window.logiwebBlogFilter.restUrl : "/wp-json/wp/v2") + "/tags?per_page=50&hide_empty=1";
+    fetch(tagsUrl).then(function (r) {
+      return r.json();
+    }).then(function (tags) {
+      if (tags && tags.length) {
+        buildTabs(tags);
+      }
+      loadPosts(null, allLabel);
+    }).catch(function () {
+      loadPosts(null, allLabel);
+    });
+    function openPostModal(postId, fallbackUrl) {
+      modalApi.setLoading();
+      modalApi.open();
+      var cachedPost = postCache[postId];
+      if (cachedPost) {
+        modalApi.renderPost(cachedPost, fallbackUrl);
+        return;
+      }
+      var postUrl = (window.logiwebBlogFilter && window.logiwebBlogFilter.restUrl ? window.logiwebBlogFilter.restUrl : "/wp-json/wp/v2") + "/posts/" + postId + "?_embed=1";
+      fetch(postUrl, {
+        headers: {
+          "X-WP-Nonce": nonce
+        }
+      }).then(function (r) {
+        if (!r.ok) throw new Error("Failed loading post");
+        return r.json();
+      }).then(function (post) {
+        postCache[post.id] = post;
+        modalApi.renderPost(post, fallbackUrl);
+      }).catch(function () {
+        modalApi.renderError(fallbackUrl);
+      });
+    }
+
+    /* ── utilities ── */
+    function escHtml(str) {
+      return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+    function escAttr(str) {
+      return String(str).replace(/"/g, "&quot;");
+    }
+    function stripHtml(html) {
+      var tmp = document.createElement("div");
+      tmp.innerHTML = html;
+      return tmp.textContent || tmp.innerText || "";
+    }
+    function formatDate(dateStr) {
+      if (!dateStr) return "";
+      var parsed = new Date(dateStr);
+      if (Number.isNaN(parsed.getTime())) return "";
+      return parsed.toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+      });
+    }
+    function ensureModal() {
+      var existing = document.querySelector(".blog-filter-modal");
+      if (existing) {
+        if (existing.__blogFilterModalApi) {
+          return existing.__blogFilterModalApi;
+        }
+        existing.__blogFilterModalApi = createModalApi(existing);
+        return existing.__blogFilterModalApi;
+      }
+      var modal = document.createElement("div");
+      modal.className = "blog-filter-modal";
+      modal.setAttribute("aria-hidden", "true");
+      modal.innerHTML = '<div class="blog-filter-modal-backdrop" data-close="1"></div>' + '<div class="blog-filter-modal-dialog" role="dialog" aria-modal="true" aria-label="Blog post details">' + '<button type="button" class="blog-filter-modal-close" aria-label="Close popup">&times;</button>' + '<div class="blog-filter-modal-media"></div>' + '<div class="blog-filter-modal-body"></div>' + '<div class="blog-filter-modal-footer">' + '<span class="blog-filter-modal-footer-text">Enjoyed this article?</span>' + '<button type="button" class="blog-filter-modal-share">Share Article <span aria-hidden="true">→</span></button>' + "</div>" + "</div>";
+      document.body.appendChild(modal);
+      modal.addEventListener("click", function (e) {
+        if (e.target.matches("[data-close='1']") || e.target.closest(".blog-filter-modal-close")) {
+          closeModal();
+        }
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && modal.classList.contains("is-open")) {
+          closeModal();
+        }
+      });
+      function closeModal() {
+        modal.classList.remove("is-open");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("blog-filter-modal-open");
+      }
+      function createModalApi(el) {
+        var media = el.querySelector(".blog-filter-modal-media");
+        var body = el.querySelector(".blog-filter-modal-body");
+        var shareBtn = el.querySelector(".blog-filter-modal-share");
+        var shareUrl = "";
+        var shareTitle = "";
+        shareBtn.addEventListener("click", function () {
+          if (!shareUrl) return;
+          if (navigator.share) {
+            navigator.share({
+              title: shareTitle,
+              url: shareUrl
+            }).catch(function () {});
+            return;
+          }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(shareUrl).catch(function () {});
+            shareBtn.textContent = "Link Copied";
+            setTimeout(function () {
+              shareBtn.innerHTML = 'Share Article <span aria-hidden="true">→</span>';
+            }, 1500);
+          }
+        });
+        return {
+          open: function () {
+            el.classList.add("is-open");
+            el.setAttribute("aria-hidden", "false");
+            document.body.classList.add("blog-filter-modal-open");
+          },
+          close: closeModal,
+          setLoading: function () {
+            media.innerHTML = '<div class="blog-filter-modal-media-placeholder"></div>';
+            body.innerHTML = '<p class="blog-filter-modal-loading">Loading article...</p>';
+            shareUrl = "";
+            shareTitle = "";
+          },
+          renderError: function (url) {
+            media.innerHTML = '<div class="blog-filter-modal-media-placeholder"></div>';
+            body.innerHTML = '<h3 class="blog-filter-modal-title">Could not load this article.</h3>' + '<p class="blog-filter-modal-text">Please open the full page instead.</p>' + '<a class="blog-filter-modal-open-link" href="' + escAttr(url || "#") + '">Open Post Page</a>';
+            shareUrl = url || "";
+            shareTitle = "Blog post";
+          },
+          renderPost: function (post, fallbackUrl) {
+            var imageUrl = post._embedded && post._embedded["wp:featuredmedia"] && post._embedded["wp:featuredmedia"][0] && post._embedded["wp:featuredmedia"][0].source_url ? post._embedded["wp:featuredmedia"][0].source_url : "";
+            var tagName = post._embedded && post._embedded["wp:term"] && post._embedded["wp:term"][1] && post._embedded["wp:term"][1][0] ? post._embedded["wp:term"][1][0].name : allLabel;
+            var authorName = post._embedded && post._embedded.author && post._embedded.author[0] ? post._embedded.author[0].name : "";
+            var dateText = formatDate(post.date);
+            var contentText = stripHtml(post.content ? post.content.rendered : post.excerpt.rendered);
+            var rt = readTime(contentText);
+            var shortContent = contentText.substring(0, 320);
+            media.innerHTML = imageUrl ? '<div class="blog-filter-modal-media-image" style="background-image:url(' + escAttr(imageUrl) + ')"></div>' : '<div class="blog-filter-modal-media-placeholder"></div>';
+            body.innerHTML = '<span class="blog-filter-modal-tag">' + escHtml(tagName) + "</span>" + '<h3 class="blog-filter-modal-title">' + escHtml(post.title.rendered) + "</h3>" + '<div class="blog-filter-modal-meta">' + (authorName ? '<span><i class="fa fa-user-o"></i> ' + escHtml(authorName) + "</span>" : "") + (dateText ? '<span><i class="fa fa-calendar-o"></i> ' + escHtml(dateText) + "</span>" : "") + '<span><i class="fa fa-clock-o"></i> ' + escHtml(rt) + "</span>" + "</div>" + '<p class="blog-filter-modal-text">' + escHtml(shortContent) + (contentText.length > 320 ? "..." : "") + "</p>";
+            shareUrl = post.link || fallbackUrl || "";
+            shareTitle = stripHtml(post.title.rendered);
+          }
+        };
+      }
+      modal.__blogFilterModalApi = createModalApi(modal);
+      return modal.__blogFilterModalApi;
+    }
+  });
+})();
+/******/ })()
+;
+//# sourceMappingURL=frontend.js.map

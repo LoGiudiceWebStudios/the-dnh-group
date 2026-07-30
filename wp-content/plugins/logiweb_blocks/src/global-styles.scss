@@ -2039,13 +2039,11 @@ body {
   transform: translateY(0);
 }
 
-/* Certifications Carousel */
 .certifications-carousel {
   --cert-gap: clamp(20px, 2.4vw, 44px);
   width: 100%;
   padding: clamp(34px, 4.2vw, 52px) 0;
   margin: 0 auto;
-  background: #f4f5f7;
   border-top: 3px solid #202f4b;
 }
 
@@ -2055,105 +2053,103 @@ body {
   padding: 0 clamp(14px, 2vw, 34px);
 }
 
-.certifications-header {
-  text-align: center;
-  margin-bottom: clamp(18px, 2.8vw, 28px);
-}
-
 .certifications-subtitle {
+  text-align: center;
   font-size: clamp(0.72rem, 0.95vw, 0.84rem);
   font-weight: 500;
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: #97a1b1;
-  margin: 0;
+  margin: 0 0 clamp(18px, 2.8vw, 28px);
 }
 
-.certifications-marquee {
-  width: 100%;
+@mixin white-gradient {
+  background: linear-gradient(to right, rgba(244, 245, 247, 1) 0%, rgba(244, 245, 247, 0) 100%);
+}
+
+$animationSpeed: 40s;
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.slider {
+  margin: auto;
   overflow: hidden;
-}
+  position: relative;
+  width: 100%;
 
-.certifications-track {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--cert-gap);
-  width: max-content;
-  animation: certificationsTicker 44s linear infinite;
-}
-
-.certification-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  white-space: nowrap;
-  flex: 0 0 auto;
-}
-
-.certification-badge {
-  width: 32px;
-  height: 32px;
-  border-radius: .75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.86rem;
-  font-weight: 700;
-  color: #7081a0;
-}
-
-.certification-caption {
-  font-size: 15px;
-  font-weight: 500;
-  color: #535c6b;
-  line-height: 1;
-}
-
-@keyframes certificationsTicker {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-@media (max-width: 1024px) {
-  .certifications-track {
-    animation-duration: 36s;
-  }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .certifications-carousel {
-    padding: 26px 0;
+  &::before,
+  &::after {
+    content: "";
+    height: 100%;
+    position: absolute;
+    width: clamp(40px, 8vw, 140px);
+    z-index: 2;
+    pointer-events: none;
   }
 
-  .certifications-content {
-    padding: 0 12px;
+  &::after {
+    right: 0;
+    top: 0;
+    transform: rotateZ(180deg);
   }
 
-  .certifications-subtitle {
-    letter-spacing: 0.2em;
-    font-size: 0.68rem;
+  &::before {
+    left: 0;
+    top: 0;
   }
 
-  .certifications-track {
-    gap: 20px;
-    animation-duration: 26s;
+  .slide-track {
+    animation: scroll $animationSpeed linear infinite;
+    display: flex;
+    width: max-content;
+    align-items: center;
+    will-change: transform;
+  }
+
+  .carousel-group {
+    display: flex;
+    align-items: center;
+    gap: var(--cert-gap);
+    width: max-content;
+    padding-right: var(--cert-gap);
+    flex-shrink: 0;
+  }
+
+  .slide {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    white-space: nowrap;
+    flex: 0 0 auto;
+    padding: 0.82rem 1.08rem;
+    border-radius: 999px;
   }
 
   .certification-badge {
-    width: 28px;
-    height: 28px;
-    font-size: 0.74rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #7081a0;
+    flex: 0 0 auto;
+    text-transform: uppercase;
   }
 
-  .certification-caption {
-    font-size: 0.9rem;
+  .certification-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: #535c6b;
+    line-height: 1;
   }
 }
+
 
 /* ============================================================================
    Services Showcase Block
@@ -3279,10 +3275,12 @@ body {
 @media (max-width: 600px) {
   .cta-hero {
     padding: clamp(44px, 11vw, 56px) 14px;
+    width: min-content;
   }
 
   .cta-hero-inner {
     gap: 1.1rem;
+    width: 50%;
   }
 
   .cta-hero-title {
@@ -3388,6 +3386,8 @@ body {
 @media (max-width: 768px) {
   .story-hero {
     padding: clamp(44px, 10vw, 64px) clamp(14px, 6vw, 22px);
+    padding-top: 6rem;
+    padding-bottom: 6rem;
     background:
       radial-gradient(circle at 70% 40%, rgba(66, 95, 255, 0.35) 0%, rgba(66, 95, 255, 0) 50%),
       var(--logiweb-block-dark-background-mobile);
@@ -3867,24 +3867,44 @@ body {
 
 @media (max-width: 900px) {
   .journey-line {
+    display: none;
     left: 46px;
     transform: none;
   }
 
   .journey-item {
-    grid-template-columns: 92px minmax(0, 1fr);
+    display: flex;
+    justify-content: center;
     gap: 0.7rem;
     align-items: center;
   }
+
+
+  .journey-item-card{
+    width: 100%;
+  }
+
 
   .journey-item.is-left .journey-item-card,
   .journey-item.is-right .journey-item-card {
     grid-column: 2;
   }
 
+    
+  .journey-item.is-left .journey-item-card .journey-item-content,
+  .journey-item.is-right .journey-item-card .journey-item-content{
+    justify-content: flex-start;
+  }
+
+  .journey-item.is-left .journey-item-content{
+    align-items: flex-start !important;
+  }
+
+
   .journey-item-node {
+    align-self: center;
     grid-column: 1;
-    width: 62px;
+    min-width: 62px;
     height: 62px;
     font-size: 1rem;
     position: relative;
@@ -3895,16 +3915,15 @@ body {
   }
 
   .journey-item-node::after {
-    width: 16px;
-    right: -16px;
-    left: auto;
+    display: none;
+  }
+
+  .journey-item-description{
+    text-align: left;
   }
 }
 
 @media (max-width: 640px) {
-  .journey-timeline {
-    padding: 36px 0;
-  }
 
   .journey-item-content {
     padding: 12px 14px 14px;
@@ -5002,6 +5021,17 @@ body {
   .career-benefits-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .career-benefits-block{
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .career-benefit-card{
+    padding-left: 0;
+  }
+  
+  .career-benefit-title{
+    font-size: var(--logiweb-block-text-size-md) !important;
+  }
 }
 
 @media (max-width: 640px) {
@@ -5009,9 +5039,6 @@ body {
     grid-template-columns: 1fr;
   }
 
-  .career-benefits-title {
-    font-size: var(--logiweb-block-title-size-section);
-  }
 }
 
 /* ============================================================================
@@ -14413,9 +14440,6 @@ body.blog-filter-modal-open {
     grid-template-columns: 1fr;
   }
 
-  .our-approach-title {
-    font-size: var(--logiweb-block-title-size-hero);
-  }
 }
 
 // =============================================================================
@@ -15591,7 +15615,7 @@ body.blog-filter-modal-open {
   }
 
   .financing-simple-stats-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0px, 1fr));
   }
 }
 
@@ -15907,6 +15931,61 @@ body.blog-filter-modal-open {
   .happy-families-cta-trust {
     gap: 0.65rem 1rem;
   }
+
+  .specialty-split-media{
+    min-height: auto;
+  }
+  .specialty-split-image{
+    min-height: auto;
+  }
+
+  .painting-faq-compact-inner{
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .flawless-finish-cta-inner{
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .financing-simple-actions{
+    flex-wrap: nowrap;
+  }
+
+  .portfolio-grid-search{
+    width: 100%;
+  }
+  .portfolio-grid-filters{
+    justify-content: flex-start;
+  }
+
+  .trust-metrics-strip-inner{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .video-testimonials-inner{
+    padding-left: 0rem;
+    padding-right: 0rem;
+  }
+
+  .trust-signals-strip-inner{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ohio-trusted-hero-mosaic{
+    display: none;
+  }
+
+
+  .ohio-hero-phone{
+        justify-content: flex-start;
+  }
+
+  .fleet-coverage-hero-stats{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
 }
 
 

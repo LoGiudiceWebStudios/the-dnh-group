@@ -1,1 +1,314 @@
-(()=>{"use strict";var e={790(e){e.exports=window.ReactJSXRuntime},715(e){e.exports=window.wp.blockEditor},997(e){e.exports=window.wp.blocks},427(e){e.exports=window.wp.components}},a={};function n(s){var l=a[s];if(void 0!==l)return l.exports;var r=a[s]={exports:{}};return e[s](r,r.exports,n),r.exports}n.n=e=>{var a=e&&e.__esModule?()=>e.default:()=>e;return n.d(a,{a}),a},n.d=(e,a)=>{for(var s in a)n.o(a,s)&&!n.o(e,s)&&Object.defineProperty(e,s,{enumerable:!0,get:a[s]})},n.o=(e,a)=>Object.prototype.hasOwnProperty.call(e,a);var s=n(997),l=n(715),r=n(427),i=n(790);(0,s.registerBlockType)("logiweb/custom-block-15",{title:"Social Media Links",icon:"admin-site",category:"widgets",attributes:{title:{type:"string",default:"Follow Us On"},instagram_link:{type:"string",default:""},facebook_link:{type:"string",default:""},linkedin_link:{type:"string",default:""}},edit:({attributes:e,setAttributes:a})=>{const{title:n,instagram_link:s,facebook_link:o,linkedin_link:t}=e;return(0,i.jsxs)("div",{className:"social-follow-block",children:[(0,i.jsx)(l.RichText,{tagName:"h2",className:"social-follow-title",value:n,onChange:e=>a({title:e}),placeholder:"Follow Us On",style:{textAlign:"center",fontWeight:"bold",fontSize:"2.2rem",marginBottom:"2.5rem"}}),(0,i.jsxs)("div",{className:"social-follow-buttons",children:[(0,i.jsxs)("a",{className:"social-btn instagram",href:s,target:"_blank",rel:"noopener noreferrer",children:[(0,i.jsx)("i",{className:"fa-brands fa-instagram"}),(0,i.jsx)("span",{children:"Instagram"})]}),(0,i.jsxs)("a",{className:"social-btn facebook",href:o,target:"_blank",rel:"noopener noreferrer",children:[(0,i.jsx)("i",{className:"fa-brands fa-facebook"}),(0,i.jsx)("span",{children:"Facebook"})]}),(0,i.jsxs)("a",{className:"social-btn linkedin",href:t,target:"_blank",rel:"noopener noreferrer",children:[(0,i.jsx)("i",{className:"fa-brands fa-linkedin"}),(0,i.jsx)("span",{children:"Linkedin"})]})]}),(0,i.jsx)(l.InspectorControls,{children:(0,i.jsxs)(r.PanelBody,{title:"Social Links",children:[(0,i.jsx)(r.TextControl,{label:"Instagram Link",value:s,onChange:e=>a({instagram_link:e})}),(0,i.jsx)(r.TextControl,{label:"Facebook Link",value:o,onChange:e=>a({facebook_link:e})}),(0,i.jsx)(r.TextControl,{label:"Linkedin Link",value:t,onChange:e=>a({linkedin_link:e})})]})})]})},save:({attributes:e})=>{const{title:a,instagram_link:n,facebook_link:s,linkedin_link:l}=e;return(0,i.jsxs)("div",{className:"social-follow-block",children:[(0,i.jsx)("h2",{className:"social-follow-title",children:a}),(0,i.jsxs)("div",{className:"social-follow-buttons",children:[(0,i.jsxs)("a",{className:"social-btn instagram",href:n,target:"_blank",rel:"noopener noreferrer",children:[(0,i.jsx)("i",{className:"fa-brands fa-instagram"}),(0,i.jsx)("span",{children:"Instagram"})]}),(0,i.jsxs)("a",{className:"social-btn facebook",href:s,target:"_blank",rel:"noopener noreferrer",children:[(0,i.jsx)("i",{className:"fa-brands fa-facebook"}),(0,i.jsx)("span",{children:"Facebook"})]}),(0,i.jsxs)("a",{className:"social-btn linkedin",href:l,target:"_blank",rel:"noopener noreferrer",children:[(0,i.jsx)("i",{className:"fa-brands fa-linkedin"}),(0,i.jsx)("span",{children:"Linkedin"})]})]})]})}})})();
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./src/global-styles.scss"
+/*!********************************!*\
+  !*** ./src/global-styles.scss ***!
+  \********************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ },
+
+/***/ "react/jsx-runtime"
+/*!**********************************!*\
+  !*** external "ReactJSXRuntime" ***!
+  \**********************************/
+(module) {
+
+module.exports = window["ReactJSXRuntime"];
+
+/***/ },
+
+/***/ "@wordpress/block-editor"
+/*!*************************************!*\
+  !*** external ["wp","blockEditor"] ***!
+  \*************************************/
+(module) {
+
+module.exports = window["wp"]["blockEditor"];
+
+/***/ },
+
+/***/ "@wordpress/blocks"
+/*!********************************!*\
+  !*** external ["wp","blocks"] ***!
+  \********************************/
+(module) {
+
+module.exports = window["wp"]["blocks"];
+
+/***/ },
+
+/***/ "@wordpress/components"
+/*!************************************!*\
+  !*** external ["wp","components"] ***!
+  \************************************/
+(module) {
+
+module.exports = window["wp"]["components"];
+
+/***/ }
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		if (!(moduleId in __webpack_modules__)) {
+/******/ 			delete __webpack_module_cache__[moduleId];
+/******/ 			var e = new Error("Cannot find module '" + moduleId + "'");
+/******/ 			e.code = 'MODULE_NOT_FOUND';
+/******/ 			throw e;
+/******/ 		}
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
+(() => {
+/*!**************************************!*\
+  !*** ./src/blocks/block-15/index.js ***!
+  \**************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _global_styles_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../global-styles.scss */ "./src/global-styles.scss");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__);
+
+
+
+
+
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)('logiweb/custom-block-15', {
+  title: 'Social Media Links',
+  icon: 'admin-site',
+  category: 'widgets',
+  attributes: {
+    title: {
+      type: 'string',
+      default: 'Follow Us On'
+    },
+    instagram_link: {
+      type: 'string',
+      default: ''
+    },
+    facebook_link: {
+      type: 'string',
+      default: ''
+    },
+    linkedin_link: {
+      type: 'string',
+      default: ''
+    }
+  },
+  edit: ({
+    attributes,
+    setAttributes
+  }) => {
+    const {
+      title,
+      instagram_link,
+      facebook_link,
+      linkedin_link
+    } = attributes;
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+      className: "social-follow-block",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+        tagName: "h2",
+        className: "social-follow-title",
+        value: title,
+        onChange: value => setAttributes({
+          title: value
+        }),
+        placeholder: "Follow Us On",
+        style: {
+          textAlign: 'center',
+          fontWeight: 'bold',
+          fontSize: '2.2rem',
+          marginBottom: '2.5rem'
+        }
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "social-follow-buttons",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("a", {
+          className: "social-btn instagram",
+          href: instagram_link,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+            className: "fa-brands fa-instagram"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+            children: "Instagram"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("a", {
+          className: "social-btn facebook",
+          href: facebook_link,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+            className: "fa-brands fa-facebook"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+            children: "Facebook"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("a", {
+          className: "social-btn linkedin",
+          href: linkedin_link,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+            className: "fa-brands fa-linkedin"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+            children: "Linkedin"
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+          title: "Social Links",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: "Instagram Link",
+            value: instagram_link,
+            onChange: value => setAttributes({
+              instagram_link: value
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: "Facebook Link",
+            value: facebook_link,
+            onChange: value => setAttributes({
+              facebook_link: value
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: "Linkedin Link",
+            value: linkedin_link,
+            onChange: value => setAttributes({
+              linkedin_link: value
+            })
+          })]
+        })
+      })]
+    });
+  },
+  save: ({
+    attributes
+  }) => {
+    const {
+      title,
+      instagram_link,
+      facebook_link,
+      linkedin_link
+    } = attributes;
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+      className: "social-follow-block",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h2", {
+        className: "social-follow-title",
+        children: title
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "social-follow-buttons",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("a", {
+          className: "social-btn instagram",
+          href: instagram_link,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+            className: "fa-brands fa-instagram"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+            children: "Instagram"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("a", {
+          className: "social-btn facebook",
+          href: facebook_link,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+            className: "fa-brands fa-facebook"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+            children: "Facebook"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("a", {
+          className: "social-btn linkedin",
+          href: linkedin_link,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+            className: "fa-brands fa-linkedin"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+            children: "Linkedin"
+          })]
+        })]
+      })]
+    });
+  }
+});
+})();
+
+/******/ })()
+;
+//# sourceMappingURL=block-15.js.map

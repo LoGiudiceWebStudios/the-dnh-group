@@ -586,9 +586,15 @@ add_action('customize_register', 'logiweb_navbar_search_customizer');
  */
 class Custom_Nav_Walker extends Walker_Nav_Menu {
 
+    private $offcanvas_mode = false;
+
+    function __construct($offcanvas_mode = false) {
+        $this->offcanvas_mode = (bool) $offcanvas_mode;
+    }
+
     function start_lvl(&$output, $depth = 0, $args = null) {
         $indent = str_repeat("\t", $depth);
-        $submenu_class = $depth > 0 ? ' dropdown-menu' : ' dropdown-menu';
+        $submenu_class = $this->offcanvas_mode ? ' offcanvas-submenu' : ' dropdown-menu';
         $output .= "\n$indent<ul class=\"$submenu_class\">\n";
     }
 
@@ -597,20 +603,26 @@ class Custom_Nav_Walker extends Walker_Nav_Menu {
         $has_children = in_array('menu-item-has-children', $classes);
 
         $class_names = 'nav-item';
-        if ($depth === 0 && $has_children) {
-            $class_names .= ' dropdown';
-        } elseif ($depth > 0 && $has_children) {
-            $class_names .= ' dropdown-submenu';
+        if ($has_children) {
+            $class_names .= ' has-children';
         }
 
-        $link_classes = $depth === 0 ? 'nav-link' : 'dropdown-item';
-        if ($has_children) {
+        if (!$this->offcanvas_mode) {
+            if ($depth === 0 && $has_children) {
+                $class_names .= ' dropdown';
+            } elseif ($depth > 0 && $has_children) {
+                $class_names .= ' dropdown-submenu';
+            }
+        }
+
+        $link_classes = $depth === 0 ? 'nav-link' : ($this->offcanvas_mode ? 'nav-link nav-sublink' : 'dropdown-item');
+        if ($has_children && !$this->offcanvas_mode) {
             $link_classes .= ' dropdown-toggle';
         }
 
         $attributes = !empty($item->url) ? ' href="' . esc_attr($item->url) . '"' : ' href="#"';
         $attributes .= ' class="' . esc_attr($link_classes) . '"';
-        if ($has_children) {
+        if ($has_children && !$this->offcanvas_mode) {
             $attributes .= ' data-bs-toggle="dropdown" aria-expanded="false"';
         }
 

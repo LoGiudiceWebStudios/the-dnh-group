@@ -4,7 +4,7 @@ import { PanelBody, Button, TextControl } from "@wordpress/components";
 import "../../global-styles.scss";
 import metadata from "./block.json";
 
-const DEFAULT_COMPANIES = [
+const DEFAULT_CERTIFICATIONS = [
   { name: "Microsoft", badgeText: "M", badgeColor: "#dbe7ff" },
   { name: "Google", badgeText: "G", badgeColor: "#fbe1e1" },
   { name: "Amazon", badgeText: "A", badgeColor: "#f6e3bf" },
@@ -12,18 +12,17 @@ const DEFAULT_COMPANIES = [
   { name: "Apple", badgeText: "A", badgeColor: "#ececf1" },
   { name: "Netflix", badgeText: "N", badgeColor: "#f5d9dc" },
   { name: "Spotify", badgeText: "S", badgeColor: "#dbf0da" },
-  { name: "Slack", badgeText: "Sl", badgeColor: "#e2daf9" },
+  { name: "Slack", badgeText: "SL", badgeColor: "#e2daf9" },
 ];
 
 const norm = (value = "") => String(value).trim();
 
-const getBadgeText = (company) => {
-  const explicit = norm(company?.badgeText);
+const getBadgeText = (certification) => {
+  const explicit = norm(certification?.badgeText);
   if (explicit) {
     return explicit;
   }
-  const fromName = norm(company?.name).charAt(0).toUpperCase();
-  return fromName || "A";
+  return norm(certification?.name).charAt(0).toUpperCase() || "A";
 };
 
 registerBlockType("logiweb/custom-block-10", {
@@ -31,125 +30,138 @@ registerBlockType("logiweb/custom-block-10", {
   attributes: {
     title: {
       type: "string",
-      default: "Trusted by Industry Leaders",
+      default: "TRUSTED BY INDUSTRY LEADERS",
     },
-    companies: {
+    certifications: {
       type: "array",
-      default: DEFAULT_COMPANIES,
+      default: DEFAULT_CERTIFICATIONS,
     },
   },
 
   edit: ({ attributes, setAttributes }) => {
-    const { title = "", companies = DEFAULT_COMPANIES } = attributes;
+    const {
+      title = "TRUSTED BY INDUSTRY LEADERS",
+      certifications = DEFAULT_CERTIFICATIONS,
+    } = attributes;
 
-    const updateCompany = (index, key, value) => {
-      const next = [...companies];
+    const updateCertification = (index, key, value) => {
+      const next = [...certifications];
       next[index] = {
         ...next[index],
         [key]: value,
       };
-      setAttributes({ companies: next });
+      setAttributes({ certifications: next });
     };
 
-    const addCompany = () => {
+    const addCertification = () => {
       setAttributes({
-        companies: [
-          ...companies,
-          { name: "New Brand", badgeText: "N", badgeColor: "#e8ecf5" },
+        certifications: [
+          ...certifications,
+          { name: "New Certification", badgeText: "N", badgeColor: "#e8ecf5" },
         ],
       });
     };
 
-    const removeCompany = (index) => {
-      if (companies.length <= 1) {
+    const removeCertification = (index) => {
+      if (certifications.length <= 1) {
         return;
       }
-      setAttributes({ companies: companies.filter((_, i) => i !== index) });
-    };
 
-    const editorLoopItems = [...companies, ...companies];
+      setAttributes({
+        certifications: certifications.filter((_, certIndex) => certIndex !== index),
+      });
+    };
 
     return (
       <section className="certifications-carousel">
         <InspectorControls>
-          <PanelBody title="Carousel Settings">
+          <PanelBody title="Certifications" initialOpen>
             <TextControl
-              label="Section Title"
+              label="Titolo"
               value={title}
-              onChange={(val) => setAttributes({ title: val })}
+              onChange={(value) => setAttributes({ title: value })}
             />
-            {companies.map((company, index) => (
+
+            {certifications.map((certification, index) => (
               <div
                 key={index}
                 style={{
-                  marginTop: "10px",
-                  marginBottom: "10px",
+                  marginTop: "12px",
+                  marginBottom: "12px",
+                  paddingBottom: "12px",
                   borderBottom: "1px solid #e5e9f2",
-                  paddingBottom: "10px",
                 }}
               >
                 <TextControl
-                  label={`Brand ${index + 1} Name`}
-                  value={company.name || ""}
-                  onChange={(value) => updateCompany(index, "name", value)}
+                  label={`Certification ${index + 1} - Nome`}
+                  value={certification.name || ""}
+                  onChange={(value) => updateCertification(index, "name", value)}
                 />
                 <TextControl
                   label="Badge Text"
-                  value={company.badgeText || ""}
-                  onChange={(value) => updateCompany(index, "badgeText", value)}
+                  value={certification.badgeText || ""}
+                  onChange={(value) => updateCertification(index, "badgeText", value)}
                 />
                 <TextControl
                   label="Badge Color"
-                  value={company.badgeColor || "#e8ecf5"}
-                  onChange={(value) =>
-                    updateCompany(index, "badgeColor", value)
-                  }
+                  value={certification.badgeColor || "#e8ecf5"}
+                  onChange={(value) => updateCertification(index, "badgeColor", value)}
                 />
                 <Button
                   isSmall
                   isDestructive
-                  onClick={() => removeCompany(index)}
-                  disabled={companies.length <= 1}
+                  disabled={certifications.length <= 1}
+                  onClick={() => removeCertification(index)}
                 >
-                  Remove brand
+                  Rimuovi
                 </Button>
               </div>
             ))}
-            <Button isPrimary isSmall onClick={addCompany}>
-              + Add brand
+
+            <Button isPrimary isSmall onClick={addCertification}>
+              + Aggiungi certification
             </Button>
           </PanelBody>
         </InspectorControls>
 
         <div className="certifications-content">
-          <div className="certifications-header">
-            <RichText
-              tagName="p"
-              className="certifications-subtitle"
-              value={title}
-              onChange={(value) => setAttributes({ title: value })}
-              placeholder="Trusted by industry leaders"
-            />
-          </div>
+          <RichText
+            tagName="p"
+            className="certifications-subtitle"
+            value={title}
+            onChange={(value) => setAttributes({ title: value })}
+            placeholder="TRUSTED BY INDUSTRY LEADERS"
+          />
 
-          <div className="certifications-marquee">
-            <div className="certifications-track">
-              {editorLoopItems.map((company, idx) => (
-                <div
-                  className="certification-item"
-                  key={`${idx}-${company.name}`}
-                >
-                  <span
-                    className="certification-badge"
-                    style={{ backgroundColor: company.badgeColor || "#e8ecf5" }}
-                  >
-                    {getBadgeText(company)}
-                  </span>
-                  <span className="certification-caption">
-                    {company.name || "Brand"}
-                  </span>
-                </div>
-              ))}
+          <div className="slider" aria-label="Certifications">
+            <div className="slide-track">
+              <div className="carousel-group">
+                {certifications.map((certification, index) => (
+                  <div className="slide" key={`editor-original-${index}-${certification.name}`}>
+                    <span
+                      className="certification-badge"
+                      style={{ backgroundColor: certification.badgeColor || "#e8ecf5" }}
+                    >
+                      {getBadgeText(certification)}
+                    </span>
+                    <span className="certification-name">{certification.name || "Brand"}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="carousel-group" aria-hidden="true">
+                {certifications.map((certification, index) => (
+                  <div className="slide" key={`editor-duplicate-${index}-${certification.name}`}>
+                    <span
+                      className="certification-badge"
+                      style={{ backgroundColor: certification.badgeColor || "#e8ecf5" }}
+                    >
+                      {getBadgeText(certification)}
+                    </span>
+                    <span className="certification-name">{certification.name || "Brand"}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -159,40 +171,44 @@ registerBlockType("logiweb/custom-block-10", {
 
   save: ({ attributes }) => {
     const {
-      title = "Trusted by Industry Leaders",
-      companies = DEFAULT_COMPANIES,
+      title = "TRUSTED BY INDUSTRY LEADERS",
+      certifications = DEFAULT_CERTIFICATIONS,
     } = attributes;
-    const loopItems = [...companies, ...companies];
 
     return (
-      <section
-        className="certifications-carousel fade-in-on-scroll"
-        data-block="certifications"
-      >
+      <section className="certifications-carousel fade-in-on-scroll" data-block="certifications">
         <div className="certifications-content">
-          <div className="certifications-header">
-            <p className="certifications-subtitle">{title}</p>
-          </div>
+          <p className="certifications-subtitle">{title}</p>
 
-          <div className="certifications-marquee" aria-label="Trusted brands">
-            <div className="certifications-track" data-carousel-track>
-              {loopItems.map((company, idx) => (
-                <div
-                  key={`${idx}-${company.name}`}
-                  className="certification-item"
-                  data-carousel-item
-                >
-                  <span
-                    className="certification-badge"
-                    style={{ backgroundColor: company.badgeColor || "#e8ecf5" }}
-                  >
-                    {getBadgeText(company)}
-                  </span>
-                  <span className="certification-caption">
-                    {company.name || "Brand"}
-                  </span>
-                </div>
-              ))}
+          <div className="slider" aria-label="Certifications">
+            <div className="slide-track">
+              <div className="carousel-group">
+                {certifications.map((certification, index) => (
+                  <div className="slide" key={`save-original-${index}-${certification.name}`}>
+                    <span
+                      className="certification-badge"
+                      style={{ backgroundColor: certification.badgeColor || "#e8ecf5" }}
+                    >
+                      {getBadgeText(certification)}
+                    </span>
+                    <span className="certification-name">{certification.name || "Brand"}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="carousel-group" aria-hidden="true">
+                {certifications.map((certification, index) => (
+                  <div className="slide" key={`save-duplicate-${index}-${certification.name}`}>
+                    <span
+                      className="certification-badge"
+                      style={{ backgroundColor: certification.badgeColor || "#e8ecf5" }}
+                    >
+                      {getBadgeText(certification)}
+                    </span>
+                    <span className="certification-name">{certification.name || "Brand"}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

@@ -53,42 +53,65 @@
                             <?php endif; ?>
 
                             </a>
-                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
-                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                <?php 
-                                    wp_nav_menu(
-                                        array(
-                                            'container' => '',
-                                            'theme_location' => 'primary',
-                                            'items_wrap' => '<ul class="navbar-nav ms-auto mb-2 mb-lg-0">%3$s</ul>',
-                                            'walker' => new Custom_Nav_Walker()
-                                        )
+                            <div class="offcanvas-lg offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                                <div class="offcanvas-header d-lg-none">
+                                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasNavbar" aria-label="Close"></button>
+                                </div>
+                                <div class="offcanvas-body d-lg-flex align-items-center">
+                                    <div class="d-none d-lg-flex flex-grow-1">
+                                        <?php 
+                                            wp_nav_menu(
+                                                array(
+                                                    'container' => '',
+                                                    'theme_location' => 'primary',
+                                                    'items_wrap' => '<ul class="navbar-nav ms-auto mb-2 mb-lg-0">%3$s</ul>',
+                                                    'walker' => new Custom_Nav_Walker()
+                                                )
 
-                                    );
-                                ?>
-                                <?php 
-                                    $nav_btn_enabled = get_theme_mod('nav_button_enabled', false);
-                                    $nav_btn_text = get_theme_mod('nav_button_text', 'Default');
-                                    $nav_btn_url = get_theme_mod('nav_button_url', '');
-                                ?>
-                                <?php if ($nav_btn_enabled): ?>
-                                    <button
-                                        class="nav-btn btn btn-outline-success btn-primary"
-                                        type="button"
-                                        <?php if ($nav_btn_url) : ?>onclick="window.location.href='<?php echo esc_url($nav_btn_url); ?>'"<?php endif; ?>
-                                    >
-                                        <?php echo esc_html($nav_btn_text); ?>
-                                    </button>
-                                <?php endif; ?>
-                                <?php 
-                                    $search_enabled = get_theme_mod('nav_search_enabled', false);
-                                    $search_placeholder = get_theme_mod('nav_search_placeholder', 'Default');
-                                ?>
-                                <?php if ($search_enabled): ?>
-                                    <?php get_search_form(); ?>
-                                <?php endif; ?>
+                                            );
+                                        ?>
+                                    </div>
+                                    <div class="d-lg-none w-100">
+                                        <?php 
+                                            wp_nav_menu(
+                                                array(
+                                                    'container' => '',
+                                                    'theme_location' => 'primary',
+                                                    'items_wrap' => '<ul class="navbar-nav mobile-offcanvas-nav">%3$s</ul>',
+                                                    'walker' => new Custom_Nav_Walker(true)
+                                                )
+
+                                            );
+                                        ?>
+                                    </div>
+                                    <?php 
+                                        $nav_btn_enabled = get_theme_mod('nav_button_enabled', false);
+                                        $nav_btn_text = get_theme_mod('nav_button_text', 'Default');
+                                        $nav_btn_url = get_theme_mod('nav_button_url', '');
+                                    ?>
+                                    <?php if ($nav_btn_enabled): ?>
+                                        <button
+                                            class="nav-btn btn btn-outline-success btn-primary"
+                                            type="button"
+                                            <?php if ($nav_btn_url) : ?>onclick="window.location.href='<?php echo esc_url($nav_btn_url); ?>'"<?php endif; ?>
+                                        >
+                                            <?php echo esc_html($nav_btn_text); ?>
+                                        </button>
+                                    <?php endif; ?>
+                                    <?php 
+                                        $search_enabled = get_theme_mod('nav_search_enabled', false);
+                                        $search_placeholder = get_theme_mod('nav_search_placeholder', 'Default');
+                                    ?>
+                                    <?php if ($search_enabled): ?>
+                                        <div class="mt-3 mt-lg-0">
+                                            <?php get_search_form(); ?>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                         </div>
                     </nav>
